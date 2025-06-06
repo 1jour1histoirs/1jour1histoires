@@ -1,189 +1,125 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>1jour,1histoires</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#f04',
-                        secondary: '#5D5CDE',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                },
-            },
-            darkMode: 'class',
-        };
-    </script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet"
-    />
-    <style>
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
-        .fade-in-up {
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
-
-        .pulse-hover:hover {
-            animation: pulse 0.3s ease-in-out;
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #f04, #ff6b6b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .glass-effect {
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .dark .glass-effect {
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .video-container {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .video-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(
-                45deg,
-                transparent 49%,
-                rgba(255, 0, 68, 0.1) 50%,
-                transparent 51%
-            );
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .audio-player {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            margin-top: 1rem;
-        }
-
-        .countdown {
-            font-weight: 600;
-            color: #f04;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>1jour,1histoires avec Soutien</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(90deg, #222 50%, #551a8b 50%);
+      color: #eee;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+      border-radius: 12px;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    button {
+      cursor: pointer;
+      background-color: #f39c12;
+      border: none;
+      color: #222;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 8px;
+      margin-top: 1rem;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #e67e22;
+    }
+    .quiz, .vip-content {
+      margin-top: 2rem;
+      background: #333;
+      padding: 1rem;
+      border-radius: 10px;
+    }
+    .vip-content {
+      display: none;
+    }
+    .vip-content.active {
+      display: block;
+    }
+    a.support-link {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      color: #f39c12;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    a.support-link:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
-<body
-    class="min-h-screen transition-colors duration-300 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
->
-    <!-- Background audio -->
-    <audio id="bg-music" loop autoplay muted>
-        <source
-            src="https://cdn.pixabay.com/download/audio/2021/10/12/audio_0a0803d75a.mp3?filename=calm-night-ambient-12070.mp3"
-            type="audio/mpeg"
-        />
-        Votre navigateur ne supporte pas l'élément audio.
-    </audio>
+<body>
 
-    <!-- Header -->
-    <header class="text-center py-12 px-4 fade-in-up">
-        <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4 gradient-text">
-                1jour,1histoires
-            </h1>
-            <p
-                class="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed"
-            >
-                Chaque jour, une micro-histoire absurde, flippante ou étrange.<br />
-                <span class="font-medium text-primary"
-                    >À lire, à écouter… ou à craindre.</span
-                >
-            </p>
-        </div>
-    </header>
+<h1>1jour,1histoires</h1>
 
-    <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-4 space-y-12">
-        <!-- Vidéo Section -->
-        <section class="fade-in-up" style="animation-delay: 0.2s">
-            <div
-                class="glass-effect rounded-2xl p-6 border border-gray-200 dark:border-gray-700"
-            >
-                <h2
-                    class="text-2xl md:text-3xl font-semibold mb-6 text-center"
-                >
-                    <span
-                        class="bg-gradient-to-r from-primary to-pink-500 bg-clip-text text-transparent"
-                        >Vidéo gratuite du jour</span
-                    >
-                </h2>
+<section>
+  <h2>Histoire du jour (Gratuite)</h2>
+  <p>Un soir, j’ai reçu un message de mon téléphone… mais c’était mon propre numéro qui m’envoyait : « Ne regarde pas derrière toi. »</p>
+</section>
 
-                <div
-                    class="video-container bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden border-2 border-primary/20 shadow-lg hover:shadow-2xl transition-all duration-300"
-                >
-                    <iframe
-                        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                        class="w-full h-64 md:h-80 lg:h-96"
-                        allowfullscreen
-                        loading="lazy"
-                    ></iframe>
-                </div>
+<section class="quiz">
+  <h2>Quiz Gratuit</h2>
+  <p>Combien y a-t-il de lettres dans le mot "fantôme" ?</p>
+  <button onclick="checkAnswer(true, 'Gratuit')">6</button>
+  <button onclick="checkAnswer(false, 'Gratuit')">5</button>
+  <button onclick="checkAnswer(false, 'Gratuit')">7</button>
+</section>
 
-                <div class="mt-6 text-center">
-                    <a
-                        href="https://www.tiktok.com/@by_bk69"
-                        target="_blank"
-                        class="inline-flex items-center gap-2 text-primary hover:text-pink-500 transition-colors duration-200 font-medium"
-                    >
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43V7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.43z"
-                            />
-                        </svg>
-                        Voir sur TikTok
-                    </a>
-                </div>
-            </div>
-        </section>
+<section>
+  <a class="support-link" href="https://www.paypal.com/donate?business=mbkauto42%40gmail.com" target="_blank" rel="noopener noreferrer">
+    Soutiens-moi ici (via PayPal)
+  </a>
+  <button id="confirm-support">J’ai soutenu ! Débloquer le VIP</button>
+</section>
 
-        <!-- Histoire du jour -->
-        <section
-            class="fade-in-up glass-effect rounded-2xl p-6 border border-gray-200 dark:border-gray-700"
-            style="animation-delay: 0.3s"
-        >
-            <h2
-                class="text-2xl md:text-3xl font-semibold mb-4 text-center gradient-text"
-            >
+<section class="vip-content" id="vip-content">
+  <h2>Contenu VIP - Histoires et Quiz supplémentaires</h2>
+  <p><strong>Histoire VIP :</strong> Dans la forêt, les arbres chuchotent des secrets qu’aucun humain ne doit entendre… sauf toi.</p>
+
+  <div class="quiz">
+    <h3>Quiz VIP</h3>
+    <p>Quel est le cri que l’on entend dans la maison abandonnée ?</p>
+    <button onclick="checkAnswer(true, 'VIP')">Un hurlement aigu</button>
+    <button onclick="checkAnswer(false, 'VIP')">Un rire d’enfant</button>
+    <button onclick="checkAnswer(false, 'VIP')">Un murmure doux</button>
+  </div>
+</section>
+
+<script>
+  const vipKey = 'vip_access';
+  const vipContent = document.getElementById('vip-content');
+  const confirmBtn = document.getElementById('confirm-support');
+
+  function checkAnswer(isCorrect, level) {
+    alert(isCorrect ? `Bonne réponse (${level}) !` : `Mauvaise réponse (${level}), essaie encore !`);
+  }
+
+  function updateVip() {
+    if(localStorage.getItem(vipKey) === 'true') {
+      vipContent.classList.add('active');
+      confirmBtn.style.display = 'none';
+    }
+  }
+
+  confirmBtn.addEventListener('click', () => {
+    localStorage.setItem(vipKey, 'true');
+    updateVip();
+    alert('Merci pour ton soutien ! Contenu VIP débloqué.');
+  });
+
+  updateVip();
+</script>
+
+</body>
+</html>
