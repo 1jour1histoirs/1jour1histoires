@@ -3,212 +3,259 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>1jour,1histoires avec Soutien VIP</title>
+<title>1jour,1histoires - VIP & Gratuit</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
   body {
-    font-family: Arial, sans-serif;
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 1rem;
-    background: linear-gradient(90deg, #222 50%, #551a8b 50%);
+    margin:0; padding:0;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(90deg, #1a1a1a 50%, #4b1369 50%);
     color: #eee;
-    border-radius: 12px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+  }
+  header {
+    background: #4b1369;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
     justify-content: space-between;
   }
-  h1, h2, h3 {
+  .menu-btn {
+    font-size: 1.8rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  nav {
+    position: fixed;
+    top: 0; left: -250px;
+    width: 230px;
+    height: 100vh;
+    background: #2c0d4d;
+    padding: 2rem 1rem;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.7);
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+  nav.active {
+    left: 0;
+  }
+  nav a {
+    display: block;
+    color: #ddd;
+    font-weight: 600;
+    margin: 1rem 0;
+    text-decoration: none;
+    font-size: 1.1rem;
+  }
+  nav a:hover {
+    color: #f39c12;
+  }
+  main {
+    flex: 1;
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 0 1rem;
     text-align: center;
   }
-  section {
-    background: rgba(255 255 255 / 0.1);
-    border-radius: 10px;
-    padding: 1rem;
+  h1 {
+    font-weight: 700;
+    font-size: 2.4rem;
+    margin-bottom: 0.2rem;
+  }
+  .subtitle {
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    color: #bbb;
+  }
+  .video-container {
     margin-bottom: 1.5rem;
   }
-  button {
-    cursor: pointer;
-    background-color: #f39c12;
+  video {
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #822ea3;
+  }
+  .story-text {
+    background: rgba(255 255 255 / 0.05);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    line-height: 1.4;
+  }
+  .quiz-section {
+    background: #350b5a;
+    padding: 1.2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+  }
+  .quiz-section p {
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  .quiz-section button {
+    background: #f39c12;
     border: none;
-    color: #222;
-    font-weight: bold;
-    padding: 10px 20px;
+    color: #1a1a1a;
+    font-weight: 700;
+    padding: 0.5rem 1.2rem;
+    margin: 0.3rem;
     border-radius: 8px;
-    margin: 1rem auto 0;
-    display: block;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+  }
+  .quiz-section button:hover {
+    background: #d48806;
+  }
+  .vip-section {
+    background: #6a2a8f;
+    padding: 1rem;
+    border-radius: 12px;
+    color: #eee;
+  }
+  .vip-btn {
+    background: #f1c40f;
+    border: none;
+    padding: 0.8rem 2rem;
+    font-weight: 700;
+    border-radius: 12px;
+    color: #1a1a1a;
+    cursor: pointer;
+    margin-top: 1rem;
     transition: background-color 0.3s ease;
   }
-  button:hover {
-    background-color: #e67e22;
-  }
-  a.support-link {
-    display: block;
-    text-align: center;
-    margin-top: 1rem;
-    color: #f39c12;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  a.support-link:hover {
-    text-decoration: underline;
-  }
-  .vip-content {
-    display: none;
-  }
-  .vip-content.active {
-    display: block;
+  .vip-btn:hover {
+    background: #d4ac0d;
   }
   footer {
-    margin-top: auto;
     text-align: center;
-    padding: 1rem 0;
-    color: #f39c12;
-    font-weight: bold;
+    padding: 1rem;
+    background: #2b0b5d;
+    color: #ddd;
+    font-weight: 600;
   }
-  .quiz button {
-    margin: 0.3rem 0.5rem 0 0;
-  }
-  #countdown {
-    text-align: center;
-    font-size: 1rem;
-    margin-top: 0.5rem;
+  footer a {
     color: #f39c12;
-    font-weight: bold;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  footer a:hover {
+    text-decoration: underline;
+  }
+  .countdown {
+    margin-top: 1rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #f39c12;
   }
 </style>
 </head>
 <body>
 
-<h1>1jour,1histoires</h1>
+<header>
+  <div class="menu-btn" id="menu-btn">&#9776;</div>
+  <h1>1jour,1histoires</h1>
+  <div style="width:30px;"></div>
+</header>
 
-<section>
-  <h2>Histoire du jour (Gratuite)</h2>
-  <p>Un soir, j’ai reçu un message de mon téléphone… mais c’était mon propre numéro qui m’envoyait : « Ne regarde pas derrière toi. »</p>
-</section>
+<nav id="nav-menu">
+  <a href="#story">Histoire du jour</a>
+  <a href="#quiz">Quiz gratuit</a>
+  <a href="#vip">VIP & Plus</a>
+</nav>
 
-<section class="quiz">
-  <h2>Quiz Gratuit</h2>
-  <p>Combien y a-t-il de lettres dans le mot "fantôme" ?</p>
-  <button onclick="checkAnswer(true, 'Gratuit')">6</button>
-  <button onclick="checkAnswer(false, 'Gratuit')">5</button>
-  <button onclick="checkAnswer(false, 'Gratuit')">7</button>
-  <div id="countdown">Tu peux faire ce quiz une fois toutes les 24h.</div>
-</section>
+<main>
 
-<section>
-  <a class="support-link" href="https://www.paypal.com/donate?hosted_button_id=TON_CODE_PAYPAL" target="_blank" rel="noopener noreferrer">
-    Soutiens-moi pour débloquer le contenu VIP - 0,99€
-  </a>
-  <button id="confirm-support">J’ai soutenu ! Débloquer le VIP</button>
-</section>
+  <section id="story">
+    <h1>Histoire du jour</h1>
+    <div class="video-container">
+      <!-- Remplace cette source par ta vraie vidéo -->
+      <video src="https://www.w3schools.com/html/mov_bbb.mp4" controls autoplay loop muted></video>
+    </div>
+    <div class="story-text">
+      <p>Un soir, j’ai reçu un message de mon téléphone… mais c’était mon propre numéro qui m’envoyait : « Ne regarde pas derrière toi. »</p>
+      <p><em>Qui peut bien envoyer un message aussi flippant ?</em></p>
+    </div>
+  </section>
 
-<section class="vip-content" id="vip-content">
-  <h2>Contenu VIP - Histoires et Quiz supplémentaires</h2>
-  <p><strong>Histoire VIP :</strong> Dans la forêt, les arbres chuchotent des secrets qu’aucun humain ne doit entendre.</p>
+  <section id="quiz" class="quiz-section">
+    <p><strong>Quiz Gratuit du jour :</strong> Combien y a-t-il de lettres dans le mot "fantôme" ?</p>
+    <button onclick="checkAnswer(true)">6</button>
+    <button onclick="checkAnswer(false)">5</button>
+    <button onclick="checkAnswer(false)">7</button>
+    <div id="quiz-msg" class="countdown"></div>
+  </section>
 
-  <div class="quiz">
-    <h3>Quiz VIP</h3>
-    <p>Quel est le cri que l’on entend dans la maison abandonnée ?</p>
-    <button onclick="checkAnswer(true, 'VIP')">Un hurlement aigu</button>
-    <button onclick="checkAnswer(false, 'VIP')">Un rire d’enfant</button>
-    <button onclick="checkAnswer(false, 'VIP')">Un murmure doux</button>
-  </div>
-</section>
+  <section id="vip" class="vip-section">
+    <h2>Contenu VIP - débloquez tout !</h2>
+    <p>Accès à des histoires inédites, quiz supplémentaires et bien plus encore.</p>
+    <button id="btn-paypal" class="vip-btn">Devenir VIP - 0,99 € (paiement unique)</button>
+    <div id="vip-msg" class="countdown"></div>
+  </section>
+
+</main>
 
 <footer>
-  <a href="https://www.tiktok.com/@by_bk69" target="_blank" rel="noopener noreferrer" style="color:#f39c12; font-weight:bold;">
-    Suivez-moi sur TikTok
-  </a>
+  <p>Suivez-moi sur <a href="https://www.tiktok.com/@by_bk69" target="_blank" rel="noopener">TikTok</a></p>
 </footer>
 
-<audio id="background-music" loop autoplay>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_15d0aa91bc.mp3?filename=dark-ambient-11031.mp3" type="audio/mpeg">
-  Ton navigateur ne supporte pas l'audio.
+<audio id="bg-music" loop autoplay>
+  <source src="https://cdn.pixabay.com/download/audio/2022/04/22/audio_463eac8ccf.mp3?filename=calm-mystery-ambient-10890.mp3" type="audio/mpeg" />
 </audio>
 
 <script>
-  const vipKey = 'vip_access';
-  const vipContent = document.getElementById('vip-content');
-  const confirmBtn = document.getElementById('confirm-support');
-  const countdownEl = document.getElementById('countdown');
-  const quizButtons = document.querySelectorAll('.quiz button');
-
-  // Gestion VIP
-  function updateVip() {
-    if(localStorage.getItem(vipKey) === 'true') {
-      vipContent.classList.add('active');
-      confirmBtn.style.display = 'none';
-    }
-  }
-
-  confirmBtn.addEventListener('click', () => {
-    localStorage.setItem(vipKey, 'true');
-    updateVip();
-    alert('Merci pour ton soutien ! Contenu VIP débloqué.');
+  // MENU TOGGLE
+  const menuBtn = document.getElementById('menu-btn');
+  const navMenu = document.getElementById('nav-menu');
+  menuBtn.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
   });
 
-  updateVip();
+  // QUIZ - réponse
+  const quizMsg = document.getElementById('quiz-msg');
+  let quizDone = localStorage.getItem('quizDone');
+  const oneDayMs = 24 * 60 * 60 * 1000;
+  let quizCountdownInterval;
 
-  // Gestion quiz gratuit 24h cooldown
-  const cooldownKey = 'lastFreeQuizTime';
-  const cooldownTime = 24 * 60 * 60 * 1000; // 24h en ms
-
-  function disableQuizButtons() {
-    quizButtons.forEach(btn => btn.disabled = true);
-  }
-
-  function enableQuizButtons() {
-    quizButtons.forEach(btn => btn.disabled = false);
-  }
-
-  function updateCountdown(remaining) {
-    const h = Math.floor(remaining / 3600000);
-    const m = Math.floor((remaining % 3600000) / 60000);
-    const s = Math.floor((remaining % 60000) / 1000);
-    countdownEl.textContent = `Prochain quiz gratuit dans ${h}h ${m}m ${s}s.`;
-  }
-
-  function checkCooldown() {
-    const lastTime = localStorage.getItem(cooldownKey);
-    if(!lastTime) {
-      enableQuizButtons();
-      countdownEl.textContent = 'Tu peux faire ce quiz une fois toutes les 24h.';
+  function checkAnswer(correct) {
+    if(quizDone){
+      alert("Quiz gratuit déjà fait aujourd'hui. Reviens demain !");
       return;
     }
-    const now = Date.now();
-    const elapsed = now - lastTime;
-    if(elapsed >= cooldownTime) {
-      enableQuizButtons();
-      countdownEl.textContent = 'Tu peux faire ce quiz une fois toutes les 24h.';
+    if(correct){
+      alert("Bonne réponse !");
     } else {
-      disableQuizButtons();
-      updateCountdown(cooldownTime - elapsed);
-      const interval = setInterval(() => {
-        const now = Date.now();
-        const elapsed = now - lastTime;
-        if(elapsed >= cooldownTime) {
-          clearInterval(interval);
-          enableQuizButtons();
-          countdownEl.textContent = 'Tu peux faire ce quiz une fois toutes les 24h.';
-        } else {
-          updateCountdown(cooldownTime - elapsed);
-        }
-      }, 1000);
+      alert("Mauvaise réponse, essaie encore !");
+      return;
     }
+    quizDone = Date.now();
+    localStorage.setItem('quizDone', quizDone);
+    startQuizCountdown(oneDayMs);
   }
 
-  // Vérification réponse quiz
-  function checkAnswer(isCorrect, level) {
-    alert(isCorrect ? `Bonne réponse (${level}) !` : `Mauvaise réponse (${level}), essaie encore !`);
-    if(level === 'Gratuit' && isCorrect) {
-      localStorage.setItem(cooldownKey, Date.now());
-      checkCooldown();
-    }
+  // Décompte quiz gratuit
+  function startQuizCountdown(ms){
+    clearInterval(quizCountdownInterval);
+    let remaining = ms;
+    updateQuizCountdown(remaining);
+    quizCountdownInterval = setInterval(() => {
+      remaining -= 1000;
+      if(remaining <= 0){
+        clearInterval(quizCountdownInterval);
+        quizMsg.textContent = "Quiz gratuit débloqué, bonne chance !";
+        localStorage.removeItem('quizDone');
+      } else {
+        updateQuizCountdown(remaining);
+      }
+    }, 1000);
   }
-
-  checkCooldown();
-</script>
-
-</body>
-</html>
+  function updateQuizCountdown(ms){
+    const h = Math.floor(ms/3600000);
+    const m = Math.floor((ms%3600000)/60000);
+    const s = Math.floor((ms%60000)/1000);
+    quizMsg.textContent = `Prochain quiz gratuit dans ${h}h ${m}m ${s}s`;
+  }
+  if(quizDone){
