@@ -1,86 +1,136 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>1jour,1histoires</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #eee;
-      margin: 0;
-      padding: 20px;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    h1 {
-      font-size: 2em;
-      color: #f04;
-    }
-    .video {
-      margin-bottom: 20px;
-      border: 2px solid #f04;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    iframe {
-      width: 100%;
-      height: 300px;
-      border: none;
-    }
-    .vip {
-      background: #222;
-      padding: 15px;
-      border-radius: 8px;
-      margin-top: 30px;
-      text-align: center;
-    }
-    .btn {
-      background: #f04;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1em;
-      margin-top: 10px;
-      display: inline-block;
-      text-decoration: none;
-    }
-    a {
-      color: #f04;
-      text-decoration: none;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>1jour,1histoires - Prototype</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .hidden { display: none; }
+  .active-tab { border-b-4 solid #f04; font-weight: 700; }
+</style>
 </head>
-<body>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen font-sans">
 
-<header>
-  <h1>Bienvenue dans 1jour,1histoires</h1>
-  <p>Chaque jour, une micro-histoire absurde, flippante ou étrange.<br>À lire, à écouter… ou à craindre.</p>
+<header class="text-center py-8 bg-gradient-to-r from-primary to-pink-500 text-white font-bold text-3xl">
+  1jour,1histoires - Prototype
 </header>
 
-<section>
-  <h2>Vidéo gratuite du jour</h2>
-  <div class="video">
-    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-  </div>
-  <p><a href="https://www.tiktok.com/@by_bk69" target="_blank">Voir sur TikTok</a></p>
-</section>
+<!-- Tabs -->
+<nav class="flex justify-center gap-8 mt-6 border-b border-gray-300 dark:border-gray-700 max-w-xl mx-auto">
+  <button id="tab-lecture" class="py-3 px-6 border-b-4 border-transparent hover:border-primary transition active-tab">Lecture</button>
+  <button id="tab-quiz" class="py-3 px-6 border-b-4 border-transparent hover:border-primary transition">Quiz</button>
+  <button id="tab-vip" class="py-3 px-6 border-b-4 border-transparent hover:border-primary transition">Espace VIP</button>
+</nav>
 
-<section class="vip">
-  <h2>Espace VIP (payant)</h2>
-  <p>Contenu exclusif à débloquer prochainement.</p>
-  <a href="#" class="btn">Débloquer l’accès VIP - 0,99 €/mois</a>
-</section>
+<main class="max-w-xl mx-auto p-6">
 
-<footer style="margin-top:40px; text-align:center; font-size:0.8em; color:#666;">
-  Merci pour votre soutien !<br>
-  <a href="https://www.tiktok.com/@by_bk69" target="_blank">Suivez-moi sur TikTok</a>
-</footer>
+  <!-- Lecture -->
+  <section id="content-lecture" class="mt-6">
+    <h2 class="text-2xl font-semibold mb-4">Histoire du jour</h2>
+    <article class="mb-4 text-lg leading-relaxed">
+      <p>Il faisait nuit noire, et pourtant cette voix chuchotait toujours dans son oreille...</p>
+      <p>À suivre demain !</p>
+    </article>
+    <audio controls class="w-full rounded shadow-md" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+  </section>
+
+  <!-- Quiz -->
+  <section id="content-quiz" class="hidden mt-6">
+    <h2 class="text-2xl font-semibold mb-4">Quiz de l'histoire</h2>
+    <form id="quiz-form" class="space-y-6 text-lg">
+      <div>
+        <p>1. Quelle heure était-il dans l'histoire ?</p>
+        <label><input type="radio" name="q1" value="a" /> Nuit noire</label><br />
+        <label><input type="radio" name="q1" value="b" /> Midi</label><br />
+        <label><input type="radio" name="q1" value="c" /> Matin</label>
+      </div>
+      <div>
+        <p>2. Quel sentiment dominait ?</p>
+        <label><input type="radio" name="q2" value="a" /> Joie</label><br />
+        <label><input type="radio" name="q2" value="b" /> Peur</label><br />
+        <label><input type="radio" name="q2" value="c" /> Tristesse</label>
+      </div>
+      <div>
+        <p>3. Que faisait la voix ?</p>
+        <label><input type="radio" name="q3" value="a" /> Chantait</label><br />
+        <label><input type="radio" name="q3" value="b" /> Chuchotait</label><br />
+        <label><input type="radio" name="q3" value="c" /> Rien</label>
+      </div>
+      <button type="submit" class="mt-4 bg-primary text-white px-6 py-3 rounded hover:bg-pink-500 transition">Valider</button>
+    </form>
+    <div id="quiz-result" class="mt-4 font-semibold"></div>
+  </section>
+
+  <!-- VIP -->
+  <section id="content-vip" class="hidden mt-6 text-center">
+    <h2 class="text-2xl font-semibold mb-4">Espace VIP</h2>
+    <p class="mb-4">Débloquez un accès illimité à toutes les histoires premium et contenus exclusifs.</p>
+    <button id="btn-pay" class="bg-gradient-to-r from-primary to-pink-500 text-white font-bold px-8 py-4 rounded shadow hover:from-pink-500 hover:to-primary transition">S'abonner à 0,99 €/mois</button>
+    <div id="pay-message" class="mt-6 font-semibold text-green-600"></div>
+  </section>
+
+</main>
+
+<script>
+  const tabs = {
+    lecture: document.getElementById('tab-lecture'),
+    quiz: document.getElementById('tab-quiz'),
+    vip: document.getElementById('tab-vip')
+  };
+  const contents = {
+    lecture: document.getElementById('content-lecture'),
+    quiz: document.getElementById('content-quiz'),
+    vip: document.getElementById('content-vip')
+  };
+
+  function activateTab(name) {
+    Object.keys(tabs).forEach(key => {
+      if (key === name) {
+        tabs[key].classList.add('active-tab');
+        contents[key].classList.remove('hidden');
+      } else {
+        tabs[key].classList.remove('active-tab');
+        contents[key].classList.add('hidden');
+      }
+    });
+  }
+
+  tabs.lecture.addEventListener('click', () => activateTab('lecture'));
+  tabs.quiz.addEventListener('click', () => activateTab('quiz'));
+  tabs.vip.addEventListener('click', () => activateTab('vip'));
+
+  // Quiz logic
+  const quizForm = document.getElementById('quiz-form');
+  const quizResult = document.getElementById('quiz-result');
+
+  quizForm.addEventListener('submit', e => {
+    e.preventDefault();
+    let score = 0;
+    const answers = {
+      q1: 'a',
+      q2: 'b',
+      q3: 'b'
+    };
+    const formData = new FormData(quizForm);
+    for (const [key, value] of formData.entries()) {
+      if (answers[key] === value) score++;
+    }
+    quizResult.textContent = `Vous avez ${score} / 3 bonnes réponses.`;
+  });
+
+  // Payment button simulation
+  const payBtn = document.getElementById('btn-pay');
+  const payMsg = document.getElementById('pay-message');
+  payBtn.addEventListener('click', () => {
+    payMsg.textContent = "Merci pour votre abonnement VIP ! 🎉 Accès débloqué.";
+    payBtn.disabled = true;
+    payBtn.classList.add('opacity-50', 'cursor-not-allowed');
+  });
+
+  // Default tab
+  activateTab('lecture');
+</script>
 
 </body>
 </html>
