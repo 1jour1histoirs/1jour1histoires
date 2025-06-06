@@ -1,136 +1,189 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>1jour,1histoires - Prototype</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-  .hidden { display: none; }
-  .active-tab { border-b-4 solid #f04; font-weight: 700; }
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>1jour,1histoires</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#f04',
+                        secondary: '#5D5CDE',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                },
+            },
+            darkMode: 'class',
+        };
+    </script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    />
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .pulse-hover:hover {
+            animation: pulse 0.3s ease-in-out;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #f04, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .glass-effect {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .video-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                45deg,
+                transparent 49%,
+                rgba(255, 0, 68, 0.1) 50%,
+                transparent 51%
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .audio-player {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            margin-top: 1rem;
+        }
+
+        .countdown {
+            font-weight: 600;
+            color: #f04;
+        }
+    </style>
 </head>
-<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen font-sans">
+<body
+    class="min-h-screen transition-colors duration-300 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
+>
+    <!-- Background audio -->
+    <audio id="bg-music" loop autoplay muted>
+        <source
+            src="https://cdn.pixabay.com/download/audio/2021/10/12/audio_0a0803d75a.mp3?filename=calm-night-ambient-12070.mp3"
+            type="audio/mpeg"
+        />
+        Votre navigateur ne supporte pas l'élément audio.
+    </audio>
 
-<header class="text-center py-8 bg-gradient-to-r from-primary to-pink-500 text-white font-bold text-3xl">
-  1jour,1histoires - Prototype
-</header>
+    <!-- Header -->
+    <header class="text-center py-12 px-4 fade-in-up">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 gradient-text">
+                1jour,1histoires
+            </h1>
+            <p
+                class="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed"
+            >
+                Chaque jour, une micro-histoire absurde, flippante ou étrange.<br />
+                <span class="font-medium text-primary"
+                    >À lire, à écouter… ou à craindre.</span
+                >
+            </p>
+        </div>
+    </header>
 
-<!-- Tabs -->
-<nav class="flex justify-center gap-8 mt-6 border-b border-gray-300 dark:border-gray-700 max-w-xl mx-auto">
-  <button id="tab-lecture" class="py-3 px-6 border-b-4 border-transparent hover:border-primary transition active-tab">Lecture</button>
-  <button id="tab-quiz" class="py-3 px-6 border-b-4 border-transparent hover:border-primary transition">Quiz</button>
-  <button id="tab-vip" class="py-3 px-6 border-b-4 border-transparent hover:border-primary transition">Espace VIP</button>
-</nav>
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 space-y-12">
+        <!-- Vidéo Section -->
+        <section class="fade-in-up" style="animation-delay: 0.2s">
+            <div
+                class="glass-effect rounded-2xl p-6 border border-gray-200 dark:border-gray-700"
+            >
+                <h2
+                    class="text-2xl md:text-3xl font-semibold mb-6 text-center"
+                >
+                    <span
+                        class="bg-gradient-to-r from-primary to-pink-500 bg-clip-text text-transparent"
+                        >Vidéo gratuite du jour</span
+                    >
+                </h2>
 
-<main class="max-w-xl mx-auto p-6">
+                <div
+                    class="video-container bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden border-2 border-primary/20 shadow-lg hover:shadow-2xl transition-all duration-300"
+                >
+                    <iframe
+                        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                        class="w-full h-64 md:h-80 lg:h-96"
+                        allowfullscreen
+                        loading="lazy"
+                    ></iframe>
+                </div>
 
-  <!-- Lecture -->
-  <section id="content-lecture" class="mt-6">
-    <h2 class="text-2xl font-semibold mb-4">Histoire du jour</h2>
-    <article class="mb-4 text-lg leading-relaxed">
-      <p>Il faisait nuit noire, et pourtant cette voix chuchotait toujours dans son oreille...</p>
-      <p>À suivre demain !</p>
-    </article>
-    <audio controls class="w-full rounded shadow-md" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-  </section>
+                <div class="mt-6 text-center">
+                    <a
+                        href="https://www.tiktok.com/@by_bk69"
+                        target="_blank"
+                        class="inline-flex items-center gap-2 text-primary hover:text-pink-500 transition-colors duration-200 font-medium"
+                    >
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43V7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.43z"
+                            />
+                        </svg>
+                        Voir sur TikTok
+                    </a>
+                </div>
+            </div>
+        </section>
 
-  <!-- Quiz -->
-  <section id="content-quiz" class="hidden mt-6">
-    <h2 class="text-2xl font-semibold mb-4">Quiz de l'histoire</h2>
-    <form id="quiz-form" class="space-y-6 text-lg">
-      <div>
-        <p>1. Quelle heure était-il dans l'histoire ?</p>
-        <label><input type="radio" name="q1" value="a" /> Nuit noire</label><br />
-        <label><input type="radio" name="q1" value="b" /> Midi</label><br />
-        <label><input type="radio" name="q1" value="c" /> Matin</label>
-      </div>
-      <div>
-        <p>2. Quel sentiment dominait ?</p>
-        <label><input type="radio" name="q2" value="a" /> Joie</label><br />
-        <label><input type="radio" name="q2" value="b" /> Peur</label><br />
-        <label><input type="radio" name="q2" value="c" /> Tristesse</label>
-      </div>
-      <div>
-        <p>3. Que faisait la voix ?</p>
-        <label><input type="radio" name="q3" value="a" /> Chantait</label><br />
-        <label><input type="radio" name="q3" value="b" /> Chuchotait</label><br />
-        <label><input type="radio" name="q3" value="c" /> Rien</label>
-      </div>
-      <button type="submit" class="mt-4 bg-primary text-white px-6 py-3 rounded hover:bg-pink-500 transition">Valider</button>
-    </form>
-    <div id="quiz-result" class="mt-4 font-semibold"></div>
-  </section>
-
-  <!-- VIP -->
-  <section id="content-vip" class="hidden mt-6 text-center">
-    <h2 class="text-2xl font-semibold mb-4">Espace VIP</h2>
-    <p class="mb-4">Débloquez un accès illimité à toutes les histoires premium et contenus exclusifs.</p>
-    <button id="btn-pay" class="bg-gradient-to-r from-primary to-pink-500 text-white font-bold px-8 py-4 rounded shadow hover:from-pink-500 hover:to-primary transition">S'abonner à 0,99 €/mois</button>
-    <div id="pay-message" class="mt-6 font-semibold text-green-600"></div>
-  </section>
-
-</main>
-
-<script>
-  const tabs = {
-    lecture: document.getElementById('tab-lecture'),
-    quiz: document.getElementById('tab-quiz'),
-    vip: document.getElementById('tab-vip')
-  };
-  const contents = {
-    lecture: document.getElementById('content-lecture'),
-    quiz: document.getElementById('content-quiz'),
-    vip: document.getElementById('content-vip')
-  };
-
-  function activateTab(name) {
-    Object.keys(tabs).forEach(key => {
-      if (key === name) {
-        tabs[key].classList.add('active-tab');
-        contents[key].classList.remove('hidden');
-      } else {
-        tabs[key].classList.remove('active-tab');
-        contents[key].classList.add('hidden');
-      }
-    });
-  }
-
-  tabs.lecture.addEventListener('click', () => activateTab('lecture'));
-  tabs.quiz.addEventListener('click', () => activateTab('quiz'));
-  tabs.vip.addEventListener('click', () => activateTab('vip'));
-
-  // Quiz logic
-  const quizForm = document.getElementById('quiz-form');
-  const quizResult = document.getElementById('quiz-result');
-
-  quizForm.addEventListener('submit', e => {
-    e.preventDefault();
-    let score = 0;
-    const answers = {
-      q1: 'a',
-      q2: 'b',
-      q3: 'b'
-    };
-    const formData = new FormData(quizForm);
-    for (const [key, value] of formData.entries()) {
-      if (answers[key] === value) score++;
-    }
-    quizResult.textContent = `Vous avez ${score} / 3 bonnes réponses.`;
-  });
-
-  // Payment button simulation
-  const payBtn = document.getElementById('btn-pay');
-  const payMsg = document.getElementById('pay-message');
-  payBtn.addEventListener('click', () => {
-    payMsg.textContent = "Merci pour votre abonnement VIP ! 🎉 Accès débloqué.";
-    payBtn.disabled = true;
-    payBtn.classList.add('opacity-50', 'cursor-not-allowed');
-  });
-
-  // Default tab
-  activateTab('lecture');
-</script>
-
-</body>
-</html>
+        <!-- Histoire du jour -->
+        <section
+            class="fade-in-up glass-effect rounded-2xl p-6 border border-gray-200 dark:border-gray-700"
+            style="animation-delay: 0.3s"
+        >
+            <h2
+                class="text-2xl md:text-3xl font-semibold mb-4 text-center gradient-text"
+            >
