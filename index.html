@@ -5,257 +5,584 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>1jour,1histoires - VIP & Gratuit</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-  body {
-    margin:0; padding:0;
-    font-family: 'Inter', sans-serif;
-    background: linear-gradient(90deg, #1a1a1a 50%, #4b1369 50%);
-    color: #eee;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  header {
-    background: #4b1369;
-    color: #fff;
-    padding: 1rem 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .menu-btn {
-    font-size: 1.8rem;
-    cursor: pointer;
-    user-select: none;
-  }
-  nav {
-    position: fixed;
-    top: 0; left: -250px;
-    width: 230px;
-    height: 100vh;
-    background: #2c0d4d;
-    padding: 2rem 1rem;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.7);
-    transition: left 0.3s ease;
-    z-index: 1000;
-  }
-  nav.active {
-    left: 0;
-  }
-  nav a {
-    display: block;
-    color: #ddd;
-    font-weight: 600;
-    margin: 1rem 0;
-    text-decoration: none;
-    font-size: 1.1rem;
-  }
-  nav a:hover {
-    color: #f39c12;
-  }
-  main {
-    flex: 1;
-    max-width: 700px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    text-align: center;
-  }
-  h1 {
-    font-weight: 700;
-    font-size: 2.4rem;
-    margin-bottom: 0.2rem;
-  }
-  .subtitle {
-    margin-bottom: 1.5rem;
-    font-style: italic;
-    color: #bbb;
-  }
-  .video-container {
-    margin-bottom: 1.5rem;
-  }
-  video {
-    max-width: 100%;
-    border-radius: 12px;
-    box-shadow: 0 0 20px #822ea3;
-  }
-  .story-text {
-    background: rgba(255 255 255 / 0.05);
-    padding: 1rem 1.5rem;
-    border-radius: 12px;
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-    line-height: 1.4;
-  }
-  .quiz-section {
-    background: #350b5a;
-    padding: 1.2rem;
-    border-radius: 12px;
-    margin-bottom: 2rem;
-  }
-  .quiz-section p {
-    margin-bottom: 1rem;
-    font-weight: 600;
-  }
-  .quiz-section button {
-    background: #f39c12;
-    border: none;
-    color: #1a1a1a;
-    font-weight: 700;
-    padding: 0.5rem 1.2rem;
-    margin: 0.3rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.25s ease;
-  }
-  .quiz-section button:hover {
-    background: #d48806;
-  }
-  .vip-section {
-    background: #6a2a8f;
-    padding: 1rem;
-    border-radius: 12px;
-    color: #eee;
-  }
-  .vip-btn {
-    background: #f1c40f;
-    border: none;
-    padding: 0.8rem 2rem;
-    font-weight: 700;
-    border-radius: 12px;
-    color: #1a1a1a;
-    cursor: pointer;
-    margin-top: 1rem;
-    transition: background-color 0.3s ease;
-  }
-  .vip-btn:hover {
-    background: #d4ac0d;
-  }
-  footer {
-    text-align: center;
-    padding: 1rem;
-    background: #2b0b5d;
-    color: #ddd;
-    font-weight: 600;
-  }
-  footer a {
-    color: #f39c12;
-    font-weight: 700;
-    text-decoration: none;
-  }
-  footer a:hover {
-    text-decoration: underline;
-  }
-  .countdown {
-    margin-top: 1rem;
-    font-weight: 600;
-    font-size: 1.1rem;
-    color: #f39c12;
-  }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  
+  :root {
+    --primary-color: #5D5CDE;
+    --primary-hover: #4948C7;
+    --secondary-color: #f39c12;
+    --secondary-hover: #d48806;
+    
+    /* Light mode */
+    --bg-color: #FFFFFF;
+    --bg-secondary: #F8F9FA;
+    --bg-card: #FFFFFF;
+    --text-primary: #1A1A1A;
+    --text-secondary: #6B7280;
+    --border-color: #E5E7EB;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --nav-bg: #F8F9FA;
+    --header-bg: var(--primary-color);
+  }
+  
+  .dark {
+    --bg-color: #181818;
+    --bg-secondary: #242424;
+    --bg-card: #2A2A2A;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B3B3B3;
+    --border-color: #404040;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --nav-bg: #242424;
+    --header-bg: #4b1369;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-color);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    line-height: 1.6;
+  }
+
+  header {
+    background: var(--header-bg);
+    color: #fff;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 10px var(--shadow-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .menu-btn {
+    font-size: 1.8rem;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.2s ease;
+  }
+
+  .menu-btn:hover {
+    transform: scale(1.1);
+  }
+
+  .theme-toggle {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+  }
+
+  .theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(180deg);
+  }
+
+  nav {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 260px;
+    height: 100vh;
+    background: var(--nav-bg);
+    padding: 2rem 1rem;
+    box-shadow: 2px 0 20px var(--shadow-color);
+    transition: left 0.3s ease;
+    z-index: 1000;
+    border-right: 1px solid var(--border-color);
+  }
+
+  nav.active {
+    left: 0;
+  }
+
+  .nav-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .nav-header h2 {
+    margin: 0;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    color: var(--text-primary);
+    font-weight: 500;
+    margin: 0.5rem 0;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  nav a:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateX(5px);
+  }
+
+  .nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+  }
+
+  .nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  main {
+    flex: 1;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    width: 100%;
+  }
+
+  .hero-section {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: var(--bg-card);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px var(--shadow-color);
+    border: 1px solid var(--border-color);
+  }
+
+  h1 {
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+  }
+
+  .section-card {
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px var(--shadow-color);
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .section-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px var(--shadow-color);
+  }
+
+  .video-container {
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+
+  video {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(93, 92, 222, 0.3);
+  }
+
+  .story-text {
+    background: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    border-left: 4px solid var(--primary-color);
+  }
+
+  .quiz-section {
+    background: linear-gradient(135deg, var(--primary-color), #6366F1);
+    padding: 2rem;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .quiz-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: translateX(-100%);
+    animation: shimmer 3s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .quiz-section h3 {
+    margin-top: 0;
+    font-weight: 600;
+    font-size: 1.3rem;
+  }
+
+  .quiz-section p {
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    font-size: 1.1rem;
+  }
+
+  .quiz-buttons {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .quiz-section button {
+    background: white;
+    border: none;
+    color: var(--primary-color);
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    min-width: 80px;
+  }
+
+  .quiz-section button:hover {
+    background: var(--secondary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+
+  .vip-section {
+    background: linear-gradient(135deg, #6366F1, var(--secondary-color));
+    padding: 2rem;
+    border-radius: 16px;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vip-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(transparent, rgba(255,255,255,0.1), transparent, rgba(255,255,255,0.1), transparent);
+    animation: rotate 4s linear infinite;
+  }
+
+  @keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .vip-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .vip-section h2 {
+    margin-top: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+  }
+
+  .vip-btn {
+    background: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    font-weight: 700;
+    border-radius: 30px;
+    color: var(--primary-color);
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+
+  .vip-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  }
+
+  footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    font-weight: 500;
+    border-top: 1px solid var(--border-color);
+  }
+
+  footer a {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  footer a:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+  }
+
+  .countdown {
+    margin-top: 1rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: white;
+    padding: 0.8rem;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    header {
+      padding: 1rem;
+    }
+    
+    h1 {
+      font-size: 2rem;
+    }
+    
+    main {
+      margin: 1rem auto;
+      padding: 0 0.5rem;
+    }
+    
+    .section-card {
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .quiz-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .quiz-section button {
+      width: 100%;
+      max-width: 200px;
+    }
+  }
+
+  /* Dark mode detection */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-color: #181818;
+      --bg-secondary: #242424;
+      --bg-card: #2A2A2A;
+      --text-primary: #FFFFFF;
+      --text-secondary: #B3B3B3;
+      --border-color: #404040;
+      --shadow-color: rgba(0, 0, 0, 0.3);
+      --nav-bg: #242424;
+      --header-bg: #4b1369;
+    }
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="menu-btn" id="menu-btn">&#9776;</div>
-  <h1>1jour,1histoires</h1>
-  <div style="width:30px;"></div>
+  <div class="header-left">
+    <div class="menu-btn" id="menu-btn">&#9776;</div>
+    <h1 style="margin: 0; font-size: 1.5rem; background: none; -webkit-text-fill-color: inherit;">1jour,1histoires</h1>
+  </div>
+  <button class="theme-toggle" id="theme-toggle" title="Changer de thème">
+    <span id="theme-icon">🌙</span>
+  </button>
 </header>
 
+<div class="nav-overlay" id="nav-overlay"></div>
 <nav id="nav-menu">
-  <a href="#story">Histoire du jour</a>
-  <a href="#quiz">Quiz gratuit</a>
-  <a href="#vip">VIP & Plus</a>
+  <div class="nav-header">
+    <h2>Menu</h2>
+  </div>
+  <a href="#story">📖 Histoire du jour</a>
+  <a href="#quiz">🎯 Quiz gratuit</a>
+  <a href="#vip">⭐ VIP & Plus</a>
 </nav>
 
 <main>
+  <div class="hero-section">
+    <h1>Histoires Mystérieuses</h1>
+    <p class="subtitle">Une nouvelle histoire chaque jour pour vous faire frissonner</p>
+  </div>
 
-  <section id="story">
-    <h1>Histoire du jour</h1>
-    <div class="video-container">
-      <!-- Remplace cette source par ta vraie vidéo -->
-      <video src="https://www.w3schools.com/html/mov_bbb.mp4" controls autoplay loop muted></video>
-    </div>
-    <div class="story-text">
-      <p>Un soir, j’ai reçu un message de mon téléphone… mais c’était mon propre numéro qui m’envoyait : « Ne regarde pas derrière toi. »</p>
-      <p><em>Qui peut bien envoyer un message aussi flippant ?</em></p>
-    </div>
-  </section>
+  <section id="story" class="section-card">
+    <h2>📖 Histoire du jour</h2>
+    <div class="video-container">
+      <video src="https://www.w3schools.com/html/mov_bbb.mp4" controls autoplay loop muted></video>
+    </div>
+    <div class="story-text">
+      <p>Un soir, j'ai reçu un message de mon téléphone… mais c'était mon propre numéro qui m'envoyait : « Ne regarde pas derrière toi. »</p>
+      <p><em>Qui peut bien envoyer un message aussi flippant ?</em></p>
+    </div>
+  </section>
 
-  <section id="quiz" class="quiz-section">
-    <p><strong>Quiz Gratuit du jour :</strong> Combien y a-t-il de lettres dans le mot "fantôme" ?</p>
-    <button onclick="checkAnswer(true)">6</button>
-    <button onclick="checkAnswer(false)">5</button>
-    <button onclick="checkAnswer(false)">7</button>
-    <div id="quiz-msg" class="countdown"></div>
-  </section>
+  <section id="quiz" class="quiz-section">
+    <div class="vip-content">
+      <h3>🎯 Quiz Gratuit du jour</h3>
+      <p>Combien y a-t-il de lettres dans le mot "fantôme" ?</p>
+      <div class="quiz-buttons">
+        <button onclick="checkAnswer(false)">5</button>
+        <button onclick="checkAnswer(true)">7</button>
+        <button onclick="checkAnswer(false)">8</button>
+      </div>
+      <div id="quiz-msg" class="countdown" style="display: none;"></div>
+    </div>
+  </section>
 
-  <section id="vip" class="vip-section">
-    <h2>Contenu VIP - débloquez tout !</h2>
-    <p>Accès à des histoires inédites, quiz supplémentaires et bien plus encore.</p>
-    <button id="btn-paypal" class="vip-btn">Devenir VIP - 0,99 € (paiement unique)</button>
-    <div id="vip-msg" class="countdown"></div>
-  </section>
+  <section id="vip" class="vip-section">
+    <div class="vip-content">
+      <h2>⭐ Contenu VIP - Débloquez tout !</h2>
+      <p>Accès à des histoires inédites, quiz supplémentaires et bien plus encore.</p>
+      <button id="btn-paypal" class="vip-btn">Devenir VIP - 0,99 € (paiement unique)</button>
+      <div id="vip-msg" class="countdown" style="display: none;"></div>
+    </div>
+  </section>
 
 </main>
 
 <footer>
-  <p>Suivez-moi sur <a href="https://www.tiktok.com/@by_bk69" target="_blank" rel="noopener">TikTok</a></p>
+  <p>Suivez-moi sur <a href="https://www.tiktok.com/@by_bk69" target="_blank" rel="noopener">TikTok @by_bk69</a></p>
+  <p style="margin-top: 0.5rem; font-size: 0.9rem;">© 2024 1jour,1histoires - Tous droits réservés</p>
 </footer>
 
-<audio id="bg-music" loop autoplay>
-  <source src="https://cdn.pixabay.com/download/audio/2022/04/22/audio_463eac8ccf.mp3?filename=calm-mystery-ambient-10890.mp3" type="audio/mpeg" />
+<audio id="bg-music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/04/22/audio_463eac8ccf.mp3?filename=calm-mystery-ambient-10890.mp3" type="audio/mpeg" />
 </audio>
 
 <script>
-  // MENU TOGGLE
-  const menuBtn = document.getElementById('menu-btn');
-  const navMenu = document.getElementById('nav-menu');
-  menuBtn.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-  });
+  // Theme management
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+  const html = document.documentElement;
 
-  // QUIZ - réponse
-  const quizMsg = document.getElementById('quiz-msg');
-  let quizDone = localStorage.getItem('quizDone');
-  const oneDayMs = 24 * 60 * 60 * 1000;
-  let quizCountdownInterval;
+  // Check system preference and set initial theme
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    html.classList.add('dark');
+    themeIcon.textContent = '☀️';
+  }
 
-  function checkAnswer(correct) {
-    if(quizDone){
-      alert("Quiz gratuit déjà fait aujourd'hui. Reviens demain !");
-      return;
-    }
-    if(correct){
-      alert("Bonne réponse !");
-    } else {
-      alert("Mauvaise réponse, essaie encore !");
-      return;
-    }
-    quizDone = Date.now();
-    localStorage.setItem('quizDone', quizDone);
-    startQuizCountdown(oneDayMs);
-  }
+  // Listen for system theme changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+    if (event.matches) {
+      html.classList.add('dark');
+      themeIcon.textContent = '☀️';
+    } else {
+      html.classList.remove('dark');
+      themeIcon.textContent = '🌙';
+    }
+  });
 
-  // Décompte quiz gratuit
-  function startQuizCountdown(ms){
-    clearInterval(quizCountdownInterval);
-    let remaining = ms;
-    updateQuizCountdown(remaining);
-    quizCountdownInterval = setInterval(() => {
-      remaining -= 1000;
-      if(remaining <= 0){
-        clearInterval(quizCountdownInterval);
-        quizMsg.textContent = "Quiz gratuit débloqué, bonne chance !";
-        localStorage.removeItem('quizDone');
-      } else {
-        updateQuizCountdown(remaining);
-      }
-    }, 1000);
-  }
-  function updateQuizCountdown(ms){
-    const h = Math.floor(ms/3600000);
-    const m = Math.floor((ms%3600000)/60000);
-    const s = Math.floor((ms%60000)/1000);
-    quizMsg.textContent = `Prochain quiz gratuit dans ${h}h ${m}m ${s}s`;
-  }
-  if(quizDone){
+  // Theme toggle functionality
+  themeToggle.addEventListener('click', () => {
+    html.classList.toggle('dark');
+    themeIcon.textContent = html.classList.contains('dark') ? '☀️' : '🌙';
+  });
+
+  // MENU TOGGLE
+  const menuBtn = document.getElementById('menu-btn');
+  const navMenu = document.getElementById('nav-menu');
+  const navOverlay = document.getElementById('nav-overlay');
+  
+  function toggleMenu() {
+    navMenu.classList.toggle('active');
+    navOverlay.classList.toggle('active');
+  }
+  
+  menuBtn.addEventListener('click', toggleMenu);
+  navOverlay.addEventListener('click', toggleMenu);
+
+  // Close menu when clicking on nav links
+  document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('active');
+      navOverlay.classList.remove('active');
+    });
+  });
+
+  // QUIZ - réponse
+  const quizMsg = document.getElementById('quiz-msg');
+  let quizDone = localStorage.getItem('quizDone');
+  const oneDayMs = 24 * 60 * 60 * 1000;
+  let quizCountdownInterval;
+
+  function checkAnswer(correct) {
+    if(quizDone && (Date.now() - parseInt(quizDone)) < oneDayMs){
+      alert("Quiz gratuit déjà fait aujourd'hui. Reviens demain !");
+      return;
+    }
+    if(correct){
+      alert("🎉 Bonne réponse ! Bravo !");
+      quizDone = Date.now();
+      localStorage.setItem('quizDone', quizDone);
+      const timeUntilNext = oneDayMs - (Date.now() - parseInt(quizDone));
+      startQuizCountdown(timeUntilNext);
+    } else {
+      alert("
