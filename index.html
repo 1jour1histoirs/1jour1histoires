@@ -1,166 +1,198 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>1jour1histoire</title>
-<style>
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    color: #fff;
-    background: url('C22094C5-71B2-4004-8502-2CEC644F56B3.png') center/cover fixed no-repeat;
-    min-height: 100vh;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-  }
-  body::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(2px);
-    z-index: -1;
-  }
-  .container {
-    width: 100%;
-    max-width: 600px;
-  }
-  header {
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-  select {
-    background: #222;
-    color: #fff;
-    border: 1px solid #555;
-    border-radius: 4px;
-    padding: 0.5rem;
-    margin-top: 0.5rem;
-  }
-  .chapters {
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0;
-  }
-  .chapters li {
-    background: rgba(255,255,255,0.1);
-    border-radius: 4px;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  .chapters li:hover {
-    background: rgba(255,255,255,0.2);
-  }
-  .content {
-    background: rgba(255,255,255,0.1);
-    border-radius: 4px;
-    padding: 1rem;
-    display: none;
-  }
-  .fade {
-    animation: fade 0.5s;
-  }
-  @keyframes fade {
-    from {opacity: 0; transform: translateY(-5px);} 
-    to {opacity: 1; transform: translateY(0);}
-  }
-  .paypal-button {
-    display: inline-block;
-    margin-top: 1rem;
-    background: #0070BA;
-    color: #fff;
-    text-decoration: none;
-    padding: 0.7rem 1.2rem;
-    border-radius: 4px;
-    font-weight: bold;
-  }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>1jour1histoire</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        color: #fff;
+        background: url("C22094C5-71B2-4004-8502-2CEC644F56B3.png") center/cover
+          fixed no-repeat;
+        min-height: 100vh;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+      }
+      body::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(2px);
+        z-index: -1;
+      }
+      .container {
+        width: 100%;
+        max-width: 600px;
+      }
+      header {
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+      select {
+        background: #222;
+        color: #fff;
+        border: 1px solid #555;
+        border-radius: 4px;
+        padding: 0.5rem;
+        margin-top: 0.5rem;
+      }
+      .chapters {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+      }
+      .chapters li {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .chapters li:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      .content {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        padding: 1rem;
+        display: none;
+      }
+      .fade {
+        animation: fade 0.5s;
+      }
+      @keyframes fade {
+        from {
+          opacity: 0;
+          transform: translateY(-5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .paypal-button {
+        display: inline-block;
+        margin-top: 1rem;
+        background: #ffc439;
+        color: #000;
+        text-decoration: none;
+        padding: 0.7rem 1.2rem;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: background 0.3s;
+      }
 
-  .relax-button {
-    display: inline-block;
-    margin: 1rem 0;
-    background: #444;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 0.7rem 1.2rem;
-    cursor: pointer;
-  }
-  .relax-button:hover {background: #555;}
-  .paypal-button:hover {
-    background: #005ea6;
-  }
-  @media (max-width: 600px) {
-    header h1 {font-size: 1rem;}
-  }
-</style>
-</head>
-<body>
-<div class="container">
-  <header>
-    <h1>📚 Bienvenue sur 1jour1histoire – chaque jour une surprise !</h1>
-    <label for="category">Choisissez une catégorie :</label>
-    <select id="category">
-      <option value="" disabled selected>-- Choisir --</option>
-      <option value="enfant">Histoire Enfant</option>
-      <option value="adulte">Histoire Adulte</option>
-      <option value="religion">Histoire Religion</option>
-    </select>
-  </header>
-  <ul id="chapters" class="chapters"></ul>
-  <div id="content" class="content"></div>
-  <button id="relaxBtn" class="relax-button">Activer son relaxant</button>
-  <audio id="relaxAudio" loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/03/31/audio_4b9a93fbe2.mp3?filename=rain-ambient-112784.mp3" type="audio/mpeg">
-  </audio>
-  <a class="paypal-button" href="https://www.paypal.com/donate?business=mbkauto42%40gmail.com" target="_blank">👉 Aider à me faire grandir 💛</a>
-</div>
-<script>
-const chaptersEl = document.getElementById('chapters');
-const contentEl = document.getElementById('content');
-const categoryEl = document.getElementById('category');
-const relaxBtn = document.getElementById('relaxBtn');
-const relaxAudio = document.getElementById('relaxAudio');
+      .relax-button {
+        display: inline-block;
+        margin: 1rem 0;
+        background: #444;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 0.7rem 1.2rem;
+        cursor: pointer;
+      }
+      .relax-button:hover {
+        background: #555;
+      }
+      .paypal-button:hover {
+        background: #e0b620;
+      }
+      @media (max-width: 600px) {
+        header h1 {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>📚 Bienvenue sur 1jour1histoire – chaque jour une surprise !</h1>
+        <label for="category">Choisissez une catégorie :</label>
+        <select id="category">
+          <option value="" disabled selected>-- Choisir --</option>
+          <option value="enfant">Histoire Enfant</option>
+          <option value="adulte">Histoire Adulte</option>
+          <option value="religion">Histoire Religion</option>
+        </select>
+      </header>
+      <ul id="chapters" class="chapters"></ul>
+      <div id="content" class="content"></div>
+      <button id="relaxBtn" class="relax-button">Activer son relaxant</button>
+      <audio id="relaxAudio" loop>
+        <source
+          src="https://cdn.pixabay.com/download/audio/2022/03/31/audio_4b9a93fbe2.mp3?filename=rain-ambient-112784.mp3"
+          type="audio/mpeg"
+        />
+      </audio>
+      <a id="paypalBtn" class="paypal-button" href="#" target="_blank"
+        >👉 Aider à me faire grandir 💛</a
+      >
+    </div>
+    <script>
+      const chaptersEl = document.getElementById("chapters");
+      const contentEl = document.getElementById("content");
+      const categoryEl = document.getElementById("category");
+      const relaxBtn = document.getElementById("relaxBtn");
+      const relaxAudio = document.getElementById("relaxAudio");
 
-const data = {
-  enfant: Array.from({length:5},(_,i)=>`Conte pour enfants – chapitre ${i+1}`),
-  adulte: Array.from({length:5},(_,i)=>`Récit adulte – chapitre ${i+1}`),
-  religion: Array.from({length:5},(_,i)=>`Histoire religieuse – chapitre ${i+1}`)
-};
+      const data = {
+        enfant: Array.from(
+          { length: 5 },
+          (_, i) => `Conte pour enfants – chapitre ${i + 1}`,
+        ),
+        adulte: Array.from(
+          { length: 5 },
+          (_, i) => `Récit adulte – chapitre ${i + 1}`,
+        ),
+        religion: Array.from(
+          { length: 5 },
+          (_, i) => `Histoire religieuse – chapitre ${i + 1}`,
+        ),
+      };
 
-categoryEl.addEventListener('change', () => {
-  const cat = categoryEl.value;
-  chaptersEl.innerHTML = '';
-  contentEl.style.display = 'none';
-  if (!data[cat]) return;
-  data[cat].forEach((title, idx) => {
-    const li = document.createElement('li');
-    li.textContent = `Chapitre ${idx+1}`;
-    li.addEventListener('click', () => {
-      contentEl.textContent = title;
-      contentEl.style.display = 'block';
-      contentEl.classList.remove('fade');
-      requestAnimationFrame(()=>contentEl.classList.add('fade'));
-    });
-    chaptersEl.appendChild(li);
-  });
-  chaptersEl.classList.remove('fade');
-  requestAnimationFrame(()=>chaptersEl.classList.add('fade'));
-});
+      categoryEl.addEventListener("change", () => {
+        const cat = categoryEl.value;
+        chaptersEl.innerHTML = "";
+        contentEl.style.display = "none";
+        if (!data[cat]) return;
+        data[cat].forEach((title, idx) => {
+          const li = document.createElement("li");
+          li.textContent = `Chapitre ${idx + 1}`;
+          li.addEventListener("click", () => {
+            contentEl.textContent = title;
+            contentEl.style.display = "block";
+            contentEl.classList.remove("fade");
+            requestAnimationFrame(() => contentEl.classList.add("fade"));
+          });
+          chaptersEl.appendChild(li);
+        });
+        chaptersEl.classList.remove("fade");
+        requestAnimationFrame(() => chaptersEl.classList.add("fade"));
+      });
 
-relaxBtn.addEventListener('click', () => {
-  if (relaxAudio.paused) {
-    relaxAudio.play();
-    relaxBtn.textContent = 'Désactiver son relaxant';
-  } else {
-    relaxAudio.pause();
-    relaxBtn.textContent = 'Activer son relaxant';
-  }
-});
-</script>
-</body>
+      relaxBtn.addEventListener("click", () => {
+        if (relaxAudio.paused) {
+          relaxAudio.play();
+          relaxBtn.textContent = "Désactiver son relaxant";
+        } else {
+          relaxAudio.pause();
+          relaxBtn.textContent = "Activer son relaxant";
+        }
+      });
+      // Récupère le lien PayPal encodé
+      fetch("paypal.json")
+        .then((r) => r.json())
+        .then((d) => {
+          document.getElementById("paypalBtn").href = atob(d.link);
+        });
+    </script>
+  </body>
 </html>
