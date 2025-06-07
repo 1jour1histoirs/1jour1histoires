@@ -340,9 +340,21 @@
             font-size: 1.2rem;
         }
 
-        .paypal-container {
+        .social-links {
             text-align: center;
             margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .tiktok-container {
+            text-align: center;
+        }
+
+        .paypal-container {
+            text-align: center;
         }
 
         .paypal-button {
@@ -364,6 +376,27 @@
             transform: translateY(-3px);
             box-shadow: 0 6px 25px rgba(255, 196, 57, 0.6);
             color: #333;
+        }
+
+        .tiktok-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff0050, #ff0080);
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(255, 0, 80, 0.4);
+            border: 2px solid #ff0050;
+        }
+
+        .tiktok-button:hover {
+            background: linear-gradient(135deg, #ff0080, #e6006b);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(255, 0, 80, 0.6);
+            color: white;
         }
 
         @media (max-width: 768px) {
@@ -399,9 +432,14 @@
                 padding: 15px;
             }
 
-            .paypal-button {
+            .paypal-button,
+            .tiktok-button {
                 padding: 12px 25px;
                 font-size: 1rem;
+            }
+
+            .social-links {
+                gap: 15px;
             }
         }
     </style>
@@ -436,12 +474,22 @@
             </div>
         </div>
 
-        <div class="paypal-container">
-            <a href="https://www.paypal.com/donate?business=mbkauto42%40gmail.com" 
-               target="_blank" 
-               class="paypal-button">
-                👉 Aider à me faire grandir 💛
-            </a>
+        <div class="social-links">
+            <div class="tiktok-container">
+                <a href="https://www.tiktok.com/@1jour1hiistoires?_t=ZN-8x0JWagYNk6&_r=1" 
+                   target="_blank" 
+                   class="tiktok-button">
+                    🎵 Suivez-nous sur TikTok @1jour1hiistoires
+                </a>
+            </div>
+            
+            <div class="paypal-container">
+                <a href="https://www.paypal.com/donate?business=mbkauto42%40gmail.com" 
+                   target="_blank" 
+                   class="paypal-button">
+                    👉 Aider à me faire grandir 💛
+                </a>
+            </div>
         </div>
     </div>
 
