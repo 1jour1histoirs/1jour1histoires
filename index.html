@@ -173,6 +173,167 @@
             display: block;
         }
 
+        .quiz-container {
+            background: rgba(20, 20, 20, 0.95);
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid #4a90e2;
+            margin-top: 20px;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .quiz-score {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .quiz-question {
+            background: rgba(74, 144, 226, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #4a90e2;
+            margin-bottom: 20px;
+        }
+
+        .quiz-question h3 {
+            color: #4a90e2;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .quiz-answers {
+            display: grid;
+            gap: 10px;
+        }
+
+        .quiz-answer {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #4a90e2;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .quiz-answer:hover {
+            background: rgba(74, 144, 226, 0.2);
+            transform: translateX(5px);
+        }
+
+        .quiz-answer.correct {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            border-color: #28a745;
+            animation: correctAnswer 0.5s ease;
+        }
+
+        .quiz-answer.wrong {
+            background: linear-gradient(135deg, #dc3545, #e74c3c);
+            border-color: #dc3545;
+            animation: wrongAnswer 0.5s ease;
+        }
+
+        .quiz-answer.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        @keyframes correctAnswer {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes wrongAnswer {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+            100% { transform: translateX(0); }
+        }
+
+        .quiz-next {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 20px auto;
+            display: none;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-next:hover {
+            background: linear-gradient(135deg, #357abd, #2c5f99);
+            transform: translateY(-2px);
+        }
+
+        .quiz-next.show {
+            display: block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 30px;
+            background: rgba(74, 144, 226, 0.1);
+            border-radius: 10px;
+            border: 2px solid #4a90e2;
+        }
+
+        .quiz-results h2 {
+            color: #4a90e2;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .quiz-results .final-score {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .quiz-results .score-excellent {
+            color: #28a745;
+        }
+
+        .quiz-results .score-good {
+            color: #ffc107;
+        }
+
+        .quiz-results .score-needs-improvement {
+            color: #dc3545;
+        }
+
+        .quiz-restart {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-restart:hover {
+            background: linear-gradient(135deg, #20c997, #17a085);
+            transform: translateY(-2px);
+        }
+
         .story-display h3 {
             color: #4a90e2;
             margin-bottom: 15px;
@@ -260,6 +421,7 @@
                     <option value="enfant">Histoire Enfant</option>
                     <option value="adulte">Histoire Adulte</option>
                     <option value="religion">Histoire Religion</option>
+                    <option value="quiz">🧠 Quiz Interactif</option>
                 </select>
             </div>
 
@@ -284,6 +446,68 @@
     </div>
 
     <script>
+        const quizData = {
+            questions: [
+                {
+                    question: "Quelle est la capitale de la France ?",
+                    answers: ["Paris", "Lyon", "Marseille", "Toulouse"],
+                    correct: 0
+                },
+                {
+                    question: "Combien de continents y a-t-il sur Terre ?",
+                    answers: ["5", "6", "7", "8"],
+                    correct: 2
+                },
+                {
+                    question: "Qui a écrit 'Les Misérables' ?",
+                    answers: ["Émile Zola", "Victor Hugo", "Gustave Flaubert", "Alexandre Dumas"],
+                    correct: 1
+                },
+                {
+                    question: "Quelle est la planète la plus proche du Soleil ?",
+                    answers: ["Vénus", "Terre", "Mercure", "Mars"],
+                    correct: 2
+                },
+                {
+                    question: "En quelle année a eu lieu la Révolution française ?",
+                    answers: ["1789", "1799", "1804", "1815"],
+                    correct: 0
+                },
+                {
+                    question: "Quel est le plus grand océan du monde ?",
+                    answers: ["Atlantique", "Indien", "Arctique", "Pacifique"],
+                    correct: 3
+                },
+                {
+                    question: "Combien de côtés a un hexagone ?",
+                    answers: ["5", "6", "7", "8"],
+                    correct: 1
+                },
+                {
+                    question: "Qui a peint 'La Joconde' ?",
+                    answers: ["Pablo Picasso", "Vincent van Gogh", "Leonardo da Vinci", "Claude Monet"],
+                    correct: 2
+                },
+                {
+                    question: "Quelle est la langue la plus parlée au monde ?",
+                    answers: ["Anglais", "Mandarin", "Espagnol", "Hindi"],
+                    correct: 1
+                },
+                {
+                    question: "Combien de minutes y a-t-il dans une heure ?",
+                    answers: ["50", "60", "70", "80"],
+                    correct: 1
+                }
+            ]
+        };
+
+        let currentQuiz = {
+            currentQuestion: 0,
+            score: 0,
+            questions: [],
+            answered: false
+        };
+
         const stories = {
             enfant: {
                 title: "Histoires pour Enfants",
@@ -334,6 +558,11 @@
         });
 
         function showChapters(category) {
+            if (category === 'quiz') {
+                showQuiz();
+                return;
+            }
+            
             const categoryData = stories[category];
             
             // Mise à jour du titre
@@ -376,6 +605,147 @@
             setTimeout(() => {
                 storyDisplay.classList.add('show');
             }, 100);
+        }
+
+        function showQuiz() {
+            // Initialiser le quiz
+            currentQuiz.currentQuestion = 0;
+            currentQuiz.score = 0;
+            currentQuiz.questions = [...quizData.questions].sort(() => Math.random() - 0.5).slice(0, 5);
+            currentQuiz.answered = false;
+            
+            // Mise à jour du titre
+            chaptersTitle.textContent = "🧠 Quiz Interactif - Testez vos connaissances !";
+            
+            // Masquer les boutons de chapitres
+            chaptersGrid.style.display = 'none';
+            
+            // Masquer l'histoire précédente
+            storyDisplay.classList.remove('show');
+            
+            // Créer l'interface de quiz
+            createQuizInterface();
+            
+            // Afficher le conteneur avec animation
+            setTimeout(() => {
+                chaptersContainer.classList.add('show');
+            }, 100);
+        }
+
+        function createQuizInterface() {
+            chaptersGrid.innerHTML = `
+                <div class="quiz-container">
+                    <div class="quiz-header">
+                        <div class="quiz-score">
+                            Score: <span id="current-score">${currentQuiz.score}</span>/${currentQuiz.questions.length}
+                        </div>
+                        <div style="color: #4a90e2; font-weight: 600;">
+                            Question <span id="question-number">${currentQuiz.currentQuestion + 1}</span> sur ${currentQuiz.questions.length}
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-question">
+                        <h3 id="question-text">${currentQuiz.questions[currentQuiz.currentQuestion].question}</h3>
+                        <div class="quiz-answers" id="quiz-answers">
+                            ${currentQuiz.questions[currentQuiz.currentQuestion].answers.map((answer, index) => 
+                                `<button class="quiz-answer" onclick="selectAnswer(${index})">${answer}</button>`
+                            ).join('')}
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button class="quiz-next" id="next-button" onclick="nextQuestion()">
+                            ${currentQuiz.currentQuestion < currentQuiz.questions.length - 1 ? 'Question suivante' : 'Voir les résultats'}
+                        </button>
+                    </div>
+                </div>
+            `;
+            chaptersGrid.style.display = 'block';
+        }
+
+        function selectAnswer(selectedIndex) {
+            if (currentQuiz.answered) return;
+            
+            currentQuiz.answered = true;
+            const correctIndex = currentQuiz.questions[currentQuiz.currentQuestion].correct;
+            const answers = document.querySelectorAll('.quiz-answer');
+            
+            answers.forEach((answer, index) => {
+                answer.classList.add('disabled');
+                if (index === correctIndex) {
+                    answer.classList.add('correct');
+                } else if (index === selectedIndex) {
+                    answer.classList.add('wrong');
+                }
+            });
+            
+            if (selectedIndex === correctIndex) {
+                currentQuiz.score++;
+                document.getElementById('current-score').textContent = currentQuiz.score;
+            }
+            
+            document.getElementById('next-button').classList.add('show');
+        }
+
+        function nextQuestion() {
+            currentQuiz.currentQuestion++;
+            currentQuiz.answered = false;
+            
+            if (currentQuiz.currentQuestion < currentQuiz.questions.length) {
+                // Question suivante
+                document.getElementById('question-number').textContent = currentQuiz.currentQuestion + 1;
+                document.getElementById('question-text').textContent = currentQuiz.questions[currentQuiz.currentQuestion].question;
+                
+                const answersContainer = document.getElementById('quiz-answers');
+                answersContainer.innerHTML = currentQuiz.questions[currentQuiz.currentQuestion].answers.map((answer, index) => 
+                    `<button class="quiz-answer" onclick="selectAnswer(${index})">${answer}</button>`
+                ).join('');
+                
+                const nextButton = document.getElementById('next-button');
+                nextButton.classList.remove('show');
+                nextButton.textContent = currentQuiz.currentQuestion < currentQuiz.questions.length - 1 ? 'Question suivante' : 'Voir les résultats';
+            } else {
+                // Afficher les résultats
+                showQuizResults();
+            }
+        }
+
+        function showQuizResults() {
+            const percentage = Math.round((currentQuiz.score / currentQuiz.questions.length) * 100);
+            let scoreClass, message;
+            
+            if (percentage >= 80) {
+                scoreClass = 'score-excellent';
+                message = "🎉 Excellent ! Vous maîtrisez bien vos connaissances !";
+            } else if (percentage >= 60) {
+                scoreClass = 'score-good';
+                message = "👍 Bien joué ! Vous avez de bonnes connaissances !";
+            } else {
+                scoreClass = 'score-needs-improvement';
+                message = "💪 Continuez à apprendre, vous progresserez !";
+            }
+            
+            chaptersGrid.innerHTML = `
+                <div class="quiz-results">
+                    <h2>🏆 Résultats du Quiz</h2>
+                    <div class="final-score ${scoreClass}">
+                        ${currentQuiz.score}/${currentQuiz.questions.length}
+                    </div>
+                    <div class="final-score ${scoreClass}">
+                        ${percentage}%
+                    </div>
+                    <p style="font-size: 1.2rem; margin: 20px 0; color: white;">
+                        ${message}
+                    </p>
+                    <button class="quiz-restart" onclick="restartQuiz()">
+                        🔄 Recommencer le quiz
+                    </button>
+                </div>
+            `;
+        }
+
+        function restartQuiz() {
+            showQuiz();
         }
 
         // Animation au chargement
