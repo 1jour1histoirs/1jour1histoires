@@ -569,7 +569,6 @@ h1 {
     <p>🎵 Musiques d'ambiance premium</p>
     <p>📱 Accès prioritaire aux nouveautés</p>
 
-<a id="btn-paypal" class="vip-btn" href="https://www.paypal.com/donate?business=mbkauto42%40gmail.com" target="_blank" rel="noopener">Devenir VIP - 0,99 € (paiement unique)</a>
 <div id="vip-msg" class="countdown"></div>
 
   </section>
@@ -594,7 +593,6 @@ h1 {
   const themeToggle = document.getElementById('theme-toggle');
   const themeIcon = document.getElementById('theme-icon');
   const quizMsg = document.getElementById('quiz-msg');
-  const vipMsg = document.getElementById('vip-msg');
   
   // Stockage en mémoire (remplace localStorage)
   let appData = {
@@ -736,16 +734,6 @@ h1 {
         link.addEventListener('click', toggleMenu);
       });
 
-      // VIP
-      const btnPaypal = document.getElementById('btn-paypal');
-      if (btnPaypal) {
-        btnPaypal.addEventListener('click', () => {
-          showMessage("🚀 Redirection vers le paiement sécurisé...", vipMsg, 'pulse');
-          setTimeout(() => {
-            window.open('https://www.paypal.com/donate?business=mbkauto42%40gmail.com', '_blank');
-          }, 500);
-        });
-      }
 
       // Smooth scroll
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
