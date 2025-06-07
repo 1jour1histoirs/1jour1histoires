@@ -10,46 +10,46 @@
 
 :root {
 /* Mode sombre par défaut */
-–primary-bg: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2d1b45 100%);
-–secondary-bg: #4b1369;
-–nav-bg: #2c0d4d;
-–card-bg: rgba(255, 255, 255, 0.05);
-–quiz-bg: #350b5a;
-–vip-bg: #6a2a8f;
-–footer-bg: #2b0b5d;
-–text-primary: #eee;
-–text-secondary: #bbb;
-–text-accent: #f39c12;
-–button-primary: #f39c12;
-–button-hover: #d48806;
-–vip-button: #f1c40f;
-–vip-button-hover: #d4ac0d;
-–shadow-primary: rgba(139, 69, 200, 0.3);
-–shadow-glow: rgba(130, 46, 163, 0.6);
-–border-color: rgba(255, 255, 255, 0.1);
+--primary-bg: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2d1b45 100%);
+--secondary-bg: #4b1369;
+--nav-bg: #2c0d4d;
+--card-bg: rgba(255, 255, 255, 0.05);
+--quiz-bg: #350b5a;
+--vip-bg: #6a2a8f;
+--footer-bg: #2b0b5d;
+--text-primary: #eee;
+--text-secondary: #bbb;
+--text-accent: #f39c12;
+--button-primary: #f39c12;
+--button-hover: #d48806;
+--vip-button: #f1c40f;
+--vip-button-hover: #d4ac0d;
+--shadow-primary: rgba(139, 69, 200, 0.3);
+--shadow-glow: rgba(130, 46, 163, 0.6);
+--border-color: rgba(255, 255, 255, 0.1);
 }
 
-[data-theme=“light”] {
-–primary-bg: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
-–secondary-bg: #6f42c1;
-–nav-bg: #495057;
-–card-bg: rgba(0, 0, 0, 0.05);
-–quiz-bg: #e7d3ff;
-–vip-bg: #b794f6;
-–footer-bg: #343a40;
-–text-primary: #212529;
-–text-secondary: #6c757d;
-–text-accent: #e67e22;
-–button-primary: #e67e22;
-–button-hover: #d35400;
-–vip-button: #f39c12;
-–vip-button-hover: #e67e22;
-–shadow-primary: rgba(0, 0, 0, 0.1);
-–shadow-glow: rgba(0, 0, 0, 0.2);
-–border-color: rgba(0, 0, 0, 0.1);
+[data-theme="light"] {
+--primary-bg: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+--secondary-bg: #6f42c1;
+--nav-bg: #495057;
+--card-bg: rgba(0, 0, 0, 0.05);
+--quiz-bg: #e7d3ff;
+--vip-bg: #b794f6;
+--footer-bg: #343a40;
+--text-primary: #212529;
+--text-secondary: #6c757d;
+--text-accent: #e67e22;
+--button-primary: #e67e22;
+--button-hover: #d35400;
+--vip-button: #f39c12;
+--vip-button-hover: #e67e22;
+--shadow-primary: rgba(0, 0, 0, 0.1);
+--shadow-glow: rgba(0, 0, 0, 0.2);
+--border-color: rgba(0, 0, 0, 0.1);
 }
 
-- {
+* {
   box-sizing: border-box;
   transition: all 0.3s ease;
   }
@@ -57,9 +57,9 @@
 body {
 margin: 0;
 padding: 0;
-font-family: ‘Inter’, sans-serif;
-background: var(–primary-bg);
-color: var(–text-primary);
+font-family: 'Inter', sans-serif;
+background: var(--primary-bg);
+color: var(--text-primary);
 min-height: 100vh;
 display: flex;
 flex-direction: column;
@@ -67,18 +67,18 @@ line-height: 1.6;
 }
 
 header {
-background: var(–secondary-bg);
+background: var(--secondary-bg);
 backdrop-filter: blur(10px);
 color: #fff;
 padding: 1rem 1.5rem;
 display: flex;
 align-items: center;
 justify-content: space-between;
-box-shadow: 0 2px 20px var(–shadow-primary);
+box-shadow: 0 2px 20px var(--shadow-primary);
 position: sticky;
 top: 0;
 z-index: 100;
-border-bottom: 1px solid var(–border-color);
+border-bottom: 1px solid var(--border-color);
 }
 
 .header-left {
@@ -127,13 +127,13 @@ top: 0;
 left: -280px;
 width: 260px;
 height: 100vh;
-background: var(–nav-bg);
+background: var(--nav-bg);
 backdrop-filter: blur(20px);
 padding: 2rem 1rem;
-box-shadow: 2px 0 30px var(–shadow-primary);
+box-shadow: 2px 0 30px var(--shadow-primary);
 transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 z-index: 1000;
-border-right: 1px solid var(–border-color);
+border-right: 1px solid var(--border-color);
 }
 
 nav.active {
@@ -141,7 +141,7 @@ left: 0;
 }
 
 nav::before {
-content: ‘’;
+content: '';
 position: absolute;
 top: 0;
 left: 0;
@@ -153,7 +153,7 @@ pointer-events: none;
 
 nav a {
 display: block;
-color: var(–text-primary);
+color: var(--text-primary);
 font-weight: 500;
 margin: 1.5rem 0;
 text-decoration: none;
@@ -166,7 +166,7 @@ overflow: hidden;
 }
 
 nav a::before {
-content: ‘’;
+content: '';
 position: absolute;
 top: 0;
 left: -100%;
@@ -177,7 +177,7 @@ transition: left 0.5s ease;
 }
 
 nav a:hover {
-color: var(–text-accent);
+color: var(--text-accent);
 background: rgba(243, 156, 18, 0.1);
 transform: translateX(5px);
 }
@@ -216,41 +216,41 @@ h1 {
 font-weight: 700;
 font-size: clamp(2rem, 5vw, 2.8rem);
 margin-bottom: 0.5rem;
-background: linear-gradient(45deg, var(–text-accent), #e74c3c);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
+background: linear-gradient(45deg, var(--text-accent), #e74c3c);
+--webkit-background-clip: text;
+--webkit-text-fill-color: transparent;
 background-clip: text;
-text-shadow: 0 0 30px var(–shadow-glow);
+text-shadow: 0 0 30px var(--shadow-glow);
 }
 
 .subtitle {
 margin-bottom: 2rem;
 font-style: italic;
-color: var(–text-secondary);
+color: var(--text-secondary);
 font-weight: 300;
 }
 
 .section-card {
-background: var(–card-bg);
+background: var(--card-bg);
 backdrop-filter: blur(20px);
-border: 1px solid var(–border-color);
+border: 1px solid var(--border-color);
 border-radius: 20px;
 padding: 2rem;
 margin-bottom: 2rem;
-box-shadow: 0 10px 40px var(–shadow-primary);
+box-shadow: 0 10px 40px var(--shadow-primary);
 transition: all 0.3s ease;
 position: relative;
 overflow: hidden;
 }
 
 .section-card::before {
-content: ‘’;
+content: '';
 position: absolute;
 top: 0;
 left: 0;
 right: 0;
 height: 2px;
-background: linear-gradient(90deg, var(–text-accent), #e74c3c, var(–text-accent));
+background: linear-gradient(90deg, var(--text-accent), #e74c3c, var(--text-accent));
 transform: translateX(-100%);
 transition: transform 0.5s ease;
 }
@@ -261,7 +261,7 @@ transform: translateX(0);
 
 .section-card:hover {
 transform: translateY(-5px);
-box-shadow: 0 20px 60px var(–shadow-primary);
+box-shadow: 0 20px 60px var(--shadow-primary);
 }
 
 .video-container {
@@ -269,7 +269,7 @@ margin-bottom: 1.5rem;
 position: relative;
 border-radius: 16px;
 overflow: hidden;
-box-shadow: 0 0 40px var(–shadow-glow);
+box-shadow: 0 0 40px var(--shadow-glow);
 }
 
 video {
@@ -295,13 +295,13 @@ margin-bottom: 1rem;
 }
 
 .story-text em {
-color: var(–text-accent);
+color: var(--text-accent);
 font-style: italic;
 }
 
 .quiz-section {
-background: var(–quiz-bg);
-border: 1px solid var(–border-color);
+background: var(--quiz-bg);
+border: 1px solid var(--border-color);
 }
 
 .quiz-section p {
@@ -319,7 +319,7 @@ margin-bottom: 1rem;
 }
 
 .quiz-section button {
-background: var(–button-primary);
+background: var(--button-primary);
 border: none;
 color: #1a1a1a;
 font-weight: 600;
@@ -334,7 +334,7 @@ overflow: hidden;
 }
 
 .quiz-section button::before {
-content: ‘’;
+content: '';
 position: absolute;
 top: 50%;
 left: 50%;
@@ -352,35 +352,37 @@ height: 200px;
 }
 
 .quiz-section button:hover {
-background: var(–button-hover);
+background: var(--button-hover);
 transform: translateY(-2px);
 box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
 .vip-section {
-background: var(–vip-bg);
-border: 1px solid var(–border-color);
+background: var(--vip-bg);
+border: 1px solid var(--border-color);
 }
 
 .vip-btn {
-background: var(–vip-button);
-border: none;
-padding: 1rem 2.5rem;
-font-weight: 700;
-border-radius: 16px;
-color: #1a1a1a;
-cursor: pointer;
-margin-top: 1rem;
-transition: all 0.3s ease;
-font-size: 1.1rem;
-text-transform: uppercase;
-letter-spacing: 1px;
+  display: inline-block;
+  background: var(--vip-button);
+  border: none;
+  padding: 1rem 2.5rem;
+  font-weight: 700;
+  border-radius: 16px;
+  color: #1a1a1a;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 position: relative;
 overflow: hidden;
 }
 
 .vip-btn::before {
-content: ‘’;
+content: '';
 position: absolute;
 top: 0;
 left: -100%;
@@ -395,7 +397,7 @@ left: 100%;
 }
 
 .vip-btn:hover {
-background: var(–vip-button-hover);
+background: var(--vip-button-hover);
 transform: translateY(-3px);
 box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
 }
@@ -403,14 +405,14 @@ box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
 footer {
 text-align: center;
 padding: 2rem 1rem;
-background: var(–footer-bg);
-color: var(–text-secondary);
+background: var(--footer-bg);
+color: var(--text-secondary);
 font-weight: 500;
-border-top: 1px solid var(–border-color);
+border-top: 1px solid var(--border-color);
 }
 
 footer a {
-color: var(–text-accent);
+color: var(--text-accent);
 font-weight: 700;
 text-decoration: none;
 transition: all 0.3s ease;
@@ -425,7 +427,7 @@ color: #e74c3c;
 margin-top: 1rem;
 font-weight: 600;
 font-size: 1.1rem;
-color: var(–text-accent);
+color: var(--text-accent);
 padding: 0.5rem 1rem;
 background: rgba(243, 156, 18, 0.1);
 border-radius: 8px;
@@ -457,7 +459,6 @@ header {
 padding: 1rem;
 }
 
-```
 main {
   margin: 1rem auto;
   padding: 0 0.5rem;
@@ -477,7 +478,6 @@ main {
   width: 100%;
   max-width: 200px;
 }
-```
 
 }
 
@@ -486,11 +486,9 @@ main {
 padding: 1rem;
 }
 
-```
 h1 {
   font-size: 1.8rem;
 }
-```
 
 }
 </style>
@@ -523,7 +521,6 @@ h1 {
     <h1>Histoire du jour</h1>
     <p class="subtitle">Une nouvelle histoire mystérieuse chaque jour</p>
 
-```
 <div class="video-container">
   <video src="https://www.w3schools.com/html/mov_bbb.mp4" controls autoplay loop muted></video>
 </div>
@@ -532,7 +529,6 @@ h1 {
   <p>Un soir, j'ai reçu un message de mon téléphone… mais c'était mon propre numéro qui m'envoyait : « Ne regarde pas derrière toi. »</p>
   <p><em>Qui peut bien envoyer un message aussi flippant ? La suite de cette histoire terrifiante vous attend...</em></p>
 </div>
-```
 
   </section>
 
@@ -540,7 +536,6 @@ h1 {
     <h2>🧠 Quiz Gratuit du jour</h2>
     <p><strong>Question :</strong> Combien y a-t-il de lettres dans le mot "fantôme" ?</p>
 
-```
 <div class="quiz-buttons">
   <button onclick="checkAnswer(true)">7 lettres</button>
   <button onclick="checkAnswer(false)">6 lettres</button>
@@ -548,7 +543,6 @@ h1 {
 </div>
 
 <div id="quiz-msg" class="countdown"></div>
-```
 
   </section>
 
@@ -559,10 +553,8 @@ h1 {
     <p>🎵 Musiques d'ambiance premium</p>
     <p>📱 Accès prioritaire aux nouveautés</p>
 
-```
-<button id="btn-paypal" class="vip-btn">Devenir VIP - 0,99 € (paiement unique)</button>
+<a id="btn-paypal" class="vip-btn" href="https://www.paypal.com/donate?business=mbkauto42%40gmail.com" target="_blank" rel="noopener">Devenir VIP - 0,99 € (paiement unique)</a>
 <div id="vip-msg" class="countdown"></div>
-```
 
   </section>
 
@@ -733,8 +725,8 @@ h1 {
         btnPaypal.addEventListener('click', () => {
           showMessage("🚀 Redirection vers le paiement sécurisé...", vipMsg, 'pulse');
           setTimeout(() => {
-            alert("💳 Fonction de paiement à configurer avec PayPal");
-          }, 1500);
+            window.open('https://www.paypal.com/donate?business=mbkauto42%40gmail.com', '_blank');
+          }, 500);
         });
       }
 
