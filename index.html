@@ -76,6 +76,26 @@
           transform: translateY(0);
         }
       }
+      .quiz-section {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        padding: 1rem;
+        margin-top: 1rem;
+        text-align: center;
+      }
+      .quiz-btn {
+        background: #f08;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        padding: 0.5rem 1rem;
+        margin: 0.3rem;
+        cursor: pointer;
+      }
+      .quiz-btn[disabled] {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
       .paypal-button {
         display: inline-block;
         margin-top: 1rem;
@@ -125,6 +145,12 @@
       </header>
       <ul id="chapters" class="chapters"></ul>
       <div id="content" class="content"></div>
+<section id="quiz" class="quiz-section">
+  <h2>Quiz du jour</h2>
+  <div id="quiz-container"></div>
+  <button id="startQuiz" class="quiz-btn">Commencer le quiz</button>
+  <button id="replayQuiz" class="quiz-btn" disabled>Rejouer demain</button>
+</section>
       <button id="relaxBtn" class="relax-button">Activer son relaxant</button>
       <audio id="relaxAudio" loop>
         <source
@@ -193,6 +219,55 @@
         .then((d) => {
           document.getElementById("paypalBtn").href = atob(d.link);
         });
+const quizContainer = document.getElementById("quiz-container");
+const startQuizBtn = document.getElementById("startQuiz");
+const replayQuizBtn = document.getElementById("replayQuiz");
+const quizData = [
+  { q: "Qui a écrit \"Le Petit Prince\" ?", choices: ["Antoine de Saint-Exupéry","Charles Perrault","Victor Hugo"], answer: 0 },
+  { q: "En quelle année a débuté la Révolution française ?", choices: ["1789","1492","1914"], answer: 0 },
+  { q: "Quel royaume dirigeait Cléopâtre ?", choices: ["Égypte","Grèce","Chine"], answer: 0 },
+  { q: "Qui a peint la Joconde ?", choices: ["Michel-Ange","Léonard de Vinci","Picasso"], answer: 1 },
+  { q: "Qui fut le premier homme sur la Lune ?", choices: ["Neil Armstrong","Buzz Aldrin","Yuri Gagarin"], answer: 0 },
+  { q: "Quelle ville est célèbre pour la tour Eiffel ?", choices: ["Londres","Berlin","Paris"], answer: 2 }
+];
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}}
+function checkQuizLock(){
+  const last=parseInt(localStorage.getItem("quizTime"),10);
+  const locked=!isNaN(last)&&Date.now()-last<86400000;
+  startQuizBtn.style.display=locked?"none":"inline-block";
+  replayQuizBtn.style.display=locked?"inline-block":"none";
+  replayQuizBtn.disabled=locked;
+}
+function startQuiz(){
+  shuffle(quizData);
+  const questions=quizData.slice(0,3);
+  let idx=0,score=0;
+  startQuizBtn.style.display="none";
+  replayQuizBtn.style.display="none";
+  showQuestion();
+  function showQuestion(){
+    const q=questions[idx];
+    quizContainer.innerHTML=`<p>${q.q}</p>`;
+    q.choices.forEach((c,i)=>{
+      const b=document.createElement("button");
+      b.textContent=c;
+      b.className="quiz-btn";
+      b.onclick=()=>{if(i===q.answer)score++;idx++;idx<questions.length?showQuestion():endQuiz();};
+      quizContainer.appendChild(b);
+    });
+  }
+  function endQuiz(){
+    quizContainer.innerHTML=`<p>Tu as ${score} / 3</p>`;
+    if(score>=2)quizContainer.innerHTML+="<p>🎉 Bravo, tu débloques une surprise demain !</p>";
+    localStorage.setItem("quizTime",Date.now());
+    replayQuizBtn.style.display="inline-block";
+    replayQuizBtn.disabled=true;
+    checkQuizLock();
+  }
+}
+startQuizBtn.addEventListener("click",startQuiz);
+replayQuizBtn.addEventListener("click",()=>{if(!replayQuizBtn.disabled)startQuiz();});
+checkQuizLock();
     </script>
   </body>
 </html>
