@@ -79,6 +79,18 @@
     border-radius: 4px;
     font-weight: bold;
   }
+
+  .relax-button {
+    display: inline-block;
+    margin: 1rem 0;
+    background: #444;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.7rem 1.2rem;
+    cursor: pointer;
+  }
+  .relax-button:hover {background: #555;}
   .paypal-button:hover {
     background: #005ea6;
   }
@@ -101,12 +113,18 @@
   </header>
   <ul id="chapters" class="chapters"></ul>
   <div id="content" class="content"></div>
+  <button id="relaxBtn" class="relax-button">Activer son relaxant</button>
+  <audio id="relaxAudio" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/31/audio_4b9a93fbe2.mp3?filename=rain-ambient-112784.mp3" type="audio/mpeg">
+  </audio>
   <a class="paypal-button" href="https://www.paypal.com/donate?business=mbkauto42%40gmail.com" target="_blank">👉 Aider à me faire grandir 💛</a>
 </div>
 <script>
 const chaptersEl = document.getElementById('chapters');
 const contentEl = document.getElementById('content');
 const categoryEl = document.getElementById('category');
+const relaxBtn = document.getElementById('relaxBtn');
+const relaxAudio = document.getElementById('relaxAudio');
 
 const data = {
   enfant: Array.from({length:5},(_,i)=>`Conte pour enfants – chapitre ${i+1}`),
@@ -132,6 +150,16 @@ categoryEl.addEventListener('change', () => {
   });
   chaptersEl.classList.remove('fade');
   requestAnimationFrame(()=>chaptersEl.classList.add('fade'));
+});
+
+relaxBtn.addEventListener('click', () => {
+  if (relaxAudio.paused) {
+    relaxAudio.play();
+    relaxBtn.textContent = 'Désactiver son relaxant';
+  } else {
+    relaxAudio.pause();
+    relaxBtn.textContent = 'Activer son relaxant';
+  }
 });
 </script>
 </body>
