@@ -94,7 +94,7 @@
         /* Bloc principal du titre - DESIGN ENFANT PARFAIT */
         .hero-welcome {
             /* Positionnement et espacement */
-            margin: 80px auto 40px auto; /* Espace du menu + marges */
+            margin: 120px auto 40px auto; /* Espace du menu + marges - descendu plus bas */
             max-width: 90%;
             width: fit-content;
             min-width: 320px;
@@ -235,11 +235,12 @@
                 inset 0 1px 0 rgba(255, 255, 255, 0.9);
         }
 
-        /* MENU CROSS-BROWSER UNIVERSEL POUR ENFANTS */
+        /* MENU CROSS-BROWSER UNIVERSEL POUR ENFANTS - DÉPLACÉ AU CENTRE-DROIT */
         .category-menu {
             position: fixed;
             top: 20px;
-            left: 20px;
+            right: 50%;
+            transform: translateX(50%);
             z-index: 100; /* Inférieur au titre (150) */
             
             /* Style cartoon enfant - Fallback solid */
@@ -268,13 +269,13 @@
 
         /* Animation compatible tous navigateurs */
         @keyframes menuFloatCompat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-2px); }
+            0%, 100% { transform: translateX(50%) translateY(0px); }
+            50% { transform: translateX(50%) translateY(-2px); }
         }
 
         /* Effet hover simplifié mais efficace */
         .category-menu:hover {
-            transform: translateY(-3px);
+            transform: translateX(50%) translateY(-3px);
             box-shadow: 
                 0 8px 30px rgba(107, 163, 232, 0.5),
                 0 4px 15px rgba(0, 0, 0, 0.15);
@@ -930,6 +931,42 @@
                 margin-right: 0;
                 padding-bottom: 100px;
             }
+            
+            /* MENU RESPONSIVE - centre sur mobile */
+            .category-menu {
+                top: 12px;
+                right: 50%;
+                transform: translateX(50%);
+                border-radius: 18px;
+                border-width: 2px;
+                /* Animation réduite pour mobile */
+                animation: none;
+            }
+            
+            .category-menu select {
+                padding: 10px 15px;
+                font-size: 14px;
+                min-width: 180px;
+                padding-right: 40px;
+                background-size: 18px;
+            }
+            
+            .hero-welcome {
+                margin: 100px auto 30px auto; /* Ajusté pour mobile */
+                padding: 25px 20px;
+                max-width: 95%;
+                border-radius: 20px;
+                border-width: 2px;
+            }
+            
+            .hero-title {
+                font-size: clamp(1.5rem, 6vw, 2.2rem);
+                margin-bottom: 12px;
+            }
+            
+            .hero-subtitle {
+                font-size: clamp(1rem, 4vw, 1.3rem);
+            }
         }
 
         @media (max-width: 480px) {
@@ -961,6 +998,40 @@
             .story-display {
                 padding-bottom: 90px;
             }
+            
+            .category-menu {
+                top: 8px;
+                right: 50%;
+                transform: translateX(50%);
+                border-radius: 15px;
+                border-width: 2px;
+            }
+            
+            .category-menu select {
+                padding: 8px 12px;
+                font-size: 13px;
+                min-width: 160px;
+                padding-right: 35px;
+                background-size: 16px;
+                font-weight: 500;
+            }
+            
+            .hero-welcome {
+                margin: 90px auto 25px auto;
+                padding: 20px 15px;
+                border-radius: 18px;
+                max-width: 98%;
+            }
+            
+            .hero-title {
+                font-size: clamp(1.3rem, 7vw, 1.9rem);
+                margin-bottom: 10px;
+                letter-spacing: 0.5px;
+            }
+            
+            .hero-subtitle {
+                font-size: clamp(0.9rem, 4.5vw, 1.2rem);
+            }
         }
 
         /* TRÈS PETITS ÉCRANS (320px) */
@@ -991,38 +1062,39 @@
             .story-display {
                 padding-bottom: 80px;
             }
-        }
-
-        /* AMÉLIORATION ACCESSIBILITÉ */
-        .social-button:focus {
-            outline: 3px solid rgba(255, 255, 255, 0.8);
-            outline-offset: 2px;
-        }
-
-        /* EFFET DE PULSATION OPTIONNEL */
-        .social-button::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: inherit;
-            border-radius: inherit;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .social-button:hover::before {
-            opacity: 0.3;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.3; }
-            50% { transform: scale(1.05); opacity: 0.1; }
-            100% { transform: scale(1); opacity: 0.3; }
+            
+            .category-menu {
+                top: 5px;
+                right: 50%;
+                transform: translateX(50%);
+                border-radius: 12px;
+                border-width: 2px;
+            }
+            
+            .category-menu select {
+                padding: 6px 10px;
+                font-size: 12px;
+                min-width: 140px;
+                padding-right: 30px;
+                background-size: 14px;
+                font-weight: 500;
+            }
+            
+            .hero-welcome {
+                margin: 80px auto 20px auto;
+                padding: 18px 12px;
+                border-radius: 15px;
+                border-width: 2px;
+            }
+            
+            .hero-title {
+                font-size: clamp(1.2rem, 8vw, 1.7rem);
+                margin-bottom: 8px;
+            }
+            
+            .hero-subtitle {
+                font-size: clamp(0.85rem, 5vw, 1.1rem);
+            }
         }
 
         .tiktok-button {
@@ -1044,118 +1116,6 @@
             transform: translateY(-3px);
             box-shadow: 0 6px 25px rgba(255, 0, 80, 0.6);
             color: white;
-        }
-
-        /* RESPONSIVE MENU CARTOON ADAPTÉ */
-        @media (max-width: 768px) {
-            .category-menu {
-                top: 12px;
-                left: 12px;
-                border-radius: 18px;
-                border-width: 2px;
-                /* Animation réduite pour mobile */
-                animation: none;
-            }
-            
-            .category-menu select {
-                padding: 10px 15px;
-                font-size: 14px;
-                min-width: 180px;
-                padding-right: 40px;
-                background-size: 18px;
-            }
-            
-            .hero-welcome {
-                margin: 70px auto 30px auto;
-                padding: 25px 20px;
-                max-width: 95%;
-                border-radius: 20px;
-                border-width: 2px;
-            }
-            
-            .hero-title {
-                font-size: clamp(1.5rem, 6vw, 2.2rem);
-                margin-bottom: 12px;
-            }
-            
-            .hero-subtitle {
-                font-size: clamp(1rem, 4vw, 1.3rem);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .category-menu {
-                top: 8px;
-                left: 8px;
-                border-radius: 15px;
-                border-width: 2px;
-            }
-            
-            .category-menu select {
-                padding: 8px 12px;
-                font-size: 13px;
-                min-width: 160px;
-                padding-right: 35px;
-                background-size: 16px;
-                font-weight: 500;
-            }
-        }
-
-        @media (max-width: 320px) {
-            .category-menu {
-                top: 5px;
-                left: 5px;
-                border-radius: 12px;
-                border-width: 2px;
-            }
-            
-            .category-menu select {
-                padding: 6px 10px;
-                font-size: 12px;
-                min-width: 140px;
-                padding-right: 30px;
-                background-size: 14px;
-                font-weight: 500;
-            }
-        }
-
-        /* Responsive pour smartphones */
-        @media (max-width: 480px) {
-            .hero-welcome {
-                margin: 60px auto 25px auto;
-                padding: 20px 15px;
-                border-radius: 18px;
-                max-width: 98%;
-            }
-            
-            .hero-title {
-                font-size: clamp(1.3rem, 7vw, 1.9rem);
-                margin-bottom: 10px;
-                letter-spacing: 0.5px;
-            }
-            
-            .hero-subtitle {
-                font-size: clamp(0.9rem, 4.5vw, 1.2rem);
-            }
-        }
-
-        /* Pour les très petits écrans */
-        @media (max-width: 320px) {
-            .hero-welcome {
-                margin: 55px auto 20px auto;
-                padding: 18px 12px;
-                border-radius: 15px;
-                border-width: 2px;
-            }
-            
-            .hero-title {
-                font-size: clamp(1.2rem, 8vw, 1.7rem);
-                margin-bottom: 8px;
-            }
-            
-            .hero-subtitle {
-                font-size: clamp(0.85rem, 5vw, 1.1rem);
-            }
         }
 
         /* Tablettes et écrans moyens */
@@ -1204,17 +1164,6 @@
                 padding: 20px 15px;
             }
 
-            .category-menu {
-                top: 15px;
-                left: 15px;
-            }
-
-            .category-menu select {
-                min-width: 170px;
-                font-size: 13px;
-                padding: 9px 13px;
-            }
-
             .kofi-button-bottom {
                 bottom: 65px;
                 padding: 8px 15px;
@@ -1237,316 +1186,11 @@
             }
         }
 
-        /* Smartphones et petits écrans */
-        @media (max-width: 480px) {
-            .container {
-                padding: 12px 8px;
-                max-width: 100%;
-            }
-
-            .welcome-message {
-                padding: 15px 12px;
-                margin-bottom: 20px;
-                border-radius: 15px;
-            }
-
-            .welcome-message h1 {
-                font-size: clamp(1.2rem, 6vw, 1.8rem);
-                margin-bottom: 8px;
-            }
-
-            .welcome-message p {
-                font-size: clamp(0.85rem, 4vw, 1rem);
-            }
-
-            .chapters-container {
-                padding: 15px 10px;
-                border-radius: 8px;
-            }
-
-            .chapters-title {
-                font-size: 1.1rem;
-                margin-bottom: 15px;
-            }
-
-            .chapter-button {
-                padding: 10px 12px;
-                font-size: 0.9rem;
-                border-radius: 6px;
-            }
-
-            .story-display, .quiz-container, .memo-container {
-                padding: 15px 10px;
-                border-radius: 8px;
-            }
-
-            .category-menu {
-                top: 8px;
-                left: 8px;
-                border-radius: 6px;
-            }
-
-            .category-menu select {
-                min-width: 150px;
-                font-size: 12px;
-                padding: 8px 10px;
-            }
-
-            .kofi-button-bottom {
-                bottom: 55px;
-                padding: 7px 12px;
-                font-size: 0.8rem;
-                min-width: 130px;
-                border-radius: 20px;
-            }
-
-            .tiktok-button-bottom {
-                bottom: 10px;
-                padding: 7px 12px;
-                font-size: 0.8rem;
-                min-width: 130px;
-                border-radius: 20px;
-            }
-
-            .video-info {
-                bottom: 8px;
-                right: 8px;
-                padding: 6px 10px;
-                font-size: 0.75rem;
-                border-radius: 20px;
-            }
-
-            .quiz-question h3 {
-                font-size: 1.1rem;
-            }
-
-            .quiz-answer {
-                padding: 12px;
-                font-size: 0.9rem;
-            }
-
-            .memo-timer {
-                font-size: 1.1rem;
-                padding: 12px 20px;
-            }
-
-            .memo-question h3 {
-                font-size: 1.1rem;
-            }
-
-            .memo-input {
-                padding: 12px;
-                font-size: 16px;
-            }
-
-            .memo-submit, .quiz-restart, .memo-restart {
-                padding: 12px 20px;
-                font-size: 1rem;
-            }
-        }
-
-        /* iPhone 5 et très petits écrans (320px et moins) */
-        @media (max-width: 320px) {
-            .container {
-                padding: 8px 4px;
-                max-width: 100%;
-            }
-
-            .welcome-message {
-                padding: 10px 8px;
-                margin-bottom: 15px;
-                border-radius: 12px;
-                border-width: 1px;
-            }
-
-            .welcome-message h1 {
-                font-size: clamp(1.1rem, 7vw, 1.6rem);
-                margin-bottom: 6px;
-                line-height: 1.2;
-            }
-
-            .welcome-message p {
-                font-size: clamp(0.8rem, 5vw, 0.95rem);
-                line-height: 1.3;
-            }
-
-            .kofi-button-bottom, .tiktok-button-bottom {
-                min-width: 110px;
-                font-size: 0.7rem;
-                padding: 5px 8px;
-                border-radius: 18px;
-                font-weight: 500;
-            }
-
-            .kofi-button-bottom {
-                bottom: 50px;
-            }
-
-            .tiktok-button-bottom {
-                bottom: 8px;
-            }
-
-            .category-menu {
-                top: 5px;
-                left: 5px;
-                border-radius: 5px;
-                border-width: 1px;
-            }
-
-            .category-menu select {
-                min-width: 130px;
-                font-size: 10px;
-                padding: 6px 8px;
-            }
-
-            .chapters-container {
-                padding: 10px 6px;
-                border-radius: 6px;
-                border-width: 1px;
-            }
-
-            .chapters-title {
-                font-size: 1rem;
-                margin-bottom: 12px;
-            }
-
-            .chapter-button {
-                padding: 8px 10px;
-                font-size: 0.85rem;
-                border-radius: 5px;
-                font-weight: 500;
-            }
-
-            .story-display, .quiz-container, .memo-container {
-                padding: 10px 6px;
-                border-radius: 6px;
-                border-width: 1px;
-            }
-
-            .quiz-question h3 {
-                font-size: 1rem;
-                margin-bottom: 10px;
-            }
-
-            .quiz-answer {
-                padding: 10px 8px;
-                font-size: 0.85rem;
-                border-radius: 5px;
-                border-width: 1px;
-            }
-
-            .quiz-score {
-                padding: 6px 12px;
-                font-size: 0.8rem;
-                margin-bottom: 10px;
-            }
-
-            .memo-timer {
-                font-size: 1rem;
-                padding: 10px 16px;
-                border-radius: 15px;
-                margin: 15px 0;
-            }
-
-            .memo-question h3 {
-                font-size: 1rem;
-                margin-bottom: 10px;
-            }
-
-            .memo-input {
-                padding: 10px;
-                font-size: 16px; /* Garde 16px pour éviter le zoom iOS */
-                border-radius: 5px;
-                border-width: 1px;
-            }
-
-            .memo-submit, .quiz-restart, .memo-restart {
-                padding: 10px 16px;
-                font-size: 0.9rem;
-                border-radius: 5px;
-            }
-
-            .video-info {
-                bottom: 5px;
-                right: 5px;
-                padding: 4px 8px;
-                font-size: 0.7rem;
-                border-radius: 15px;
-                border-width: 1px;
-            }
-
-            /* Optimisations performance iPhone 5 */
-            .quiz-answer:hover,
-            .chapter-button:hover,
-            .memo-submit:hover {
-                transform: none; /* Supprime les transforms pour de meilleures performances */
-            }
-
-            .quiz-answer:active,
-            .chapter-button:active,
-            .memo-submit:active {
-                opacity: 0.8;
-                transform: scale(0.98);
-            }
-
-            /* Simplifie les animations pour iPhone 5 */
-            .memo-timer {
-                animation: none; /* Supprime l'animation qui consomme de la performance */
-            }
-
-            .memo-timer.warning,
-            .memo-timer.danger {
-                animation: none;
-                opacity: 0.9;
-            }
-
-            /* Grid ultra-compact */
-            .chapters-grid {
-                gap: 8px;
-                margin-bottom: 15px;
-            }
-
-            .quiz-answers {
-                gap: 8px;
-            }
-
-            /* Textes optimisés */
-            .final-score {
-                font-size: 1.5rem !important;
-            }
-
-            .quiz-results h2 {
-                font-size: 1.2rem;
-            }
-
-            .memo-result {
-                font-size: 1rem;
-                padding: 15px 10px;
-            }
-        }
-
         /* iPhone 6/6S/7/8/SE2020 et écrans similaires (375px) */
         @media (min-width: 361px) and (max-width: 414px) {
             .container {
                 padding: 12px 10px;
                 max-width: 100%;
-            }
-
-            .welcome-message {
-                padding: 16px 14px;
-                margin-bottom: 22px;
-                border-radius: 16px;
-            }
-
-            .welcome-message h1 {
-                font-size: clamp(1.4rem, 5.5vw, 2rem);
-                margin-bottom: 8px;
-                line-height: 1.25;
-            }
-
-            .welcome-message p {
-                font-size: clamp(0.95rem, 3.5vw, 1.1rem);
-                line-height: 1.4;
             }
 
             .kofi-button-bottom, .tiktok-button-bottom {
@@ -1563,18 +1207,6 @@
 
             .tiktok-button-bottom {
                 bottom: 12px;
-            }
-
-            .category-menu {
-                top: 12px;
-                left: 12px;
-                border-radius: 8px;
-            }
-
-            .category-menu select {
-                min-width: 160px;
-                font-size: 13px;
-                padding: 9px 12px;
             }
 
             .chapters-container {
@@ -1699,20 +1331,10 @@
                 padding: 10px 6px;
             }
 
-            .welcome-message {
-                padding: 12px 10px;
-                border-radius: 14px;
-            }
-
             .kofi-button-bottom, .tiktok-button-bottom {
                 min-width: 125px;
                 font-size: 0.75rem;
                 padding: 6px 10px;
-            }
-
-            .category-menu select {
-                min-width: 145px;
-                font-size: 11px;
             }
 
             .chapters-container {
@@ -1741,10 +1363,6 @@
                 max-width: 1000px;
             }
 
-            .welcome-message {
-                padding: 30px 25px;
-            }
-
             .chapters-grid {
                 grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
                 gap: 20px;
@@ -1767,7 +1385,7 @@
         🎬 Vidéo du jour
     </div>
 
-    <!-- Menu catégories en haut à gauche -->
+    <!-- Menu catégories au centre-droit -->
     <div class="category-menu">
         <select id="category">
             <option value="">📚 Choisir une catégorie</option>
