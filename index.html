@@ -84,7 +84,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 650px;
             margin: 0 auto;
             padding: 15px;
             position: relative;
@@ -1505,39 +1505,41 @@
         </nav>
     </header>
 
-    <!-- Conteneur des boutons fixes en colonne droite -->
-    <div class="fixed-buttons-container">
-        <a href="https://ko-fi.com/1jour1histoire" 
-           target="_blank" 
-           class="social-button kofi-button-bottom">
-            ☕ Soutenir sur Ko-fi
-        </a>
 
-        <a href="https://www.tiktok.com/@1jour1hiistoires?_t=ZN-8x0JWagYNk6&_r=1" 
-           target="_blank" 
-           class="social-button tiktok-button-bottom">
-            🎵 Rejoins-moi sur TikTok
-        </a>
-    </div>
 
     <div class="container">
         <!-- Histoire du jour affichée par défaut -->
         <div class="story-display show" id="daily-story">
             <h2 style="color: #4a90e2; margin-bottom: 20px; text-align: center;">🌟 Histoire du jour</h2>
             <div style="background: rgba(74, 144, 226, 0.1); padding: 20px; border-radius: 10px; border: 1px solid #4a90e2; margin-bottom: 20px;">
-                <h3 style="color: #4a90e2; margin-bottom: 15px;">La fée Luna et l'arc-en-ciel perdu</h3>
+                <h3 style="color: #4a90e2; margin-bottom: 15px;">Le Mystère des Chaussettes Disparues</h3>
                 <p style="line-height: 1.8; font-size: 1.1rem;">
-                    Il était une fois une petite fée nommée Luna qui vivait dans un jardin magique. Un matin, elle se réveilla et découvrit que toutes les fleurs avaient perdu leurs couleurs vives. Les roses n'étaient plus rouges, les tournesols n'étaient plus jaunes, et tout le jardin était devenu gris et terne.
+                    Marcel Dubois, comptable de 42 ans et maniaque de l'ordre, avait découvert un phénomène troublant : ses chaussettes disparaissaient une par une, toujours la gauche. Après trois semaines d'enquête minutieuse impliquant un tableau Excel avec 47 colonnes et des photos légendées, il était convaincu d'être victime d'un complot.
                 </p>
                 <p style="line-height: 1.8; font-size: 1.1rem; margin-top: 15px;">
-                    Luna comprit immédiatement ce qui s'était passé : l'arc-en-ciel avait disparu ! Sans lui, aucune couleur ne pouvait exister dans le monde. Déterminée à sauver son jardin bien-aimé, la petite fée fit appel à ses amis les papillons multicolores qui avaient encore conservé leurs teintes chatoyantes.
+                    Un mardi matin, armé d'une lampe de poche et d'un carnet de notes, Marcel décida de mener une filature nocturne de sa machine à laver. À 2h47 précises, il vit quelque chose d'extraordinaire : une petite créature poilue sortait de l'évacuation, tenant fièrement sa chaussette préférée à carreaux bleus.
                 </p>
                 <p style="line-height: 1.8; font-size: 1.1rem; margin-top: 15px;">
-                    Ensemble, ils partirent à la recherche de l'arc-en-ciel perdu. Après avoir volé au-dessus des nuages et traversé les vallées, ils le trouvèrent endormi derrière une montagne, épuisé d'avoir éclairé le monde pendant si longtemps. Luna chanta une douce mélodie pour le réveiller, et l'arc-en-ciel s'étira dans le ciel, redonnant instantanément vie et couleur à tout le jardin magique. 🌈
+                    "Excusez-moi !" chuchota Marcel. La créature se retourna, ajusta ses lunettes miniatures et déclara avec dignité : "Gnarp Kloxinne, collecteur officiel de chaussettes gauches pour le Département des Objets Célibataires. Vos chaussettes sont en sécurité dans notre refuge, elles y trouvent d'autres chaussettes abandonnées. Merci pour votre contribution involontaire !" Et depuis, Marcel achète toujours ses chaussettes par paires dépareillées. 🧦✨
                 </p>
             </div>
             <div style="text-align: center;">
-                <p style="color: #ffc107; font-weight: 600; margin-bottom: 15px;">✨ Explorez d'autres histoires dans le menu ci-dessus ! ✨</p>
+                <p style="color: #ffc107; font-weight: 600; margin-bottom: 25px;">✨ Explorez d'autres histoires dans le menu ci-dessus ! ✨</p>
+                
+                <!-- Boutons Ko-fi et TikTok centrés -->
+                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 30px;">
+                    <a href="https://ko-fi.com/1jour1histoire" 
+                       target="_blank" 
+                       style="display: inline-block; background: linear-gradient(135deg, #29abe0, #00b9fe); color: white; text-decoration: none; padding: 15px 25px; border-radius: 50px; font-size: 1rem; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(41, 171, 224, 0.4); border: 2px solid transparent; min-width: 180px; text-align: center;">
+                        ☕ Soutenez-moi sur Ko-fi
+                    </a>
+
+                    <a href="https://www.tiktok.com/@1jour1hiistoires?_t=ZN-8x0JWagYNk6&_r=1" 
+                       target="_blank" 
+                       style="display: inline-block; background: linear-gradient(135deg, #ff0050, #ff0080); color: white; text-decoration: none; padding: 15px 25px; border-radius: 50px; font-size: 1rem; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(255, 0, 80, 0.4); border: 2px solid transparent; min-width: 180px; text-align: center;">
+                        🎵 Rejoins-moi sur TikTok
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -3179,14 +3181,14 @@
         // Système de vidéos quotidiennes
         const dailyVideos = [
             {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
-                title: 'Big Buck Bunny - Lundi',
-                description: 'Animation 3D par Blender Foundation'
+                url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
+                title: 'Nature - Lundi', 
+                description: 'Vidéo de démonstration nature'
             },
             {
-                url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
-                title: 'Nature - Mardi', 
-                description: 'Vidéo de démonstration nature'
+                url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4',
+                title: 'Océan - Mardi',
+                description: 'Vidéo relaxante océanique'
             },
             {
                 url: 'https://www.w3schools.com/html/movie.mp4',
@@ -3194,9 +3196,9 @@
                 description: 'Vidéo de test W3Schools'
             },
             {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
-                title: 'Big Buck Bunny - Jeudi',
-                description: 'Retour du classique d\'animation'
+                url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
+                title: 'Paysages - Jeudi',
+                description: 'Magnifiques paysages naturels'
             },
             {
                 url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4',
@@ -3204,12 +3206,12 @@
                 description: 'Vidéo relaxante pour finir la semaine'
             },
             {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
-                title: 'Weekend Bunny - Samedi',
-                description: 'Animation spéciale weekend'
+                url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
+                title: 'Weekend Nature - Samedi',
+                description: 'Nature spéciale weekend'
             },
             {
-                url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
+                url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4',
                 title: 'Dimanche Zen - Dimanche',
                 description: 'Vidéo apaisante pour le dimanche'
             }
