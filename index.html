@@ -1508,22 +1508,13 @@
 
 
     <div class="container">
-        <!-- Histoire du jour affichée par défaut -->
+        <!-- Énigme mémo 30 secondes par défaut -->
         <div class="story-display show" id="daily-story">
-            <h2 style="color: #4a90e2; margin-bottom: 20px; text-align: center;">🌟 Histoire du jour</h2>
-            <div style="background: rgba(74, 144, 226, 0.1); padding: 20px; border-radius: 10px; border: 1px solid #4a90e2; margin-bottom: 20px;">
-                <h3 style="color: #4a90e2; margin-bottom: 15px;">Le Mystère des Chaussettes Disparues</h3>
-                <p style="line-height: 1.8; font-size: 1.1rem;">
-                    Marcel Dubois, comptable de 42 ans et maniaque de l'ordre, avait découvert un phénomène troublant : ses chaussettes disparaissaient une par une, toujours la gauche. Après trois semaines d'enquête minutieuse impliquant un tableau Excel avec 47 colonnes et des photos légendées, il était convaincu d'être victime d'un complot.
-                </p>
-                <p style="line-height: 1.8; font-size: 1.1rem; margin-top: 15px;">
-                    Un mardi matin, armé d'une lampe de poche et d'un carnet de notes, Marcel décida de mener une filature nocturne de sa machine à laver. À 2h47 précises, il vit quelque chose d'extraordinaire : une petite créature poilue sortait de l'évacuation, tenant fièrement sa chaussette préférée à carreaux bleus.
-                </p>
-                <p style="line-height: 1.8; font-size: 1.1rem; margin-top: 15px;">
-                    "Excusez-moi !" chuchota Marcel. La créature se retourna, ajusta ses lunettes miniatures et déclara avec dignité : "Gnarp Kloxinne, collecteur officiel de chaussettes gauches pour le Département des Objets Célibataires. Vos chaussettes sont en sécurité dans notre refuge, elles y trouvent d'autres chaussettes abandonnées. Merci pour votre contribution involontaire !" Et depuis, Marcel achète toujours ses chaussettes par paires dépareillées. 🧦✨
-                </p>
+            <h2 style="color: #4a90e2; margin-bottom: 20px; text-align: center;">🖼️ Énigme du jour - 30 secondes</h2>
+            <div id="daily-enigme-container">
+                <!-- Contenu de l'énigme généré par JavaScript -->
             </div>
-            <div style="text-align: center;">
+            <div style="text-align: center; margin-top: 25px;" id="daily-enigme-footer">
                 <p style="color: #ffc107; font-weight: 600; margin-bottom: 25px;">✨ Explorez d'autres histoires dans le menu ci-dessus ! ✨</p>
                 
                 <!-- Boutons Ko-fi et TikTok centrés -->
@@ -3409,6 +3400,9 @@
                 // Charger la vidéo du jour
                 setDailyVideo();
                 
+                // Initialiser l'énigme du jour
+                initializeDailyEnigme();
+                
                 // Optimiser l'apparition de la page
                 optimizedAnimation(() => {
                     document.body.style.opacity = '1';
@@ -3439,6 +3433,198 @@
             });
             
             observer.observe({ entryTypes: ['navigation'] });
+        }
+
+        // Fonction pour initialiser l'énigme du jour
+        function initializeDailyEnigme() {
+            // Sélectionner une énigme aléatoirement
+            const randomEnigmeIndex = Math.floor(Math.random() * enigmeData.enigmes.length);
+            const selectedEnigme = enigmeData.enigmes[randomEnigmeIndex];
+            
+            // Initialiser l'énigme courante
+            currentEnigme = {
+                currentEnigme: randomEnigmeIndex,
+                currentQuestion: 0,
+                answers: [null, null, null],
+                timer: null,
+                timeLeft: 30,
+                phase: 'viewing',
+                finished: false
+            };
+            
+            const container = document.getElementById('daily-enigme-container');
+            
+            container.innerHTML = `
+                <div style="background: rgba(74, 144, 226, 0.1); padding: 20px; border-radius: 10px; border: 1px solid #4a90e2; text-align: center;">
+                    <p style="color: #ffc107; font-weight: 600; margin-bottom: 20px;">
+                        Regardez attentivement l'image, puis répondez aux 3 questions en 30 secondes !
+                    </p>
+                    
+                    <div style="margin: 20px 0;">
+                        <div class="image-loader" style="min-height: 300px; display: flex; align-items: center; justify-content: center; background: rgba(74, 144, 226, 0.1); border-radius: 10px; border: 2px solid #4a90e2;">
+                            <div style="color: #4a90e2; font-size: 1.2rem;">🖼️ Chargement de l'image...</div>
+                        </div>
+                        <p style="color: #4a90e2; margin-top: 10px; font-weight: 600;">${selectedEnigme.title}</p>
+                    </div>
+                    
+                    <button class="memo-submit" id="daily-start-enigme-btn" onclick="startDailyEnigmeTimer()" disabled style="opacity: 0.5;">
+                        🚀 Chargement en cours...
+                    </button>
+                </div>
+            `;
+            
+            // Charger l'image
+            lazyLoadImage(selectedEnigme.image, selectedEnigme.title, 'daily-start-enigme-btn');
+        }
+
+        function startDailyEnigmeTimer() {
+            const selectedEnigme = enigmeData.enigmes[currentEnigme.currentEnigme];
+            currentEnigme.phase = 'questioning';
+            currentEnigme.timeLeft = 30;
+            currentEnigme.currentQuestion = 0;
+            
+            showDailyEnigmeQuestion();
+            
+            // Démarrer le timer
+            currentEnigme.timer = setInterval(() => {
+                currentEnigme.timeLeft--;
+                const timerElement = document.getElementById('daily-enigme-timer');
+                
+                if (timerElement) {
+                    timerElement.textContent = `⏰ ${currentEnigme.timeLeft} secondes`;
+                    
+                    // Changer les couleurs selon le temps restant
+                    if (currentEnigme.timeLeft <= 5) {
+                        timerElement.className = 'memo-timer danger';
+                    } else if (currentEnigme.timeLeft <= 10) {
+                        timerElement.className = 'memo-timer warning';
+                    }
+                }
+                
+                if (currentEnigme.timeLeft <= 0) {
+                    clearInterval(currentEnigme.timer);
+                    dailyEnigmeTimeUp();
+                }
+            }, 1000);
+        }
+
+        function showDailyEnigmeQuestion() {
+            const selectedEnigme = enigmeData.enigmes[currentEnigme.currentEnigme];
+            const currentQuestion = selectedEnigme.questions[currentEnigme.currentQuestion];
+            
+            const container = document.getElementById('daily-enigme-container');
+            container.innerHTML = `
+                <div style="background: rgba(74, 144, 226, 0.1); padding: 20px; border-radius: 10px; border: 1px solid #4a90e2; text-align: center;">
+                    <div class="memo-timer" id="daily-enigme-timer">⏰ ${currentEnigme.timeLeft} secondes</div>
+                    
+                    <div style="margin: 15px 0;">
+                        <div style="background: linear-gradient(135deg, #4a90e2, #357abd); color: white; padding: 8px 16px; border-radius: 15px; display: inline-block; margin-bottom: 15px;">
+                            Question ${currentEnigme.currentQuestion + 1} / 3
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(74, 144, 226, 0.1); padding: 20px; border-radius: 10px; border: 1px solid #4a90e2; margin: 20px 0;">
+                        <h3 style="color: #4a90e2; margin-bottom: 15px; font-size: 1.3rem;">${currentQuestion.question}</h3>
+                        <div style="display: grid; gap: 10px;" id="daily-enigme-answers">
+                            ${currentQuestion.answers.map((answer, index) => 
+                                `<button class="quiz-answer" onclick="selectDailyEnigmeAnswer(${index})">${answer}</button>`
+                            ).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectDailyEnigmeAnswer(selectedIndex) {
+            const selectedEnigme = enigmeData.enigmes[currentEnigme.currentEnigme];
+            const currentQuestion = selectedEnigme.questions[currentEnigme.currentQuestion];
+            
+            // Stocker la réponse
+            currentEnigme.answers[currentEnigme.currentQuestion] = selectedIndex;
+            
+            // Passer à la question suivante
+            currentEnigme.currentQuestion++;
+            
+            if (currentEnigme.currentQuestion < 3) {
+                // Question suivante
+                showDailyEnigmeQuestion();
+            } else {
+                // Toutes les questions répondues
+                clearInterval(currentEnigme.timer);
+                showDailyEnigmeResults();
+            }
+        }
+
+        function dailyEnigmeTimeUp() {
+            if (currentEnigme.finished) return;
+            
+            currentEnigme.finished = true;
+            showDailyEnigmeResults();
+        }
+
+        function showDailyEnigmeResults() {
+            const selectedEnigme = enigmeData.enigmes[currentEnigme.currentEnigme];
+            let correctAnswers = 0;
+            
+            // Compter les bonnes réponses
+            for (let i = 0; i < 3; i++) {
+                if (currentEnigme.answers[i] !== null && 
+                    currentEnigme.answers[i] === selectedEnigme.questions[i].correct) {
+                    correctAnswers++;
+                }
+            }
+            
+            const allCorrect = correctAnswers === 3;
+            let resultMessage, resultClass;
+            
+            if (allCorrect) {
+                resultMessage = "🎉 PARFAIT ! Vous avez tout juste ! Excellente observation !";
+                resultClass = "success";
+            } else {
+                resultMessage = `❌ ${correctAnswers}/3 bonnes réponses. Il fallait TOUTES les bonnes réponses pour réussir !`;
+                resultClass = "failure";
+            }
+            
+            const container = document.getElementById('daily-enigme-container');
+            container.innerHTML = `
+                <div style="background: rgba(74, 144, 226, 0.1); padding: 20px; border-radius: 10px; border: 1px solid #4a90e2;">
+                    <h3 style="color: #4a90e2; margin-bottom: 20px; text-align: center;">📊 Résultat de l'énigme</h3>
+                    
+                    <div class="memo-result ${resultClass}" style="margin: 20px 0;">
+                        ${resultMessage}
+                    </div>
+                    
+                    <div style="background: rgba(74, 144, 226, 0.05); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <h4 style="color: #4a90e2; margin-bottom: 10px;">📋 Détail des réponses :</h4>
+                        
+                        ${selectedEnigme.questions.map((question, index) => `
+                            <div style="margin-bottom: 10px; padding: 8px; border-radius: 5px; border-left: 3px solid ${
+                                currentEnigme.answers[index] === question.correct ? '#28a745' : '#dc3545'
+                            }; font-size: 0.9rem;">
+                                <p style="color: #4a90e2; font-weight: 600; margin-bottom: 3px;">
+                                    ${index + 1}. ${question.question}
+                                </p>
+                                <p style="color: #28a745; margin-bottom: 2px;">
+                                    ✅ ${question.answers[question.correct]}
+                                </p>
+                                ${currentEnigme.answers[index] !== null ? `
+                                    <p style="color: ${currentEnigme.answers[index] === question.correct ? '#28a745' : '#dc3545'};">
+                                        ${currentEnigme.answers[index] === question.correct ? '✅' : '❌'} Vous : ${question.answers[currentEnigme.answers[index]]}
+                                    </p>
+                                ` : `
+                                    <p style="color: #ffc107;">⏰ Pas de réponse</p>
+                                `}
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button class="memo-restart" onclick="initializeDailyEnigme()">
+                            🔄 Nouvelle énigme image
+                        </button>
+                    </div>
+                </div>
+            `;
         }
     </script>
 </body>
