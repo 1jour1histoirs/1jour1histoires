@@ -1493,7 +1493,7 @@
 
     <!-- 🔝 Barre fixe en haut -->
     <header class="top-bar">
-        <h1>1jour1histoire</h1>
+        <h1>Bienvenue sur 1jour1histoire</h1>
         <nav class="nav-categories">
             <a href="#horreur" onclick="showCategory('horreur')">🧟 Horreur</a>
             <a href="#absurde" onclick="showCategory('absurde')">🤡 Absurde</a>
@@ -1521,9 +1521,24 @@
     </div>
 
     <div class="container">
-        <div class="hero-welcome">
-            <h1 class="hero-title">📚 Bienvenue sur 1jour1histoire</h1>
-            <p class="hero-subtitle">Chaque jour une surprise !</p>
+        <!-- Histoire du jour affichée par défaut -->
+        <div class="story-display show" id="daily-story">
+            <h2 style="color: #4a90e2; margin-bottom: 20px; text-align: center;">🌟 Histoire du jour</h2>
+            <div style="background: rgba(74, 144, 226, 0.1); padding: 20px; border-radius: 10px; border: 1px solid #4a90e2; margin-bottom: 20px;">
+                <h3 style="color: #4a90e2; margin-bottom: 15px;">La fée Luna et l'arc-en-ciel perdu</h3>
+                <p style="line-height: 1.8; font-size: 1.1rem;">
+                    Il était une fois une petite fée nommée Luna qui vivait dans un jardin magique. Un matin, elle se réveilla et découvrit que toutes les fleurs avaient perdu leurs couleurs vives. Les roses n'étaient plus rouges, les tournesols n'étaient plus jaunes, et tout le jardin était devenu gris et terne.
+                </p>
+                <p style="line-height: 1.8; font-size: 1.1rem; margin-top: 15px;">
+                    Luna comprit immédiatement ce qui s'était passé : l'arc-en-ciel avait disparu ! Sans lui, aucune couleur ne pouvait exister dans le monde. Déterminée à sauver son jardin bien-aimé, la petite fée fit appel à ses amis les papillons multicolores qui avaient encore conservé leurs teintes chatoyantes.
+                </p>
+                <p style="line-height: 1.8; font-size: 1.1rem; margin-top: 15px;">
+                    Ensemble, ils partirent à la recherche de l'arc-en-ciel perdu. Après avoir volé au-dessus des nuages et traversé les vallées, ils le trouvèrent endormi derrière une montagne, épuisé d'avoir éclairé le monde pendant si longtemps. Luna chanta une douce mélodie pour le réveiller, et l'arc-en-ciel s'étira dans le ciel, redonnant instantanément vie et couleur à tout le jardin magique. 🌈
+                </p>
+            </div>
+            <div style="text-align: center;">
+                <p style="color: #ffc107; font-weight: 600; margin-bottom: 15px;">✨ Explorez d'autres histoires dans le menu ci-dessus ! ✨</p>
+            </div>
         </div>
 
         <div class="chapters-container" id="chapters-container">
