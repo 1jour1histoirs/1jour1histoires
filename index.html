@@ -1,0 +1,3649 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1jour1histoire - Chaque jour une surprise !</title>
+    
+    <!-- Performance optimizations -->
+    <meta http-equiv="Cache-Control" content="max-age=3600">
+    <meta name="theme-color" content="#4a90e2">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://www.w3schools.com">
+    <link rel="dns-prefetch" href="https://sample-videos.com">
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="data:font/woff2;base64," as="font" type="font/woff2" crossorigin>
+    <style>
+        /* Performance optimizations */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Force hardware acceleration for better performance */
+        .video-background,
+        .welcome-message,
+        .chapter-button,
+        .quiz-answer,
+        .memo-timer {
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        /* Optimize repaints */
+        .category-menu,
+        .kofi-button-bottom,
+        .tiktok-button-bottom {
+            contain: layout style paint;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            color: white;
+            position: relative;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+
+        .video-info {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: #4a90e2;
+            border: 1px solid #4a90e2;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Bloc principal du titre - DESIGN ENFANT PARFAIT */
+        .hero-welcome {
+            /* Positionnement et espacement */
+            margin: 80px auto 40px auto; /* Espace du menu + marges */
+            max-width: 90%;
+            width: fit-content;
+            min-width: 320px;
+            
+            /* CORRECTION Z-INDEX - Priorité maximale */
+            position: relative;
+            z-index: 150; /* Plus élevé que le menu (100) */
+            
+            /* Centrage parfait */
+            text-align: center;
+            display: block;
+            
+            /* Style visuel enfant */
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.95) 0%, 
+                rgba(240, 248, 255, 0.9) 100%);
+            
+            /* Bordures et formes */
+            border-radius: 25px;
+            border: 3px solid #6ba3e8;
+            
+            /* Ombres douces */
+            box-shadow: 
+                0 8px 32px rgba(107, 163, 232, 0.3),
+                0 4px 16px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            
+            /* Espacement interne généreux */
+            padding: 30px 25px;
+            
+            /* Transitions fluides */
+            transition: all 0.3s ease;
+            
+            /* Effet de profondeur */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            
+            /* Animation d'entrée */
+            animation: heroFadeIn 0.8s ease-out;
+        }
+
+        /* Titre principal */
+        .hero-title {
+            /* Taille responsive et lisible */
+            font-size: clamp(1.8rem, 5.5vw, 3rem);
+            
+            /* Police adaptée aux enfants */
+            font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
+            font-weight: 700;
+            
+            /* Couleur vive et joyeuse */
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            
+            /* Animation arc-en-ciel */
+            animation: rainbowText 4s ease-in-out infinite;
+            
+            /* Espacement */
+            margin: 0 0 15px 0;
+            line-height: 1.2;
+            
+            /* Effet de texte */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            letter-spacing: 1px;
+        }
+
+        /* Sous-titre */
+        .hero-subtitle {
+            /* Taille et lisibilité */
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            
+            /* Police claire */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+            
+            /* Couleur douce */
+            color: #2c3e50;
+            
+            /* Espacement */
+            margin: 0;
+            line-height: 1.4;
+            
+            /* Style décoratif */
+            position: relative;
+            
+            /* Ombre légère */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Décoration sous le sous-titre */
+        .hero-subtitle::after {
+            content: "✨";
+            display: inline-block;
+            margin-left: 8px;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        /* Animation arc-en-ciel pour le titre */
+        @keyframes rainbowText {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Animation d'entrée du bloc */
+        @keyframes heroFadeIn {
+            0% { 
+                opacity: 0; 
+                transform: translateY(-30px) scale(0.95); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+
+        /* Animation des étoiles */
+        @keyframes sparkle {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg); 
+                opacity: 1; 
+            }
+            50% { 
+                transform: scale(1.2) rotate(180deg); 
+                opacity: 0.8; 
+            }
+        }
+
+        /* Effet au survol (pour les écrans tactiles) */
+        .hero-welcome:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 12px 40px rgba(107, 163, 232, 0.4),
+                0 6px 20px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        /* MENU CROSS-BROWSER UNIVERSEL POUR ENFANTS */
+        .category-menu {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100; /* Inférieur au titre (150) */
+            
+            /* Style cartoon enfant - Fallback solid */
+            background: #ffffff;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.95) 0%, 
+                rgba(240, 248, 255, 0.9) 100%);
+            
+            /* Bordures arrondies et douces */
+            border-radius: 20px;
+            border: 3px solid #6ba3e8;
+            
+            /* Ombres compatibles */
+            box-shadow: 
+                0 6px 25px rgba(107, 163, 232, 0.4),
+                0 2px 10px rgba(0, 0, 0, 0.1);
+            
+            /* Fallback sans backdrop-filter pour IE/Edge ancien */
+            
+            /* Transition simple et compatible */
+            transition: all 0.3s ease;
+            
+            /* Animation réduite pour compatibilité */
+            animation: menuFloatCompat 4s ease-in-out infinite;
+        }
+
+        /* Animation compatible tous navigateurs */
+        @keyframes menuFloatCompat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-2px); }
+        }
+
+        /* Effet hover simplifié mais efficace */
+        .category-menu:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 8px 30px rgba(107, 163, 232, 0.5),
+                0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Container pour le select avec flèche custom */
+        .category-menu::after {
+            content: '▼';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6ba3e8;
+            font-size: 14px;
+            pointer-events: none;
+            transition: transform 0.3s ease;
+        }
+
+        .category-menu:hover::after {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .category-menu select {
+            /* Style enfant friendly */
+            padding: 12px 35px 12px 18px;
+            font-size: 15px;
+            font-family: 'Comic Sans MS', 'Segoe UI', 'Arial', sans-serif;
+            font-weight: 600;
+            
+            /* Couleurs cartoon */
+            background: transparent;
+            color: #2c3e50;
+            
+            /* Bordures et forme */
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            
+            /* Taille responsive */
+            min-width: 200px;
+            width: 100%;
+            
+            /* Transitions compatibles */
+            transition: all 0.3s ease;
+            
+            /* Masquer la flèche native de façon compatible */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            
+            /* Fallback pour IE */
+            background-image: none;
+        }
+
+        /* Fallback pour IE - flèche visible */
+        @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+            .category-menu::after {
+                display: none;
+            }
+            
+            .category-menu select {
+                padding-right: 18px;
+            }
+        }
+
+        /* Focus states accessibles */
+        .category-menu select:focus {
+            outline: 2px solid #6ba3e8;
+            outline-offset: 2px;
+            background: rgba(107, 163, 232, 0.1);
+        }
+
+        .category-menu select:hover {
+            background: rgba(107, 163, 232, 0.05);
+        }
+
+        /* Options - styling minimal mais compatible */
+        .category-menu select option {
+            background: #ffffff;
+            color: #2c3e50;
+            padding: 8px 12px;
+            font-weight: 600;
+        }
+
+        /* États sélectionnés - compatible */
+        .category-menu select option:checked,
+        .category-menu select option[selected] {
+            background: #6ba3e8;
+            color: white;
+        }
+
+        /* Support moderne amélioré pour navigateurs récents */
+        @supports (backdrop-filter: blur(10px)) {
+            .category-menu {
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+            }
+        }
+
+        /* Support des custom properties modernes */
+        @supports (--css: variables) {
+            .category-menu {
+                --menu-primary: #6ba3e8;
+                --menu-bg: rgba(255, 255, 255, 0.95);
+                --menu-shadow: rgba(107, 163, 232, 0.4);
+                
+                border-color: var(--menu-primary);
+                background: var(--menu-bg);
+                box-shadow: 0 6px 25px var(--menu-shadow);
+            }
+        }
+
+        .chapters-container {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #4a90e2;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            display: none;
+        }
+
+        .chapters-container.show {
+            opacity: 1;
+            transform: translateY(0);
+            display: block;
+        }
+
+        .chapters-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #4a90e2;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .chapter-button {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .chapter-button:hover {
+            background: linear-gradient(135deg, #357abd, #2c5f99);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        .chapter-button:active {
+            transform: translateY(0);
+        }
+
+        .story-display {
+            background: rgba(20, 20, 20, 0.95);
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid #4a90e2;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .story-display.show {
+            opacity: 1;
+            transform: translateY(0);
+            display: block;
+        }
+
+        .quiz-container {
+            background: rgba(20, 20, 20, 0.95);
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid #4a90e2;
+            margin-top: 20px;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .quiz-score {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .quiz-question {
+            background: rgba(74, 144, 226, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #4a90e2;
+            margin-bottom: 20px;
+        }
+
+        .quiz-question h3 {
+            color: #4a90e2;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .quiz-answers {
+            display: grid;
+            gap: 10px;
+        }
+
+        .quiz-answer {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #4a90e2;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .quiz-answer:hover {
+            background: rgba(74, 144, 226, 0.2);
+            transform: translateX(5px);
+        }
+
+        .quiz-answer.correct {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            border-color: #28a745;
+            animation: correctAnswer 0.5s ease;
+        }
+
+        .quiz-answer.wrong {
+            background: linear-gradient(135deg, #dc3545, #e74c3c);
+            border-color: #dc3545;
+            animation: wrongAnswer 0.5s ease;
+        }
+
+        .quiz-answer.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        @keyframes correctAnswer {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes wrongAnswer {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+            100% { transform: translateX(0); }
+        }
+
+        .quiz-next {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 20px auto;
+            display: none;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-next:hover {
+            background: linear-gradient(135deg, #357abd, #2c5f99);
+            transform: translateY(-2px);
+        }
+
+        .quiz-next.show {
+            display: block;
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 30px;
+            background: rgba(74, 144, 226, 0.1);
+            border-radius: 10px;
+            border: 2px solid #4a90e2;
+        }
+
+        .quiz-results h2 {
+            color: #4a90e2;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .quiz-results .final-score {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .quiz-results .score-excellent {
+            color: #28a745;
+        }
+
+        .quiz-results .score-good {
+            color: #ffc107;
+        }
+
+        .quiz-results .score-needs-improvement {
+            color: #dc3545;
+        }
+
+        .quiz-restart {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-restart:hover {
+            background: linear-gradient(135deg, #20c997, #17a085);
+            transform: translateY(-2px);
+        }
+
+        .memo-container {
+            background: rgba(20, 20, 20, 0.95);
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid #4a90e2;
+            margin-top: 20px;
+        }
+
+        .memo-phase {
+            text-align: center;
+        }
+
+        .memo-story {
+            background: rgba(74, 144, 226, 0.1);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #4a90e2;
+            margin: 20px 0;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .memo-timer {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            animation: timerPulse 1s infinite;
+        }
+
+        @keyframes timerPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .memo-timer.warning {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            animation: timerWarning 0.5s infinite;
+        }
+
+        .memo-timer.danger {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            animation: timerDanger 0.3s infinite;
+        }
+
+        @keyframes timerWarning {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes timerDanger {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4); }
+            50% { transform: scale(1.15); box-shadow: 0 6px 25px rgba(244, 67, 54, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4); }
+        }
+
+        .memo-question {
+            background: rgba(74, 144, 226, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #4a90e2;
+            margin: 20px 0;
+        }
+
+        .memo-question h3 {
+            color: #4a90e2;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .memo-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #4a90e2;
+            border-radius: 8px;
+            color: white;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .memo-input:focus {
+            outline: none;
+            border-color: #6bb6ff;
+            box-shadow: 0 0 10px rgba(107, 182, 255, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .memo-submit {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .memo-submit:hover:not(:disabled) {
+            background: linear-gradient(135deg, #357abd, #2c5f99);
+            transform: translateY(-2px);
+        }
+
+        .memo-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .memo-result {
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .memo-result.success {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .memo-result.failure {
+            background: linear-gradient(135deg, #dc3545, #e74c3c);
+            color: white;
+        }
+
+        .memo-restart {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .memo-restart:hover {
+            background: linear-gradient(135deg, #20c997, #17a085);
+            transform: translateY(-2px);
+        }
+
+        .story-display h3 {
+            color: #4a90e2;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .tiktok-container {
+            text-align: center;
+        }
+
+        /* CONTENEUR BOUTONS FIXES - COLONNE DROITE */
+        .fixed-buttons-container {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 200; /* Plus élevé que tout le contenu */
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            
+            /* Animation flottante douce */
+            animation: floatButtons 3s ease-in-out infinite;
+            
+            /* Performance optimization */
+            will-change: transform;
+            pointer-events: none; /* Le conteneur ne bloque pas les clics */
+        }
+
+        /* Animation flottante subtile */
+        @keyframes floatButtons {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Style commun pour les boutons */
+        .social-button {
+            display: block;
+            text-decoration: none;
+            padding: 12px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 140px;
+            
+            /* Réactive les événements de clic */
+            pointer-events: auto;
+            
+            /* Transitions fluides */
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Ombres et profondeur */
+            box-shadow: 
+                0 4px 20px rgba(0, 0, 0, 0.15),
+                0 2px 8px rgba(0, 0, 0, 0.1);
+            
+            /* Backdrop blur pour effet moderne */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            
+            /* Contour pour accessibilité */
+            border: 2px solid transparent;
+        }
+
+        /* BOUTON KO-FI */
+        .kofi-button-bottom {
+            background: linear-gradient(135deg, #29abe0, #00b9fe);
+            color: white;
+            border-color: rgba(41, 171, 224, 0.3);
+        }
+
+        .kofi-button-bottom:hover {
+            background: linear-gradient(135deg, #00b9fe, #0099cc);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 
+                0 8px 30px rgba(41, 171, 224, 0.4),
+                0 4px 15px rgba(0, 0, 0, 0.2);
+            color: white;
+            border-color: rgba(41, 171, 224, 0.6);
+        }
+
+        .kofi-button-bottom:active {
+            transform: translateY(-2px) scale(1.01);
+        }
+
+        /* BOUTON TIKTOK */
+        .tiktok-button-bottom {
+            background: linear-gradient(135deg, #ff0050, #ff0080);
+            color: white;
+            border-color: rgba(255, 0, 80, 0.3);
+        }
+
+        .tiktok-button-bottom:hover {
+            background: linear-gradient(135deg, #ff0080, #e6006b);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 
+                0 8px 30px rgba(255, 0, 80, 0.4),
+                0 4px 15px rgba(0, 0, 0, 0.2);
+            color: white;
+            border-color: rgba(255, 0, 80, 0.6);
+        }
+
+        .tiktok-button-bottom:active {
+            transform: translateY(-2px) scale(1.01);
+        }
+
+        /* PROTECTION ANTI-CHEVAUCHEMENT */
+        .container,
+        .quiz-container,
+        .memo-container,
+        .story-display {
+            /* Marge droite pour éviter le chevauchement */
+            margin-right: 0;
+            padding-right: 15px;
+            
+            /* Espace en bas pour les boutons */
+            padding-bottom: 120px;
+        }
+
+        /* Zone de sécurité pour le contenu principal */
+        @media (min-width: 768px) {
+            .container {
+                margin-right: 180px; /* Espace pour les boutons */
+                padding-right: 15px;
+            }
+        }
+
+        /* RESPONSIVE MOBILE */
+        @media (max-width: 768px) {
+            .fixed-buttons-container {
+                right: 10px;
+                bottom: 15px;
+                gap: 10px;
+                /* Animation réduite sur mobile */
+                animation: none;
+            }
+            
+            .social-button {
+                min-width: 120px;
+                padding: 10px 14px;
+                font-size: 0.8rem;
+                border-radius: 30px;
+            }
+            
+            /* Moins d'espace pour mobile */
+            .container,
+            .quiz-container,
+            .memo-container,
+            .story-display {
+                margin-right: 0;
+                padding-bottom: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .fixed-buttons-container {
+                right: 8px;
+                bottom: 10px;
+                gap: 8px;
+            }
+            
+            .social-button {
+                min-width: 110px;
+                padding: 8px 12px;
+                font-size: 0.75rem;
+                border-radius: 25px;
+                
+                /* Ombres réduites pour performance */
+                box-shadow: 0 3px 15px rgba(0, 0, 0, 0.15);
+            }
+            
+            .social-button:hover {
+                transform: translateY(-2px) scale(1.01);
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            }
+            
+            /* Encore moins d'espace pour petit mobile */
+            .container,
+            .quiz-container,
+            .memo-container,
+            .story-display {
+                padding-bottom: 90px;
+            }
+        }
+
+        /* TRÈS PETITS ÉCRANS (320px) */
+        @media (max-width: 320px) {
+            .fixed-buttons-container {
+                right: 5px;
+                bottom: 8px;
+                gap: 6px;
+            }
+            
+            .social-button {
+                min-width: 100px;
+                padding: 7px 10px;
+                font-size: 0.7rem;
+                border-radius: 20px;
+                font-weight: 500;
+            }
+            
+            /* Supprime les effets coûteux sur très petits écrans */
+            .social-button:hover {
+                transform: none;
+                box-shadow: 0 3px 15px rgba(0, 0, 0, 0.15);
+            }
+            
+            .container,
+            .quiz-container,
+            .memo-container,
+            .story-display {
+                padding-bottom: 80px;
+            }
+        }
+
+        /* AMÉLIORATION ACCESSIBILITÉ */
+        .social-button:focus {
+            outline: 3px solid rgba(255, 255, 255, 0.8);
+            outline-offset: 2px;
+        }
+
+        /* EFFET DE PULSATION OPTIONNEL */
+        .social-button::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: inherit;
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-button:hover::before {
+            opacity: 0.3;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.05); opacity: 0.1; }
+            100% { transform: scale(1); opacity: 0.3; }
+        }
+
+        .tiktok-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff0050, #ff0080);
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(255, 0, 80, 0.4);
+            border: 2px solid #ff0050;
+        }
+
+        .tiktok-button:hover {
+            background: linear-gradient(135deg, #ff0080, #e6006b);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(255, 0, 80, 0.6);
+            color: white;
+        }
+
+        /* RESPONSIVE MENU CARTOON ADAPTÉ */
+        @media (max-width: 768px) {
+            .category-menu {
+                top: 12px;
+                left: 12px;
+                border-radius: 18px;
+                border-width: 2px;
+                /* Animation réduite pour mobile */
+                animation: none;
+            }
+            
+            .category-menu select {
+                padding: 10px 15px;
+                font-size: 14px;
+                min-width: 180px;
+                padding-right: 40px;
+                background-size: 18px;
+            }
+            
+            .hero-welcome {
+                margin: 70px auto 30px auto;
+                padding: 25px 20px;
+                max-width: 95%;
+                border-radius: 20px;
+                border-width: 2px;
+            }
+            
+            .hero-title {
+                font-size: clamp(1.5rem, 6vw, 2.2rem);
+                margin-bottom: 12px;
+            }
+            
+            .hero-subtitle {
+                font-size: clamp(1rem, 4vw, 1.3rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .category-menu {
+                top: 8px;
+                left: 8px;
+                border-radius: 15px;
+                border-width: 2px;
+            }
+            
+            .category-menu select {
+                padding: 8px 12px;
+                font-size: 13px;
+                min-width: 160px;
+                padding-right: 35px;
+                background-size: 16px;
+                font-weight: 500;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .category-menu {
+                top: 5px;
+                left: 5px;
+                border-radius: 12px;
+                border-width: 2px;
+            }
+            
+            .category-menu select {
+                padding: 6px 10px;
+                font-size: 12px;
+                min-width: 140px;
+                padding-right: 30px;
+                background-size: 14px;
+                font-weight: 500;
+            }
+        }
+
+        /* Responsive pour smartphones */
+        @media (max-width: 480px) {
+            .hero-welcome {
+                margin: 60px auto 25px auto;
+                padding: 20px 15px;
+                border-radius: 18px;
+                max-width: 98%;
+            }
+            
+            .hero-title {
+                font-size: clamp(1.3rem, 7vw, 1.9rem);
+                margin-bottom: 10px;
+                letter-spacing: 0.5px;
+            }
+            
+            .hero-subtitle {
+                font-size: clamp(0.9rem, 4.5vw, 1.2rem);
+            }
+        }
+
+        /* Pour les très petits écrans */
+        @media (max-width: 320px) {
+            .hero-welcome {
+                margin: 55px auto 20px auto;
+                padding: 18px 12px;
+                border-radius: 15px;
+                border-width: 2px;
+            }
+            
+            .hero-title {
+                font-size: clamp(1.2rem, 8vw, 1.7rem);
+                margin-bottom: 8px;
+            }
+            
+            .hero-subtitle {
+                font-size: clamp(0.85rem, 5vw, 1.1rem);
+            }
+        }
+
+        /* Tablettes et écrans moyens */
+        @media (max-width: 1024px) {
+            .container {
+                max-width: 800px;
+                padding: 20px 15px;
+            }
+
+            .chapters-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 12px;
+            }
+        }
+
+        /* Tablettes portrait et petits ordinateurs portables */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px 10px;
+            }
+
+            .welcome-message {
+                padding: 18px 15px;
+                margin-bottom: 25px;
+            }
+
+            .welcome-message h1 {
+                font-size: clamp(1.3rem, 5vw, 2rem);
+            }
+
+            .welcome-message p {
+                font-size: clamp(0.9rem, 3vw, 1.1rem);
+            }
+
+            .chapters-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .chapter-button {
+                padding: 12px 15px;
+                font-size: 0.95rem;
+            }
+
+            .story-display, .quiz-container, .memo-container {
+                padding: 20px 15px;
+            }
+
+            .category-menu {
+                top: 15px;
+                left: 15px;
+            }
+
+            .category-menu select {
+                min-width: 170px;
+                font-size: 13px;
+                padding: 9px 13px;
+            }
+
+            .kofi-button-bottom {
+                bottom: 65px;
+                padding: 8px 15px;
+                font-size: 0.85rem;
+                min-width: 140px;
+            }
+
+            .tiktok-button-bottom {
+                bottom: 15px;
+                padding: 8px 15px;
+                font-size: 0.85rem;
+                min-width: 140px;
+            }
+
+            .video-info {
+                bottom: 15px;
+                right: 15px;
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Smartphones et petits écrans */
+        @media (max-width: 480px) {
+            .container {
+                padding: 12px 8px;
+                max-width: 100%;
+            }
+
+            .welcome-message {
+                padding: 15px 12px;
+                margin-bottom: 20px;
+                border-radius: 15px;
+            }
+
+            .welcome-message h1 {
+                font-size: clamp(1.2rem, 6vw, 1.8rem);
+                margin-bottom: 8px;
+            }
+
+            .welcome-message p {
+                font-size: clamp(0.85rem, 4vw, 1rem);
+            }
+
+            .chapters-container {
+                padding: 15px 10px;
+                border-radius: 8px;
+            }
+
+            .chapters-title {
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+            }
+
+            .chapter-button {
+                padding: 10px 12px;
+                font-size: 0.9rem;
+                border-radius: 6px;
+            }
+
+            .story-display, .quiz-container, .memo-container {
+                padding: 15px 10px;
+                border-radius: 8px;
+            }
+
+            .category-menu {
+                top: 8px;
+                left: 8px;
+                border-radius: 6px;
+            }
+
+            .category-menu select {
+                min-width: 150px;
+                font-size: 12px;
+                padding: 8px 10px;
+            }
+
+            .kofi-button-bottom {
+                bottom: 55px;
+                padding: 7px 12px;
+                font-size: 0.8rem;
+                min-width: 130px;
+                border-radius: 20px;
+            }
+
+            .tiktok-button-bottom {
+                bottom: 10px;
+                padding: 7px 12px;
+                font-size: 0.8rem;
+                min-width: 130px;
+                border-radius: 20px;
+            }
+
+            .video-info {
+                bottom: 8px;
+                right: 8px;
+                padding: 6px 10px;
+                font-size: 0.75rem;
+                border-radius: 20px;
+            }
+
+            .quiz-question h3 {
+                font-size: 1.1rem;
+            }
+
+            .quiz-answer {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+
+            .memo-timer {
+                font-size: 1.1rem;
+                padding: 12px 20px;
+            }
+
+            .memo-question h3 {
+                font-size: 1.1rem;
+            }
+
+            .memo-input {
+                padding: 12px;
+                font-size: 16px;
+            }
+
+            .memo-submit, .quiz-restart, .memo-restart {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+        }
+
+        /* iPhone 5 et très petits écrans (320px et moins) */
+        @media (max-width: 320px) {
+            .container {
+                padding: 8px 4px;
+                max-width: 100%;
+            }
+
+            .welcome-message {
+                padding: 10px 8px;
+                margin-bottom: 15px;
+                border-radius: 12px;
+                border-width: 1px;
+            }
+
+            .welcome-message h1 {
+                font-size: clamp(1.1rem, 7vw, 1.6rem);
+                margin-bottom: 6px;
+                line-height: 1.2;
+            }
+
+            .welcome-message p {
+                font-size: clamp(0.8rem, 5vw, 0.95rem);
+                line-height: 1.3;
+            }
+
+            .kofi-button-bottom, .tiktok-button-bottom {
+                min-width: 110px;
+                font-size: 0.7rem;
+                padding: 5px 8px;
+                border-radius: 18px;
+                font-weight: 500;
+            }
+
+            .kofi-button-bottom {
+                bottom: 50px;
+            }
+
+            .tiktok-button-bottom {
+                bottom: 8px;
+            }
+
+            .category-menu {
+                top: 5px;
+                left: 5px;
+                border-radius: 5px;
+                border-width: 1px;
+            }
+
+            .category-menu select {
+                min-width: 130px;
+                font-size: 10px;
+                padding: 6px 8px;
+            }
+
+            .chapters-container {
+                padding: 10px 6px;
+                border-radius: 6px;
+                border-width: 1px;
+            }
+
+            .chapters-title {
+                font-size: 1rem;
+                margin-bottom: 12px;
+            }
+
+            .chapter-button {
+                padding: 8px 10px;
+                font-size: 0.85rem;
+                border-radius: 5px;
+                font-weight: 500;
+            }
+
+            .story-display, .quiz-container, .memo-container {
+                padding: 10px 6px;
+                border-radius: 6px;
+                border-width: 1px;
+            }
+
+            .quiz-question h3 {
+                font-size: 1rem;
+                margin-bottom: 10px;
+            }
+
+            .quiz-answer {
+                padding: 10px 8px;
+                font-size: 0.85rem;
+                border-radius: 5px;
+                border-width: 1px;
+            }
+
+            .quiz-score {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+                margin-bottom: 10px;
+            }
+
+            .memo-timer {
+                font-size: 1rem;
+                padding: 10px 16px;
+                border-radius: 15px;
+                margin: 15px 0;
+            }
+
+            .memo-question h3 {
+                font-size: 1rem;
+                margin-bottom: 10px;
+            }
+
+            .memo-input {
+                padding: 10px;
+                font-size: 16px; /* Garde 16px pour éviter le zoom iOS */
+                border-radius: 5px;
+                border-width: 1px;
+            }
+
+            .memo-submit, .quiz-restart, .memo-restart {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+                border-radius: 5px;
+            }
+
+            .video-info {
+                bottom: 5px;
+                right: 5px;
+                padding: 4px 8px;
+                font-size: 0.7rem;
+                border-radius: 15px;
+                border-width: 1px;
+            }
+
+            /* Optimisations performance iPhone 5 */
+            .quiz-answer:hover,
+            .chapter-button:hover,
+            .memo-submit:hover {
+                transform: none; /* Supprime les transforms pour de meilleures performances */
+            }
+
+            .quiz-answer:active,
+            .chapter-button:active,
+            .memo-submit:active {
+                opacity: 0.8;
+                transform: scale(0.98);
+            }
+
+            /* Simplifie les animations pour iPhone 5 */
+            .memo-timer {
+                animation: none; /* Supprime l'animation qui consomme de la performance */
+            }
+
+            .memo-timer.warning,
+            .memo-timer.danger {
+                animation: none;
+                opacity: 0.9;
+            }
+
+            /* Grid ultra-compact */
+            .chapters-grid {
+                gap: 8px;
+                margin-bottom: 15px;
+            }
+
+            .quiz-answers {
+                gap: 8px;
+            }
+
+            /* Textes optimisés */
+            .final-score {
+                font-size: 1.5rem !important;
+            }
+
+            .quiz-results h2 {
+                font-size: 1.2rem;
+            }
+
+            .memo-result {
+                font-size: 1rem;
+                padding: 15px 10px;
+            }
+        }
+
+        /* iPhone 6/6S/7/8/SE2020 et écrans similaires (375px) */
+        @media (min-width: 361px) and (max-width: 414px) {
+            .container {
+                padding: 12px 10px;
+                max-width: 100%;
+            }
+
+            .welcome-message {
+                padding: 16px 14px;
+                margin-bottom: 22px;
+                border-radius: 16px;
+            }
+
+            .welcome-message h1 {
+                font-size: clamp(1.4rem, 5.5vw, 2rem);
+                margin-bottom: 8px;
+                line-height: 1.25;
+            }
+
+            .welcome-message p {
+                font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+                line-height: 1.4;
+            }
+
+            .kofi-button-bottom, .tiktok-button-bottom {
+                min-width: 140px;
+                font-size: 0.85rem;
+                padding: 8px 14px;
+                border-radius: 22px;
+                font-weight: 600;
+            }
+
+            .kofi-button-bottom {
+                bottom: 60px;
+            }
+
+            .tiktok-button-bottom {
+                bottom: 12px;
+            }
+
+            .category-menu {
+                top: 12px;
+                left: 12px;
+                border-radius: 8px;
+            }
+
+            .category-menu select {
+                min-width: 160px;
+                font-size: 13px;
+                padding: 9px 12px;
+            }
+
+            .chapters-container {
+                padding: 16px 12px;
+                border-radius: 10px;
+            }
+
+            .chapters-title {
+                font-size: 1.2rem;
+                margin-bottom: 16px;
+            }
+
+            .chapter-button {
+                padding: 12px 16px;
+                font-size: 0.95rem;
+                border-radius: 8px;
+                font-weight: 600;
+                /* Réactive les hover effects pour iPhone 6 (plus puissant) */
+            }
+
+            .story-display, .quiz-container, .memo-container {
+                padding: 16px 12px;
+                border-radius: 10px;
+            }
+
+            .quiz-question h3 {
+                font-size: 1.15rem;
+                margin-bottom: 12px;
+            }
+
+            .quiz-answer {
+                padding: 12px 10px;
+                font-size: 0.9rem;
+                border-radius: 8px;
+                /* Hover effects réactivés pour meilleure UX */
+            }
+
+            .quiz-score {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+                margin-bottom: 12px;
+            }
+
+            .memo-timer {
+                font-size: 1.2rem;
+                padding: 12px 20px;
+                border-radius: 18px;
+                margin: 16px 0;
+                /* Animations réactivées grâce au processeur A8 */
+            }
+
+            .memo-question h3 {
+                font-size: 1.15rem;
+                margin-bottom: 12px;
+            }
+
+            .memo-input {
+                padding: 12px;
+                font-size: 16px;
+                border-radius: 8px;
+            }
+
+            .memo-submit, .quiz-restart, .memo-restart {
+                padding: 12px 20px;
+                font-size: 1rem;
+                border-radius: 8px;
+            }
+
+            .video-info {
+                bottom: 12px;
+                right: 12px;
+                padding: 8px 12px;
+                font-size: 0.8rem;
+                border-radius: 18px;
+            }
+
+            /* Optimisations grilles pour iPhone 6 */
+            .chapters-grid {
+                gap: 10px;
+                margin-bottom: 16px;
+            }
+
+            .quiz-answers {
+                gap: 10px;
+            }
+
+            /* Textes optimisés pour 375px */
+            .final-score {
+                font-size: 1.8rem !important;
+            }
+
+            .quiz-results h2 {
+                font-size: 1.3rem;
+            }
+
+            .memo-result {
+                font-size: 1.1rem;
+                padding: 16px 12px;
+            }
+
+            /* Grid à 2 colonnes possible sur iPhone 6 en paysage */
+            @media (orientation: landscape) {
+                .chapters-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 12px;
+                }
+                
+                .container {
+                    padding: 10px 8px;
+                }
+                
+                .welcome-message {
+                    padding: 12px 16px;
+                    margin-bottom: 16px;
+                }
+            }
+        }
+
+        /* Écrans entre 321px et 360px (iPhone 5C, anciens Android) */
+        @media (min-width: 321px) and (max-width: 360px) {
+            .container {
+                padding: 10px 6px;
+            }
+
+            .welcome-message {
+                padding: 12px 10px;
+                border-radius: 14px;
+            }
+
+            .kofi-button-bottom, .tiktok-button-bottom {
+                min-width: 125px;
+                font-size: 0.75rem;
+                padding: 6px 10px;
+            }
+
+            .category-menu select {
+                min-width: 145px;
+                font-size: 11px;
+            }
+
+            .chapters-container {
+                padding: 12px 8px;
+            }
+
+            .story-display, .quiz-container, .memo-container {
+                padding: 12px 8px;
+            }
+        }
+
+        /* Grandes tablettes et écrans moyens en paysage */
+        @media (min-width: 769px) and (max-width: 1199px) {
+            .container {
+                max-width: 850px;
+            }
+
+            .chapters-grid {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            }
+        }
+
+        /* Écrans ultra-larges */
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1000px;
+            }
+
+            .welcome-message {
+                padding: 30px 25px;
+            }
+
+            .chapters-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Vidéo de fond qui change chaque jour -->
+    <video class="video-background" autoplay muted loop id="daily-video">
+        <source src="" type="video/mp4">
+        Votre navigateur ne supporte pas la vidéo HTML5.
+    </video>
+    
+    <!-- Overlay pour améliorer la lisibilité -->
+    <div class="video-overlay"></div>
+    
+    <!-- Info sur la vidéo du jour -->
+    <div class="video-info" id="video-info">
+        🎬 Vidéo du jour
+    </div>
+
+    <!-- Menu catégories en haut à gauche -->
+    <div class="category-menu">
+        <select id="category">
+            <option value="">📚 Choisir une catégorie</option>
+            <option value="enfant">👶 Histoire Enfant</option>
+            <option value="adulte">👨‍💼 Histoire Adulte</option>
+            <option value="religion">🙏 Histoire Religion</option>
+            <option value="quiz">🧠 Quiz Interactif</option>
+            <option value="memo">⏱️ Mémo 30 secondes</option>
+            <option value="enigme">🔍 Énigmes</option>
+        </select>
+    </div>
+
+    <!-- Conteneur des boutons fixes en colonne droite -->
+    <div class="fixed-buttons-container">
+        <a href="https://ko-fi.com/1jour1histoire" 
+           target="_blank" 
+           class="social-button kofi-button-bottom">
+            ☕ Soutenir sur Ko-fi
+        </a>
+
+        <a href="https://www.tiktok.com/@1jour1hiistoires?_t=ZN-8x0JWagYNk6&_r=1" 
+           target="_blank" 
+           class="social-button tiktok-button-bottom">
+            🎵 Rejoins-moi sur TikTok
+        </a>
+    </div>
+
+    <div class="container">
+        <div class="hero-welcome">
+            <h1 class="hero-title">📚 Bienvenue sur 1jour1histoire</h1>
+            <p class="hero-subtitle">Chaque jour une surprise !</p>
+        </div>
+
+        <div class="chapters-container" id="chapters-container">
+            <div class="chapters-title" id="chapters-title">Chapitres disponibles</div>
+            <div class="chapters-grid" id="chapters-grid">
+                <!-- Chapitres générés dynamiquement -->
+            </div>
+            <div class="story-display" id="story-display">
+                <!-- Histoire affichée ici -->
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        const enigmeData = {
+            enigmes: [
+                {
+                    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop",
+                    title: "Paysage de montagne",
+                    questions: [
+                        {
+                            question: "Que voit-on principalement dans cette image ?",
+                            answers: ["A) La mer", "B) Des montagnes", "C) Une ville"],
+                            correct: 1
+                        },
+                        {
+                            question: "Quelle est la couleur dominante du ciel ?",
+                            answers: ["A) Gris", "B) Rose/Orange", "C) Noir"],
+                            correct: 1
+                        },
+                        {
+                            question: "À quel moment de la journée cette photo a-t-elle été prise ?",
+                            answers: ["A) Lever/coucher de soleil", "B) Midi", "C) Minuit"],
+                            correct: 0
+                        }
+                    ]
+                },
+                {
+                    image: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&h=600&fit=crop",
+                    title: "Chien adorable",
+                    questions: [
+                        {
+                            question: "Quel animal voit-on sur cette image ?",
+                            answers: ["A) Un chat", "B) Un chien", "C) Un lapin"],
+                            correct: 1
+                        },
+                        {
+                            question: "Quelle est la couleur principale du pelage ?",
+                            answers: ["A) Brun/Beige", "B) Noir", "C) Blanc"],
+                            correct: 0
+                        },
+                        {
+                            question: "Où se trouve principalement l'animal ?",
+                            answers: ["A) Dans l'eau", "B) Sur l'herbe/sol", "C) Dans un arbre"],
+                            correct: 1
+                        }
+                    ]
+                },
+                {
+                    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&h=600&fit=crop",
+                    title: "Bureau moderne",
+                    questions: [
+                        {
+                            question: "Quel objet principal voit-on sur le bureau ?",
+                            answers: ["A) Un ordinateur", "B) Des livres", "C) Une plante"],
+                            correct: 0
+                        },
+                        {
+                            question: "Quelle est l'ambiance générale de l'image ?",
+                            answers: ["A) Sombre", "B) Moderne/claire", "C) Colorée"],
+                            correct: 1
+                        },
+                        {
+                            question: "Que suggère cette image ?",
+                            answers: ["A) Le travail/bureau", "B) La cuisine", "C) Le sport"],
+                            correct: 0
+                        }
+                    ]
+                },
+                {
+                    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop",
+                    title: "Nature sauvage",
+                    questions: [
+                        {
+                            question: "Dans quel type d'environnement sommes-nous ?",
+                            answers: ["A) Urbain", "B) Naturel/sauvage", "C) Industriel"],
+                            correct: 1
+                        },
+                        {
+                            question: "Quel élément naturel domine l'image ?",
+                            answers: ["A) L'eau", "B) Les rochers/montagnes", "C) Les arbres"],
+                            correct: 1
+                        },
+                        {
+                            question: "Cette image évoque quoi ?",
+                            answers: ["A) La tranquillité", "B) L'agitation", "C) La peur"],
+                            correct: 0
+                        }
+                    ]
+                },
+                {
+                    image: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e?w=800&h=600&fit=crop",
+                    title: "Petit déjeuner",
+                    questions: [
+                        {
+                            question: "Que voit-on principalement sur cette image ?",
+                            answers: ["A) De la nourriture", "B) Des outils", "C) Des vêtements"],
+                            correct: 0
+                        },
+                        {
+                            question: "À quel repas cette image fait-elle penser ?",
+                            answers: ["A) Dîner", "B) Petit déjeuner", "C) Goûter"],
+                            correct: 1
+                        },
+                        {
+                            question: "Quel sentiment cette image évoque-t-elle ?",
+                            answers: ["A) Tristesse", "B) Convivialité/chaleur", "C) Colère"],
+                            correct: 1
+                        }
+                    ]
+                }
+            ]
+        };
+
+        let currentEnigme = {
+            currentQuestion: 0,
+            score: 0,
+            enigmes: [],
+            answered: false
+        };
+
+        const quizData = {
+            questions: [
+                {
+                    question: "Quelle est la capitale de la France ?",
+                    answers: ["Paris", "Lyon", "Marseille", "Toulouse"],
+                    correct: 0
+                },
+                {
+                    question: "Combien de continents y a-t-il sur Terre ?",
+                    answers: ["5", "6", "7", "8"],
+                    correct: 2
+                },
+                {
+                    question: "Qui a écrit 'Les Misérables' ?",
+                    answers: ["Émile Zola", "Victor Hugo", "Gustave Flaubert", "Alexandre Dumas"],
+                    correct: 1
+                },
+                {
+                    question: "Quelle est la planète la plus proche du Soleil ?",
+                    answers: ["Vénus", "Terre", "Mercure", "Mars"],
+                    correct: 2
+                },
+                {
+                    question: "En quelle année a eu lieu la Révolution française ?",
+                    answers: ["1789", "1799", "1804", "1815"],
+                    correct: 0
+                },
+                {
+                    question: "Quel est le plus grand océan du monde ?",
+                    answers: ["Atlantique", "Indien", "Arctique", "Pacifique"],
+                    correct: 3
+                },
+                {
+                    question: "Combien de côtés a un hexagone ?",
+                    answers: ["5", "6", "7", "8"],
+                    correct: 1
+                },
+                {
+                    question: "Qui a peint 'La Joconde' ?",
+                    answers: ["Pablo Picasso", "Vincent van Gogh", "Leonardo da Vinci", "Claude Monet"],
+                    correct: 2
+                },
+                {
+                    question: "Quelle est la langue la plus parlée au monde ?",
+                    answers: ["Anglais", "Mandarin", "Espagnol", "Hindi"],
+                    correct: 1
+                },
+                {
+                    question: "Combien de minutes y a-t-il dans une heure ?",
+                    answers: ["50", "60", "70", "80"],
+                    correct: 1
+                }
+            ]
+        };
+
+        let currentQuiz = {
+            currentQuestion: 0,
+            score: 0,
+            questions: [],
+            answered: false
+        };
+
+        const memoQuestions = {
+            enfant: [
+                { 
+                    question: "Comment s'appelait la petite fée dans l'histoire ?", 
+                    answers: ["A) Luna", "B) Stella", "C) Iris"], 
+                    correct: 0,
+                    explanation: "La petite fée s'appelait Luna et vivait dans un jardin magique."
+                },
+                { 
+                    question: "Quel animal était l'ami de Félix dans l'histoire ?", 
+                    answers: ["A) Un lapin", "B) Un écureuil", "C) Un hérisson"], 
+                    correct: 1,
+                    explanation: "Félix le renard avait pour ami l'écureuil Noisette."
+                },
+                { 
+                    question: "Quel pouvoir avait la princesse Étoile ?", 
+                    answers: ["A) Contrôler le vent", "B) Faire apparaître des étoiles filantes", "C) Parler aux animaux"], 
+                    correct: 1,
+                    explanation: "La princesse Étoile pouvait faire apparaître des étoiles filantes."
+                },
+                { 
+                    question: "Que créait Léo le dragon au lieu de cracher du feu ?", 
+                    answers: ["A) Des bulles multicolores", "B) De la fumée rose", "C) Des étincelles dorées"], 
+                    correct: 0,
+                    explanation: "Léo créait de magnifiques bulles multicolores qui rendaient tout le monde heureux."
+                },
+                { 
+                    question: "Que gardait la sirène Perle ?", 
+                    answers: ["A) Un trésor sous-marin", "B) Un phare magique", "C) Une grotte secrète"], 
+                    correct: 1,
+                    explanation: "La sirène Perle gardait un phare magique qui guidait les bateaux perdus."
+                }
+            ],
+            adulte: [
+                { 
+                    question: "Depuis combien d'années Marie tenait-elle sa boutique ?", 
+                    answers: ["A) 30 ans", "B) 40 ans", "C) 50 ans"], 
+                    correct: 1,
+                    explanation: "Marie tenait sa boutique de fleurs depuis 40 ans."
+                },
+                { 
+                    question: "Quel était le métier de Thomas ?", 
+                    answers: ["A) Architecte", "B) Ingénieur", "C) Menuisier"], 
+                    correct: 0,
+                    explanation: "Thomas était architecte et maintenant à la retraite."
+                },
+                { 
+                    question: "Quel type d'établissement Sophie a-t-elle ouvert ?", 
+                    answers: ["A) Une boulangerie", "B) Un café-librairie", "C) Une galerie d'art"], 
+                    correct: 1,
+                    explanation: "Sophie a quitté son travail de cadre pour ouvrir un café-librairie."
+                },
+                { 
+                    question: "Après combien d'années Jean a-t-il retrouvé son premier amour ?", 
+                    answers: ["A) 25 ans", "B) 30 ans", "C) 35 ans"], 
+                    correct: 1,
+                    explanation: "Jean a retrouvé son premier amour après 30 ans lors d'une réunion d'anciens élèves."
+                },
+                { 
+                    question: "Quel était le métier d'Élise ?", 
+                    answers: ["A) Journaliste", "B) Photographe", "C) Réalisatrice"], 
+                    correct: 1,
+                    explanation: "Élise était photographe de guerre avant de se reconvertir."
+                }
+            ],
+            religion: [
+                { 
+                    question: "Comment s'appelait le frère du monastère ?", 
+                    answers: ["A) Antoine", "B) François", "C) Bernard"], 
+                    correct: 0,
+                    explanation: "Le frère Antoine passait ses journées à copier des manuscrits anciens."
+                },
+                { 
+                    question: "Comment s'appelait la jeune femme en pèlerinage ?", 
+                    answers: ["A) Marie", "B) Sarah", "C) Claire"], 
+                    correct: 1,
+                    explanation: "Sarah était la jeune femme en quête de spiritualité qui entreprit un pèlerinage à pied."
+                },
+                { 
+                    question: "Comment s'appelait le curé du village ?", 
+                    answers: ["A) Pierre", "B) Michel", "C) Paul"], 
+                    correct: 1,
+                    explanation: "Le père Michel était le curé d'un village isolé."
+                },
+                { 
+                    question: "Comment s'appelait le rabbin ?", 
+                    answers: ["A) Samuel", "B) David", "C) Isaac"], 
+                    correct: 1,
+                    explanation: "Le rabbin David organisait des dîners pour les personnes seules dans sa synagogue."
+                },
+                { 
+                    question: "Comment s'appelait la jeune musulmane ?", 
+                    answers: ["A) Fatima", "B) Amina", "C) Aicha"], 
+                    correct: 1,
+                    explanation: "Amina était la jeune musulmane qui luttait pour concilier sa foi et sa vie moderne."
+                }
+            ]
+        };
+
+        let currentMemo = {
+            category: '',
+            chapter: 0,
+            question: {},
+            timer: null,
+            timeLeft: 30,
+            phase: 'reading', // 'reading', 'questioning', 'finished'
+            answered: false
+        };
+
+        const stories = {
+            enfant: {
+                title: "Histoires pour Enfants - Quiz",
+                chapters: {
+                    1: {
+                        story: "Il était une fois une petite fée nommée Luna qui vivait dans un jardin magique. Un jour, elle découvrit que toutes les fleurs avaient perdu leurs couleurs. Avec l'aide de ses amis les papillons, elle partit à la recherche de l'arc-en-ciel perdu pour redonner vie à son jardin.",
+                        questions: [
+                            {
+                                question: "Comment s'appelait la petite fée de l'histoire ?",
+                                answers: ["A) Luna", "B) Stella", "C) Aurora"],
+                                correct: 0,
+                                explanation: "La petite fée s'appelait Luna et vivait dans un jardin magique."
+                            },
+                            {
+                                question: "Que découvrit Luna dans son jardin ?",
+                                answers: ["A) Que les fleurs étaient fanées", "B) Que les fleurs avaient perdu leurs couleurs", "C) Que les fleurs parlaient"],
+                                correct: 1,
+                                explanation: "Luna découvrit que toutes les fleurs avaient perdu leurs couleurs."
+                            },
+                            {
+                                question: "Qui aida Luna dans sa quête ?",
+                                answers: ["A) Les oiseaux", "B) Les papillons", "C) Les abeilles"],
+                                correct: 1,
+                                explanation: "Luna partit à la recherche de l'arc-en-ciel avec l'aide de ses amis les papillons."
+                            }
+                        ]
+                    },
+                    2: {
+                        story: "Dans une forêt enchantée, un petit renard curieux nommé Félix découvrit une carte au trésor. Il décida de partir à l'aventure avec son ami l'écureuil Noisette. Ensemble, ils apprirent que le véritable trésor était leur amitié.",
+                        questions: [
+                            {
+                                question: "Comment s'appelait le petit renard ?",
+                                answers: ["A) Félix", "B) Oscar", "C) Roux"],
+                                correct: 0,
+                                explanation: "Le petit renard curieux s'appelait Félix."
+                            },
+                            {
+                                question: "Qu'est-ce que Félix découvrit ?",
+                                answers: ["A) Un livre magique", "B) Une carte au trésor", "C) Une grotte secrète"],
+                                correct: 1,
+                                explanation: "Félix découvrit une carte au trésor dans la forêt enchantée."
+                            },
+                            {
+                                question: "Quel était le véritable trésor découvert ?",
+                                answers: ["A) De l'or", "B) Des pierres précieuses", "C) L'amitié"],
+                                correct: 2,
+                                explanation: "Félix et Noisette apprirent que le véritable trésor était leur amitié."
+                            }
+                        ]
+                    },
+                    3: {
+                        story: "La princesse Étoile avait un pouvoir spécial : elle pouvait faire apparaître des étoiles filantes. Un soir, elle remarqua qu'un petit village était triste car ils n'avaient jamais vu d'étoiles. Elle décida de leur offrir la plus belle nuit étoilée de leur vie.",
+                        questions: [
+                            {
+                                question: "Quel était le pouvoir de la princesse Étoile ?",
+                                answers: ["A) Contrôler le vent", "B) Faire apparaître des étoiles filantes", "C) Parler aux animaux"],
+                                correct: 1,
+                                explanation: "La princesse Étoile pouvait faire apparaître des étoiles filantes."
+                            },
+                            {
+                                question: "Pourquoi le village était-il triste ?",
+                                answers: ["A) Il pleuvait toujours", "B) Ils n'avaient jamais vu d'étoiles", "C) Ils étaient pauvres"],
+                                correct: 1,
+                                explanation: "Le petit village était triste car ses habitants n'avaient jamais vu d'étoiles."
+                            },
+                            {
+                                question: "Que décida de faire la princesse ?",
+                                answers: ["A) Partir en voyage", "B) Offrir la plus belle nuit étoilée", "C) Construire un château"],
+                                correct: 1,
+                                explanation: "La princesse décida d'offrir au village la plus belle nuit étoilée de leur vie."
+                            }
+                        ]
+                    },
+                    4: {
+                        story: "Léo le petit dragon ne savait pas cracher du feu comme les autres dragons. Il était très triste jusqu'au jour où il découvrit qu'il pouvait créer de magnifiques bulles multicolores qui rendaient tout le monde heureux.",
+                        questions: [
+                            {
+                                question: "Que ne savait pas faire Léo comme les autres dragons ?",
+                                answers: ["A) Voler", "B) Cracher du feu", "C) Rugir"],
+                                correct: 1,
+                                explanation: "Léo ne savait pas cracher du feu comme les autres dragons."
+                            },
+                            {
+                                question: "Que découvrit Léo qu'il savait faire ?",
+                                answers: ["A) Créer des bulles multicolores", "B) Chanter", "C) Danser"],
+                                correct: 0,
+                                explanation: "Léo découvrit qu'il pouvait créer de magnifiques bulles multicolores."
+                            },
+                            {
+                                question: "Quel effet avaient les bulles de Léo ?",
+                                answers: ["A) Elles explosaient", "B) Elles rendaient tout le monde heureux", "C) Elles sentaient bon"],
+                                correct: 1,
+                                explanation: "Les bulles multicolores de Léo rendaient tout le monde heureux."
+                            }
+                        ]
+                    },
+                    5: {
+                        story: "Dans un royaume sous-marin, la sirène Perle gardait un phare magique qui guidait les bateaux perdus. Quand une terrible tempête éteignit sa lumière, elle dut faire appel au courage de tous les poissons pour rallumer l'espoir.",
+                        questions: [
+                            {
+                                question: "Que gardait la sirène Perle ?",
+                                answers: ["A) Un trésor", "B) Un phare magique", "C) Un palais"],
+                                correct: 1,
+                                explanation: "La sirène Perle gardait un phare magique sous-marin."
+                            },
+                            {
+                                question: "À quoi servait le phare magique ?",
+                                answers: ["A) À éclairer le royaume", "B) À guider les bateaux perdus", "C) À effrayer les ennemis"],
+                                correct: 1,
+                                explanation: "Le phare magique guidait les bateaux perdus."
+                            },
+                            {
+                                question: "Qui aida Perle à rallumer l'espoir ?",
+                                answers: ["A) Les dauphins", "B) Tous les poissons", "C) Les baleines"],
+                                correct: 1,
+                                explanation: "Perle fit appel au courage de tous les poissons pour rallumer l'espoir."
+                            }
+                        ]
+                    }
+                }
+            },
+            adulte: {
+                title: "Histoires pour Adultes - Quiz",
+                chapters: {
+                    1: {
+                        story: "Marie ferma sa boutique de fleurs pour la dernière fois après 40 ans. En rangeant, elle découvrit une lettre cachée depuis des décennies. Cette lettre allait changer sa perspective sur toute sa vie et lui révéler un secret gardé par sa grand-mère.",
+                        questions: [
+                            {
+                                question: "Depuis combien de temps Marie tenait-elle sa boutique ?",
+                                answers: ["A) 30 ans", "B) 40 ans", "C) 50 ans"],
+                                correct: 1,
+                                explanation: "Marie ferma sa boutique de fleurs après 40 ans d'activité."
+                            },
+                            {
+                                question: "Que découvrit Marie en rangeant ?",
+                                answers: ["A) Un journal intime", "B) Une lettre cachée", "C) Une photo ancienne"],
+                                correct: 1,
+                                explanation: "En rangeant, Marie découvrit une lettre cachée depuis des décennies."
+                            },
+                            {
+                                question: "Qui avait gardé le secret révélé par la lettre ?",
+                                answers: ["A) Sa mère", "B) Sa grand-mère", "C) Sa sœur"],
+                                correct: 1,
+                                explanation: "La lettre révélait un secret gardé par sa grand-mère."
+                            }
+                        ]
+                    },
+                    2: {
+                        story: "Thomas, architecte à la retraite, décida de construire une petite cabane dans les bois. Ce projet simple devint une quête de sens qui le reconnecta avec la nature et avec lui-même, lui apprenant que les plus belles créations naissent de la simplicité.",
+                        questions: [
+                            {
+                                question: "Quel était le métier de Thomas ?",
+                                answers: ["A) Architecte", "B) Ingénieur", "C) Menuisier"],
+                                correct: 0,
+                                explanation: "Thomas était architecte et maintenant à la retraite."
+                            },
+                            {
+                                question: "Que décida de construire Thomas ?",
+                                answers: ["A) Une maison", "B) Une cabane dans les bois", "C) Un garage"],
+                                correct: 1,
+                                explanation: "Thomas décida de construire une petite cabane dans les bois."
+                            },
+                            {
+                                question: "Que lui apprit ce projet ?",
+                                answers: ["A) Que le travail est difficile", "B) Que les plus belles créations naissent de la simplicité", "C) Qu'il était trop vieux"],
+                                correct: 1,
+                                explanation: "Ce projet lui apprit que les plus belles créations naissent de la simplicité."
+                            }
+                        ]
+                    },
+                    3: {
+                        story: "À 50 ans, Sophie quitta son travail de cadre pour ouvrir un café-librairie. Cette décision bouleversa sa vie et celle de son quartier, prouvant qu'il n'est jamais trop tard pour suivre ses rêves et créer du lien social.",
+                        questions: [
+                            {
+                                question: "À quel âge Sophie changea-t-elle de vie ?",
+                                answers: ["A) 45 ans", "B) 50 ans", "C) 55 ans"],
+                                correct: 1,
+                                explanation: "Sophie avait 50 ans quand elle quitta son travail de cadre."
+                            },
+                            {
+                                question: "Qu'ouvrit Sophie après avoir quitté son travail ?",
+                                answers: ["A) Un restaurant", "B) Un café-librairie", "C) Une boutique"],
+                                correct: 1,
+                                explanation: "Sophie ouvrit un café-librairie après avoir quitté son travail de cadre."
+                            },
+                            {
+                                question: "Que prouva la décision de Sophie ?",
+                                answers: ["A) Que l'argent ne fait pas le bonheur", "B) Qu'il n'est jamais trop tard pour suivre ses rêves", "C) Que le travail est important"],
+                                correct: 1,
+                                explanation: "Sa décision prouva qu'il n'est jamais trop tard pour suivre ses rêves."
+                            }
+                        ]
+                    },
+                    4: {
+                        story: "Jean retrouva par hasard son premier amour après 30 ans lors d'une réunion d'anciens élèves. Leur conversation d'une nuit leur fit comprendre que certaines connexions transcendent le temps et les circonstances de la vie.",
+                        questions: [
+                            {
+                                question: "Après combien d'années Jean retrouva-t-il son premier amour ?",
+                                answers: ["A) 25 ans", "B) 30 ans", "C) 35 ans"],
+                                correct: 1,
+                                explanation: "Jean retrouva son premier amour après 30 ans."
+                            },
+                            {
+                                question: "Où se retrouvèrent-ils ?",
+                                answers: ["A) Dans un café", "B) À une réunion d'anciens élèves", "C) Dans la rue"],
+                                correct: 1,
+                                explanation: "Ils se retrouvèrent lors d'une réunion d'anciens élèves."
+                            },
+                            {
+                                question: "Que leur fit comprendre leur conversation ?",
+                                answers: ["A) Qu'ils avaient changé", "B) Que certaines connexions transcendent le temps", "C) Qu'ils étaient trop vieux"],
+                                correct: 1,
+                                explanation: "Leur conversation leur fit comprendre que certaines connexions transcendent le temps."
+                            }
+                        ]
+                    },
+                    5: {
+                        story: "Élise, photographe de guerre fatiguée, décida de documenter la beauté ordinaire de sa ville natale. Ce projet artistique la guérit de ses traumatismes et lui redonna foi en l'humanité à travers les petits gestes du quotidien.",
+                        questions: [
+                            {
+                                question: "Quel était le métier d'Élise ?",
+                                answers: ["A) Journaliste", "B) Photographe de guerre", "C) Artiste"],
+                                correct: 1,
+                                explanation: "Élise était photographe de guerre et se sentait fatiguée."
+                            },
+                            {
+                                question: "Que décida de documenter Élise ?",
+                                answers: ["A) Les conflits", "B) La beauté ordinaire de sa ville", "C) Les célébrités"],
+                                correct: 1,
+                                explanation: "Élise décida de documenter la beauté ordinaire de sa ville natale."
+                            },
+                            {
+                                question: "Quel effet eut ce projet sur Élise ?",
+                                answers: ["A) Il l'ennuya", "B) Il la guérit et lui redonna foi en l'humanité", "C) Il la rendit triste"],
+                                correct: 1,
+                                explanation: "Ce projet la guérit de ses traumatismes et lui redonna foi en l'humanité."
+                            }
+                        ]
+                    }
+                }
+            },
+            religion: {
+                title: "Histoires Religieuses - Quiz",
+                chapters: {
+                    1: {
+                        story: "Dans un petit monastère, le frère Antoine passait ses journées à copier des manuscrits anciens. Un jour, il découvrit entre les pages d'un livre saint une prière oubliée qui apportait une paix profonde à tous ceux qui la récitaient.",
+                        questions: [
+                            {
+                                question: "Comment s'appelait le frère du monastère ?",
+                                answers: ["A) Antoine", "B) François", "C) Bernard"],
+                                correct: 0,
+                                explanation: "Le frère Antoine passait ses journées à copier des manuscrits anciens."
+                            },
+                            {
+                                question: "Que faisait le frère Antoine chaque jour ?",
+                                answers: ["A) Il priait", "B) Il copiait des manuscrits", "C) Il jardinait"],
+                                correct: 1,
+                                explanation: "Le frère Antoine passait ses journées à copier des manuscrits anciens."
+                            },
+                            {
+                                question: "Que découvrit-il dans un livre saint ?",
+                                answers: ["A) Une illustration", "B) Une prière oubliée", "C) Une carte"],
+                                correct: 1,
+                                explanation: "Il découvrit une prière oubliée qui apportait une paix profonde."
+                            }
+                        ]
+                    },
+                    2: {
+                        story: "Sarah, jeune femme en quête de spiritualité, entreprit un pèlerinage à pied. Chaque étape de son voyage lui enseigna une nouvelle leçon sur la foi, la persévérance et la générosité des âmes qu'elle rencontrait sur son chemin.",
+                        questions: [
+                            {
+                                question: "Comment s'appelait la jeune femme ?",
+                                answers: ["A) Marie", "B) Sarah", "C) Claire"],
+                                correct: 1,
+                                explanation: "Sarah était une jeune femme en quête de spiritualité."
+                            },
+                            {
+                                question: "Comment entreprit-elle son pèlerinage ?",
+                                answers: ["A) En voiture", "B) À pied", "C) À vélo"],
+                                correct: 1,
+                                explanation: "Sarah entreprit un pèlerinage à pied."
+                            },
+                            {
+                                question: "Que lui enseigna chaque étape ?",
+                                answers: ["A) La patience", "B) Des leçons sur la foi et la persévérance", "C) L'humilité"],
+                                correct: 1,
+                                explanation: "Chaque étape lui enseigna des leçons sur la foi, la persévérance et la générosité."
+                            }
+                        ]
+                    },
+                    3: {
+                        story: "Le père Michel, curé d'un village isolé, vit sa foi ébranlée par les difficultés de ses paroissiens. C'est en aidant une famille dans le besoin qu'il redécouvrit le véritable sens de sa vocation et la force de la communauté.",
+                        questions: [
+                            {
+                                question: "Comment s'appelait le curé ?",
+                                answers: ["A) Pierre", "B) Michel", "C) Paul"],
+                                correct: 1,
+                                explanation: "Le père Michel était curé d'un village isolé."
+                            },
+                            {
+                                question: "Qu'est-ce qui ébranla sa foi ?",
+                                answers: ["A) Une maladie", "B) Les difficultés de ses paroissiens", "C) Une dispute"],
+                                correct: 1,
+                                explanation: "Sa foi fut ébranlée par les difficultés de ses paroissiens."
+                            },
+                            {
+                                question: "Comment redécouvrit-il sa vocation ?",
+                                answers: ["A) En priant", "B) En aidant une famille dans le besoin", "C) En voyageant"],
+                                correct: 1,
+                                explanation: "Il redécouvrit sa vocation en aidant une famille dans le besoin."
+                            }
+                        ]
+                    },
+                    4: {
+                        story: "Dans une synagogue centenaire, le rabbin David organisait chaque vendredi un dîner pour les personnes seules. Ces repas partagés créèrent des liens profonds et montrèrent comment les traditions peuvent rassembler au-delà des différences.",
+                        questions: [
+                            {
+                                question: "Comment s'appelait le rabbin ?",
+                                answers: ["A) Samuel", "B) David", "C) Isaac"],
+                                correct: 1,
+                                explanation: "Le rabbin David organisait des dîners dans sa synagogue."
+                            },
+                            {
+                                question: "Que faisait le rabbin chaque vendredi ?",
+                                answers: ["A) Il priait seul", "B) Il organisait un dîner pour les personnes seules", "C) Il étudiait"],
+                                correct: 1,
+                                explanation: "Chaque vendredi, il organisait un dîner pour les personnes seules."
+                            },
+                            {
+                                question: "Que montrèrent ces repas partagés ?",
+                                answers: ["A) L'importance de la nourriture", "B) Comment les traditions peuvent rassembler", "C) La richesse de la communauté"],
+                                correct: 1,
+                                explanation: "Ces repas montrèrent comment les traditions peuvent rassembler au-delà des différences."
+                            }
+                        ]
+                    },
+                    5: {
+                        story: "Amina, jeune musulmane, luttait pour concilier sa foi et sa vie moderne. À travers les enseignements de sa grand-mère et la méditation, elle apprit que la spiritualité peut s'épanouir dans tous les aspects de la vie quotidienne.",
+                        questions: [
+                            {
+                                question: "Comment s'appelait la jeune musulmane ?",
+                                answers: ["A) Fatima", "B) Amina", "C) Aicha"],
+                                correct: 1,
+                                explanation: "Amina était une jeune musulmane en quête d'équilibre."
+                            },
+                            {
+                                question: "Avec quoi luttait-elle ?",
+                                answers: ["A) Sa famille", "B) Concilier sa foi et sa vie moderne", "C) Ses études"],
+                                correct: 1,
+                                explanation: "Amina luttait pour concilier sa foi et sa vie moderne."
+                            },
+                            {
+                                question: "Qu'apprit-elle grâce à sa grand-mère ?",
+                                answers: ["A) Que la foi est difficile", "B) Que la spiritualité peut s'épanouir partout", "C) Qu'il faut être parfaite"],
+                                correct: 1,
+                                explanation: "Elle apprit que la spiritualité peut s'épanouir dans tous les aspects de la vie quotidienne."
+                            }
+                        ]
+                    }
+                }
+            }
+        };
+
+        const categorySelect = document.getElementById('category');
+        const chaptersContainer = document.getElementById('chapters-container');
+        const chaptersTitle = document.getElementById('chapters-title');
+        const chaptersGrid = document.getElementById('chapters-grid');
+        const storyDisplay = document.getElementById('story-display');
+
+        categorySelect.addEventListener('change', function() {
+            const selectedCategory = this.value;
+            
+            if (selectedCategory) {
+                showChapters(selectedCategory);
+            } else {
+                hideChapters();
+            }
+        });
+
+        function showChapters(category) {
+            if (category === 'quiz') {
+                showQuiz();
+                return;
+            }
+            
+            if (category === 'memo') {
+                showMemo();
+                return;
+            }
+            
+            if (category === 'enigme') {
+                showEnigme();
+                return;
+            }
+            
+            const categoryData = stories[category];
+            
+            // Mise à jour du titre
+            chaptersTitle.textContent = categoryData.title;
+            
+            // Création des boutons de chapitres
+            chaptersGrid.innerHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                const button = document.createElement('button');
+                button.className = 'chapter-button';
+                button.textContent = `Chapitre ${i}`;
+                button.addEventListener('click', () => showStory(category, i));
+                chaptersGrid.appendChild(button);
+            }
+            
+            // Masquer l'histoire précédente
+            storyDisplay.classList.remove('show');
+            
+            // Afficher les chapitres avec animation
+            setTimeout(() => {
+                chaptersContainer.classList.add('show');
+            }, 100);
+        }
+
+        function hideChapters() {
+            chaptersContainer.classList.remove('show');
+            storyDisplay.classList.remove('show');
+        }
+
+        function showStory(category, chapterNumber) {
+            // Initialiser le quiz de l'histoire
+            currentStory = {
+                category: category,
+                chapter: chapterNumber,
+                currentQuestion: 0,
+                score: 0,
+                answered: false,
+                data: stories[category].chapters[chapterNumber]
+            };
+            
+            // Afficher l'histoire puis commencer le quiz
+            showStoryReading();
+        }
+
+        let currentStory = {
+            category: '',
+            chapter: 0,
+            currentQuestion: 0,
+            score: 0,
+            answered: false,
+            data: {}
+        };
+
+        function showStoryReading() {
+            storyDisplay.innerHTML = `
+                <div class="quiz-container">
+                    <h2 style="color: #4a90e2; margin-bottom: 20px;">📖 Chapitre ${currentStory.chapter}</h2>
+                    <p style="color: #ffc107; font-weight: 600; margin-bottom: 20px;">
+                        Lisez attentivement cette histoire, puis répondez aux questions !
+                    </p>
+                    
+                    <div class="memo-story">
+                        <p style="line-height: 1.8; font-size: 1.1rem;">${currentStory.data.story}</p>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 25px;">
+                        <button class="memo-submit" onclick="startStoryQuiz()">
+                            🧠 Commencer le quiz sur cette histoire
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Masquer puis afficher avec animation
+            storyDisplay.classList.remove('show');
+            setTimeout(() => {
+                storyDisplay.classList.add('show');
+            }, 100);
+        }
+
+        function startStoryQuiz() {
+            createStoryQuizInterface();
+        }
+
+        function createStoryQuizInterface() {
+            const currentQuestion = currentStory.data.questions[currentStory.currentQuestion];
+            
+            storyDisplay.innerHTML = `
+                <div class="quiz-container">
+                    <div class="quiz-header">
+                        <div class="quiz-score">
+                            Score: <span id="current-story-score">${currentStory.score}</span>/${currentStory.data.questions.length}
+                        </div>
+                        <div style="color: #4a90e2; font-weight: 600;">
+                            Question <span id="story-question-number">${currentStory.currentQuestion + 1}</span> sur ${currentStory.data.questions.length}
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-question">
+                        <h3 id="story-question-text">${currentQuestion.question}</h3>
+                        <div class="quiz-answers" id="story-answers">
+                            ${currentQuestion.answers.map((answer, index) => 
+                                `<button class="quiz-answer" onclick="selectStoryAnswer(${index})">${answer}</button>`
+                            ).join('')}
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button class="quiz-next" id="story-next-button" onclick="nextStoryQuestion()">
+                            ${currentStory.currentQuestion < currentStory.data.questions.length - 1 ? 'Question suivante' : 'Voir les résultats'}
+                        </button>
+                    </div>
+                    
+                    <div id="story-explanation" style="display: none; background: rgba(74, 144, 226, 0.1); padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #4a90e2;">
+                        <p style="color: #4a90e2; font-weight: 600; margin-bottom: 8px;">💡 Explication :</p>
+                        <p style="color: white; font-size: 0.95rem;"></p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectStoryAnswer(selectedIndex) {
+            if (currentStory.answered) return;
+            
+            currentStory.answered = true;
+            const correctIndex = currentStory.data.questions[currentStory.currentQuestion].correct;
+            const answers = document.querySelectorAll('.quiz-answer');
+            const explanation = currentStory.data.questions[currentStory.currentQuestion].explanation;
+            
+            answers.forEach((answer, index) => {
+                answer.classList.add('disabled');
+                if (index === correctIndex) {
+                    answer.classList.add('correct');
+                } else if (index === selectedIndex) {
+                    answer.classList.add('wrong');
+                }
+            });
+            
+            if (selectedIndex === correctIndex) {
+                currentStory.score++;
+                document.getElementById('current-story-score').textContent = currentStory.score;
+            }
+            
+            // Afficher l'explication
+            const explanationDiv = document.getElementById('story-explanation');
+            explanationDiv.querySelector('p:last-child').textContent = explanation;
+            explanationDiv.style.display = 'block';
+            
+            document.getElementById('story-next-button').classList.add('show');
+        }
+
+        function nextStoryQuestion() {
+            currentStory.currentQuestion++;
+            currentStory.answered = false;
+            
+            if (currentStory.currentQuestion < currentStory.data.questions.length) {
+                // Question suivante
+                const currentQuestion = currentStory.data.questions[currentStory.currentQuestion];
+                
+                document.getElementById('story-question-number').textContent = currentStory.currentQuestion + 1;
+                document.getElementById('story-question-text').textContent = currentQuestion.question;
+                
+                const answersContainer = document.getElementById('story-answers');
+                answersContainer.innerHTML = currentQuestion.answers.map((answer, index) => 
+                    `<button class="quiz-answer" onclick="selectStoryAnswer(${index})">${answer}</button>`
+                ).join('');
+                
+                const nextButton = document.getElementById('story-next-button');
+                nextButton.classList.remove('show');
+                nextButton.textContent = currentStory.currentQuestion < currentStory.data.questions.length - 1 ? 'Question suivante' : 'Voir les résultats';
+                
+                // Masquer l'explication précédente
+                document.getElementById('story-explanation').style.display = 'none';
+            } else {
+                // Afficher les résultats
+                showStoryResults();
+            }
+        }
+
+        function showStoryResults() {
+            const percentage = Math.round((currentStory.score / currentStory.data.questions.length) * 100);
+            let scoreClass, message;
+            
+            if (percentage >= 80) {
+                scoreClass = 'score-excellent';
+                message = "📚 Excellent ! Vous avez bien retenu l'histoire !";
+            } else if (percentage >= 60) {
+                scoreClass = 'score-good';
+                message = "👍 Bien joué ! Bonne compréhension de l'histoire !";
+            } else {
+                scoreClass = 'score-needs-improvement';
+                message = "📖 Relisez l'histoire pour mieux la retenir !";
+            }
+            
+            storyDisplay.innerHTML = `
+                <div class="quiz-results">
+                    <h2>🏆 Résultats du Chapitre ${currentStory.chapter}</h2>
+                    <div class="final-score ${scoreClass}">
+                        ${currentStory.score}/${currentStory.data.questions.length}
+                    </div>
+                    <div class="final-score ${scoreClass}">
+                        ${percentage}%
+                    </div>
+                    <p style="font-size: 1.2rem; margin: 20px 0; color: white;">
+                        ${message}
+                    </p>
+                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                        <button class="quiz-restart" onclick="showStoryReading()">
+                            📖 Relire l'histoire
+                        </button>
+                        <button class="quiz-restart" onclick="startStoryQuiz()" style="background: linear-gradient(135deg, #4a90e2, #357abd);">
+                            🔄 Refaire le quiz
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showQuiz() {
+            // Initialiser le quiz
+            currentQuiz.currentQuestion = 0;
+            currentQuiz.score = 0;
+            currentQuiz.questions = [...quizData.questions].sort(() => Math.random() - 0.5).slice(0, 5);
+            currentQuiz.answered = false;
+            
+            // Mise à jour du titre
+            chaptersTitle.textContent = "🧠 Quiz Interactif - Testez vos connaissances !";
+            
+            // Masquer les boutons de chapitres
+            chaptersGrid.style.display = 'none';
+            
+            // Masquer l'histoire précédente
+            storyDisplay.classList.remove('show');
+            
+            // Créer l'interface de quiz
+            createQuizInterface();
+            
+            // Afficher le conteneur avec animation
+            setTimeout(() => {
+                chaptersContainer.classList.add('show');
+            }, 100);
+        }
+
+        function createQuizInterface() {
+            chaptersGrid.innerHTML = `
+                <div class="quiz-container">
+                    <div class="quiz-header">
+                        <div class="quiz-score">
+                            Score: <span id="current-score">${currentQuiz.score}</span>/${currentQuiz.questions.length}
+                        </div>
+                        <div style="color: #4a90e2; font-weight: 600;">
+                            Question <span id="question-number">${currentQuiz.currentQuestion + 1}</span> sur ${currentQuiz.questions.length}
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-question">
+                        <h3 id="question-text">${currentQuiz.questions[currentQuiz.currentQuestion].question}</h3>
+                        <div class="quiz-answers" id="quiz-answers">
+                            ${currentQuiz.questions[currentQuiz.currentQuestion].answers.map((answer, index) => 
+                                `<button class="quiz-answer" onclick="selectAnswer(${index})">${answer}</button>`
+                            ).join('')}
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button class="quiz-next" id="next-button" onclick="nextQuestion()">
+                            ${currentQuiz.currentQuestion < currentQuiz.questions.length - 1 ? 'Question suivante' : 'Voir les résultats'}
+                        </button>
+                    </div>
+                </div>
+            `;
+            chaptersGrid.style.display = 'block';
+        }
+
+        function selectAnswer(selectedIndex) {
+            if (currentQuiz.answered) return;
+            
+            currentQuiz.answered = true;
+            const correctIndex = currentQuiz.questions[currentQuiz.currentQuestion].correct;
+            const answers = document.querySelectorAll('.quiz-answer');
+            
+            answers.forEach((answer, index) => {
+                answer.classList.add('disabled');
+                if (index === correctIndex) {
+                    answer.classList.add('correct');
+                } else if (index === selectedIndex) {
+                    answer.classList.add('wrong');
+                }
+            });
+            
+            if (selectedIndex === correctIndex) {
+                currentQuiz.score++;
+                document.getElementById('current-score').textContent = currentQuiz.score;
+            }
+            
+            document.getElementById('next-button').classList.add('show');
+        }
+
+        function nextQuestion() {
+            currentQuiz.currentQuestion++;
+            currentQuiz.answered = false;
+            
+            if (currentQuiz.currentQuestion < currentQuiz.questions.length) {
+                // Question suivante
+                document.getElementById('question-number').textContent = currentQuiz.currentQuestion + 1;
+                document.getElementById('question-text').textContent = currentQuiz.questions[currentQuiz.currentQuestion].question;
+                
+                const answersContainer = document.getElementById('quiz-answers');
+                answersContainer.innerHTML = currentQuiz.questions[currentQuiz.currentQuestion].answers.map((answer, index) => 
+                    `<button class="quiz-answer" onclick="selectAnswer(${index})">${answer}</button>`
+                ).join('');
+                
+                const nextButton = document.getElementById('next-button');
+                nextButton.classList.remove('show');
+                nextButton.textContent = currentQuiz.currentQuestion < currentQuiz.questions.length - 1 ? 'Question suivante' : 'Voir les résultats';
+            } else {
+                // Afficher les résultats
+                showQuizResults();
+            }
+        }
+
+        function showQuizResults() {
+            const percentage = Math.round((currentQuiz.score / currentQuiz.questions.length) * 100);
+            let scoreClass, message;
+            
+            if (percentage >= 80) {
+                scoreClass = 'score-excellent';
+                message = "🎉 Excellent ! Vous maîtrisez bien vos connaissances !";
+            } else if (percentage >= 60) {
+                scoreClass = 'score-good';
+                message = "👍 Bien joué ! Vous avez de bonnes connaissances !";
+            } else {
+                scoreClass = 'score-needs-improvement';
+                message = "💪 Continuez à apprendre, vous progresserez !";
+            }
+            
+            chaptersGrid.innerHTML = `
+                <div class="quiz-results">
+                    <h2>🏆 Résultats du Quiz</h2>
+                    <div class="final-score ${scoreClass}">
+                        ${currentQuiz.score}/${currentQuiz.questions.length}
+                    </div>
+                    <div class="final-score ${scoreClass}">
+                        ${percentage}%
+                    </div>
+                    <p style="font-size: 1.2rem; margin: 20px 0; color: white;">
+                        ${message}
+                    </p>
+                    <button class="quiz-restart" onclick="restartQuiz()">
+                        🔄 Recommencer le quiz
+                    </button>
+                </div>
+            `;
+        }
+
+        function restartQuiz() {
+            showQuiz();
+        }
+
+        function showMemo() {
+            // Mise à jour du titre
+            chaptersTitle.textContent = "🧠 Mémo 30 secondes - Testez votre mémoire !";
+            
+            // Masquer les boutons de chapitres
+            chaptersGrid.style.display = 'none';
+            
+            // Masquer l'histoire précédente
+            storyDisplay.classList.remove('show');
+            
+            // Créer l'interface de sélection
+            createMemoSelection();
+            
+            // Afficher le conteneur avec animation
+            setTimeout(() => {
+                chaptersContainer.classList.add('show');
+            }, 100);
+        }
+
+        function createMemoSelection() {
+            chaptersGrid.innerHTML = `
+                <div class="memo-container">
+                    <div class="memo-phase">
+                        <h2 style="color: #4a90e2; margin-bottom: 20px;">🧠 Mémo 30 secondes</h2>
+                        <p style="font-size: 1.1rem; margin-bottom: 30px; color: white;">
+                            Choisissez une catégorie et un chapitre. Vous aurez le temps de lire l'histoire, 
+                            puis 30 secondes pour répondre à une question de mémoire !
+                        </p>
+                        
+                        <div style="display: grid; gap: 15px; max-width: 400px; margin: 0 auto;">
+                            <select id="memo-category" class="memo-input" style="cursor: pointer;">
+                                <option value="">-- Choisissez une catégorie --</option>
+                                <option value="enfant">Histoire Enfant</option>
+                                <option value="adulte">Histoire Adulte</option>
+                                <option value="religion">Histoire Religion</option>
+                            </select>
+                            
+                            <select id="memo-chapter" class="memo-input" style="cursor: pointer;" disabled>
+                                <option value="">-- Choisissez un chapitre --</option>
+                            </select>
+                            
+                            <button class="memo-submit" id="memo-start" onclick="startMemoGame()" disabled>
+                                🚀 Commencer le défi mémoire
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            chaptersGrid.style.display = 'block';
+            
+            // Ajouter les événements
+            document.getElementById('memo-category').addEventListener('change', function() {
+                const chapterSelect = document.getElementById('memo-chapter');
+                const startButton = document.getElementById('memo-start');
+                
+                if (this.value) {
+                    chapterSelect.disabled = false;
+                    chapterSelect.innerHTML = `
+                        <option value="">-- Choisissez un chapitre --</option>
+                        <option value="1">Chapitre 1</option>
+                        <option value="2">Chapitre 2</option>
+                        <option value="3">Chapitre 3</option>
+                        <option value="4">Chapitre 4</option>
+                        <option value="5">Chapitre 5</option>
+                    `;
+                } else {
+                    chapterSelect.disabled = true;
+                    chapterSelect.innerHTML = '<option value="">-- Choisissez un chapitre --</option>';
+                    startButton.disabled = true;
+                }
+            });
+            
+            document.getElementById('memo-chapter').addEventListener('change', function() {
+                const startButton = document.getElementById('memo-start');
+                startButton.disabled = !this.value;
+            });
+        }
+
+        function startMemoGame() {
+            const category = document.getElementById('memo-category').value;
+            const chapter = parseInt(document.getElementById('memo-chapter').value);
+            
+            currentMemo.category = category;
+            currentMemo.chapter = chapter;
+            currentMemo.question = memoQuestions[category][chapter - 1];
+            currentMemo.phase = 'reading';
+            
+            showMemoReading();
+        }
+
+        function showMemoReading() {
+            const story = stories[currentMemo.category].chapters[currentMemo.chapter];
+            
+            chaptersGrid.innerHTML = `
+                <div class="memo-container">
+                    <div class="memo-phase">
+                        <h2 style="color: #4a90e2; margin-bottom: 20px;">📖 Lisez attentivement</h2>
+                        <p style="color: #ffc107; font-weight: 600; margin-bottom: 20px;">
+                            Prenez le temps de bien lire cette histoire. Vous allez devoir répondre à une question après !
+                        </p>
+                        
+                        <div class="memo-story">
+                            <h3 style="color: #4a90e2; margin-bottom: 15px;">Chapitre ${currentMemo.chapter}</h3>
+                            <p>${story}</p>
+                        </div>
+                        
+                        <button class="memo-submit" onclick="startMemoTimer()">
+                            ✅ J'ai fini de lire, commencer le test !
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function startMemoTimer() {
+            currentMemo.phase = 'questioning';
+            currentMemo.timeLeft = 30;
+            currentMemo.answered = false;
+            
+            chaptersGrid.innerHTML = `
+                <div class="memo-container">
+                    <div class="memo-phase">
+                        <div class="memo-timer" id="memo-timer">⏰ ${currentMemo.timeLeft} secondes</div>
+                        
+                        <div class="memo-question">
+                            <h3>🧠 Question :</h3>
+                            <p style="font-size: 1.1rem; color: white;">${currentMemo.question.question}</p>
+                            <p style="color: #ffc107; margin-top: 10px;">➤ T'as 30 secondes pour t'en souvenir.</p>
+                        </div>
+                        
+                        <div class="quiz-answers" id="memo-answers">
+                            ${currentMemo.question.answers.map((answer, index) => 
+                                `<button class="quiz-answer" onclick="selectMemoAnswer(${index})">${answer}</button>`
+                            ).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Démarrer le timer
+            startTimer();
+        }
+
+        function startTimer() {
+            currentMemo.timer = setInterval(() => {
+                currentMemo.timeLeft--;
+                const timerElement = document.getElementById('memo-timer');
+                
+                if (timerElement) {
+                    timerElement.textContent = `⏰ ${currentMemo.timeLeft} secondes`;
+                    
+                    // Changer les couleurs selon le temps restant
+                    if (currentMemo.timeLeft <= 5) {
+                        timerElement.className = 'memo-timer danger';
+                    } else if (currentMemo.timeLeft <= 10) {
+                        timerElement.className = 'memo-timer warning';
+                    }
+                }
+                
+                if (currentMemo.timeLeft <= 0) {
+                    clearInterval(currentMemo.timer);
+                    timeUp();
+                }
+            }, 1000);
+        }
+
+        function selectMemoAnswer(selectedIndex) {
+            if (currentMemo.answered) return;
+            
+            currentMemo.answered = true;
+            
+            if (currentMemo.timer) {
+                clearInterval(currentMemo.timer);
+            }
+            
+            const correctIndex = currentMemo.question.correct;
+            const answers = document.querySelectorAll('.quiz-answer');
+            
+            answers.forEach((answer, index) => {
+                answer.classList.add('disabled');
+                if (index === correctIndex) {
+                    answer.classList.add('correct');
+                } else if (index === selectedIndex) {
+                    answer.classList.add('wrong');
+                }
+            });
+            
+            const isCorrect = selectedIndex === correctIndex;
+            const selectedAnswer = currentMemo.question.answers[selectedIndex];
+            
+            // Attendre un peu pour laisser voir l'animation
+            setTimeout(() => {
+                showMemoResult(isCorrect, selectedAnswer, false);
+            }, 1500);
+        }
+
+        function timeUp() {
+            if (currentMemo.answered) return;
+            
+            currentMemo.answered = true;
+            const answers = document.querySelectorAll('.quiz-answer');
+            const correctIndex = currentMemo.question.correct;
+            
+            answers.forEach((answer, index) => {
+                answer.classList.add('disabled');
+                if (index === correctIndex) {
+                    answer.classList.add('correct');
+                }
+            });
+            
+            setTimeout(() => {
+                showMemoResult(false, '', true);
+            }, 1500);
+        }
+
+        function showMemoResult(isCorrect, userAnswer = '', timeExpired = false) {
+            currentMemo.phase = 'finished';
+            
+            let resultMessage, resultClass;
+            
+            if (timeExpired) {
+                resultMessage = "⏰ Temps écoulé ! Vous n'avez pas répondu à temps.";
+                resultClass = "failure";
+            } else if (isCorrect) {
+                resultMessage = "🎉 Bravo ! Excellente mémoire !";
+                resultClass = "success";
+            } else {
+                resultMessage = "❌ Pas tout à fait... Réessayez pour améliorer votre mémoire !";
+                resultClass = "failure";
+            }
+            
+            chaptersGrid.innerHTML = `
+                <div class="memo-container">
+                    <div class="memo-phase">
+                        <h2 style="color: #4a90e2; margin-bottom: 20px;">📊 Résultat</h2>
+                        
+                        <div class="memo-result ${resultClass}">
+                            ${resultMessage}
+                        </div>
+                        
+                        <div style="background: rgba(74, 144, 226, 0.1); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                            <p style="color: #4a90e2; font-weight: 600; margin-bottom: 10px;">Question :</p>
+                            <p style="color: white; margin-bottom: 15px;">${currentMemo.question.question}</p>
+                            
+                            <p style="color: #4a90e2; font-weight: 600; margin-bottom: 10px;">Bonne réponse :</p>
+                            <p style="color: #28a745; font-weight: 600; margin-bottom: 15px;">${currentMemo.question.answers[currentMemo.question.correct]}</p>
+                            
+                            ${userAnswer && !timeExpired ? `
+                                <p style="color: #4a90e2; font-weight: 600; margin-bottom: 10px;">Votre réponse :</p>
+                                <p style="color: ${isCorrect ? '#28a745' : '#dc3545'}; font-weight: 600;">${userAnswer}</p>
+                            ` : ''}
+                            
+                            <div style="margin-top: 15px; padding: 10px; background: rgba(255, 196, 57, 0.1); border-radius: 5px; border-left: 3px solid #ffc439;">
+                                <p style="color: #ffc439; font-weight: 600; margin-bottom: 5px;">💡 Explication :</p>
+                                <p style="color: white; font-size: 0.95rem;">${currentMemo.question.explanation}</p>
+                            </div>
+                        </div>
+                        
+                        <button class="memo-restart" onclick="showMemo()">
+                            🔄 Nouveau défi mémoire
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showEnigme() {
+            // Initialiser l'énigme 30 secondes
+            currentEnigme = {
+                currentEnigme: Math.floor(Math.random() * enigmeData.enigmes.length),
+                currentQuestion: 0,
+                answers: [null, null, null],
+                timer: null,
+                timeLeft: 30,
+                phase: 'viewing',
+                finished: false
+            };
+            
+            // Mise à jour du titre
+            chaptersTitle.textContent = "🖼️ Énigme 30 secondes - Observez bien !";
+            
+            // Masquer les boutons de chapitres
+            chaptersGrid.style.display = 'none';
+            
+            // Masquer l'histoire précédente
+            storyDisplay.classList.remove('show');
+            
+            // Créer l'interface d'énigmes avec image
+            createEnigmeImageInterface();
+            
+            // Afficher le conteneur avec animation
+            setTimeout(() => {
+                chaptersContainer.classList.add('show');
+            }, 100);
+        }
+
+        function createEnigmeImageInterface() {
+            const currentEnigmeData = enigmeData.enigmes[currentEnigme.currentEnigme];
+            
+            chaptersGrid.innerHTML = `
+                <div class="memo-container">
+                    <div class="memo-phase">
+                        <h2 style="color: #4a90e2; margin-bottom: 20px;">🖼️ Observez bien cette image</h2>
+                        <p style="color: #ffc107; font-weight: 600; margin-bottom: 20px;">
+                            Regardez attentivement l'image, puis répondez aux 3 questions en 30 secondes !
+                        </p>
+                        
+                        <div style="text-align: center; margin: 20px 0;">
+                            <div class="image-loader" style="min-height: 300px; display: flex; align-items: center; justify-content: center; background: rgba(74, 144, 226, 0.1); border-radius: 10px; border: 2px solid #4a90e2;">
+                                <div style="color: #4a90e2; font-size: 1.2rem;">🖼️ Chargement de l'image...</div>
+                            </div>
+                            <p style="color: #4a90e2; margin-top: 10px; font-weight: 600;">${currentEnigmeData.title}</p>
+                        </div>
+                        
+                        <button class="memo-submit" id="start-enigme-btn" onclick="startEnigmeTimer()" disabled style="opacity: 0.5;">
+                            🚀 Chargement en cours...
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Lazy load de l'image avec optimisations
+            lazyLoadImage(currentEnigmeData.image, currentEnigmeData.title, 'start-enigme-btn');
+            chaptersGrid.style.display = 'block';
+        }
+
+        // Fonction optimisée de lazy loading
+        function lazyLoadImage(src, alt, buttonId) {
+            const img = new Image();
+            const startTime = performance.now();
+            
+            img.onload = function() {
+                const loadTime = performance.now() - startTime;
+                console.log(`🚀 Image chargée en ${Math.round(loadTime)}ms`);
+                
+                // Remplacer le loader par l'image avec transition fluide
+                const loader = document.querySelector('.image-loader');
+                if (loader) {
+                    loader.style.transition = 'opacity 0.3s ease';
+                    loader.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        loader.outerHTML = `
+                            <img src="${src}" 
+                                 alt="${alt}" 
+                                 style="max-width: 100%; max-height: 400px; border-radius: 10px; border: 2px solid #4a90e2; box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3); opacity: 0; transition: opacity 0.3s ease;"
+                                 onload="this.style.opacity='1'">
+                        `;
+                        
+                        // Activer le bouton
+                        const button = document.getElementById(buttonId);
+                        if (button) {
+                            button.disabled = false;
+                            button.style.opacity = '1';
+                            button.textContent = '🚀 J\'ai bien observé, commencer le défi !';
+                        }
+                    }, 300);
+                }
+            };
+            
+            img.onerror = function() {
+                console.error('❌ Erreur de chargement de l\'image');
+                const loader = document.querySelector('.image-loader');
+                if (loader) {
+                    loader.innerHTML = '<div style="color: #dc3545;">❌ Erreur de chargement</div>';
+                }
+            };
+            
+            // Optimisation : ajouter des paramètres de compression
+            img.src = src + (src.includes('?') ? '&' : '?') + 'auto=compress&cs=tinysrgb&dpr=2&h=600&w=800';
+        }
+
+        function startEnigmeTimer() {
+            const currentEnigmeData = enigmeData.enigmes[currentEnigme.currentEnigme];
+            currentEnigme.phase = 'questioning';
+            currentEnigme.timeLeft = 30;
+            currentEnigme.currentQuestion = 0;
+            
+            showEnigmeQuestion();
+            
+            // Démarrer le timer
+            currentEnigme.timer = setInterval(() => {
+                currentEnigme.timeLeft--;
+                const timerElement = document.getElementById('enigme-timer');
+                
+                if (timerElement) {
+                    timerElement.textContent = `⏰ ${currentEnigme.timeLeft} secondes`;
+                    
+                    // Changer les couleurs selon le temps restant
+                    if (currentEnigme.timeLeft <= 5) {
+                        timerElement.className = 'memo-timer danger';
+                    } else if (currentEnigme.timeLeft <= 10) {
+                        timerElement.className = 'memo-timer warning';
+                    }
+                }
+                
+                if (currentEnigme.timeLeft <= 0) {
+                    clearInterval(currentEnigme.timer);
+                    enigmeTimeUp();
+                }
+            }, 1000);
+        }
+
+        function showEnigmeQuestion() {
+            const currentEnigmeData = enigmeData.enigmes[currentEnigme.currentEnigme];
+            const currentQuestion = currentEnigmeData.questions[currentEnigme.currentQuestion];
+            
+            chaptersGrid.innerHTML = `
+                <div class="memo-container">
+                    <div class="memo-phase">
+                        <div class="memo-timer" id="enigme-timer">⏰ ${currentEnigme.timeLeft} secondes</div>
+                        
+                        <div style="text-align: center; margin: 15px 0;">
+                            <div style="background: linear-gradient(135deg, #4a90e2, #357abd); color: white; padding: 8px 16px; border-radius: 15px; display: inline-block; margin-bottom: 15px;">
+                                Question ${currentEnigme.currentQuestion + 1} / 3
+                            </div>
+                        </div>
+                        
+                        <div class="memo-question">
+                            <h3>${currentQuestion.question}</h3>
+                            <div class="quiz-answers" id="enigme-answers">
+                                ${currentQuestion.answers.map((answer, index) => 
+                                    `<button class="quiz-answer" onclick="selectEnigmeImageAnswer(${index})">${answer}</button>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectEnigmeImageAnswer(selectedIndex) {
+            const currentEnigmeData = enigmeData.enigmes[currentEnigme.currentEnigme];
+            const currentQuestion = currentEnigmeData.questions[currentEnigme.currentQuestion];
+            
+            // Stocker la réponse
+            currentEnigme.answers[currentEnigme.currentQuestion] = selectedIndex;
+            
+            // Passer à la question suivante
+            currentEnigme.currentQuestion++;
+            
+            if (currentEnigme.currentQuestion < 3) {
+                // Question suivante
+                showEnigmeQuestion();
+            } else {
+                // Toutes les questions répondues
+                clearInterval(currentEnigme.timer);
+                showEnigmeImageResults();
+            }
+        }
+
+        function enigmeTimeUp() {
+            if (currentEnigme.finished) return;
+            
+            currentEnigme.finished = true;
+            showEnigmeImageResults();
+        }
+
+        function showEnigmeImageResults() {
+            const currentEnigmeData = enigmeData.enigmes[currentEnigme.currentEnigme];
+            let correctAnswers = 0;
+            
+            // Compter les bonnes réponses
+            for (let i = 0; i < 3; i++) {
+                if (currentEnigme.answers[i] !== null && 
+                    currentEnigme.answers[i] === currentEnigmeData.questions[i].correct) {
+                    correctAnswers++;
+                }
+            }
+            
+            const allCorrect = correctAnswers === 3;
+            let resultMessage, resultClass;
+            
+            if (allCorrect) {
+                resultMessage = "🎉 PARFAIT ! Vous avez tout juste ! Excellente observation !";
+                resultClass = "success";
+            } else {
+                resultMessage = `❌ ${correctAnswers}/3 bonnes réponses. Il fallait TOUTES les bonnes réponses pour réussir !`;
+                resultClass = "failure";
+            }
+            
+            chaptersGrid.innerHTML = `
+                <div class="memo-container">
+                    <div class="memo-phase">
+                        <h2 style="color: #4a90e2; margin-bottom: 20px;">📊 Résultat de l'énigme</h2>
+                        
+                        <div class="memo-result ${resultClass}">
+                            ${resultMessage}
+                        </div>
+                        
+                        <div style="background: rgba(74, 144, 226, 0.1); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                            <h3 style="color: #4a90e2; margin-bottom: 15px;">📋 Détail des réponses :</h3>
+                            
+                            ${currentEnigmeData.questions.map((question, index) => `
+                                <div style="margin-bottom: 15px; padding: 10px; border-radius: 5px; border-left: 3px solid ${
+                                    currentEnigme.answers[index] === question.correct ? '#28a745' : '#dc3545'
+                                };">
+                                    <p style="color: #4a90e2; font-weight: 600; margin-bottom: 5px;">
+                                        ${index + 1}. ${question.question}
+                                    </p>
+                                    <p style="color: #28a745; margin-bottom: 3px;">
+                                        ✅ Bonne réponse : ${question.answers[question.correct]}
+                                    </p>
+                                    ${currentEnigme.answers[index] !== null ? `
+                                        <p style="color: ${currentEnigme.answers[index] === question.correct ? '#28a745' : '#dc3545'};">
+                                            ${currentEnigme.answers[index] === question.correct ? '✅' : '❌'} Votre réponse : ${question.answers[currentEnigme.answers[index]]}
+                                        </p>
+                                    ` : `
+                                        <p style="color: #ffc107;">⏰ Pas de réponse (temps écoulé)</p>
+                                    `}
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <button class="memo-restart" onclick="showEnigme()">
+                            🔄 Nouvelle énigme image
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+
+
+        // Système de vidéos quotidiennes
+        const dailyVideos = [
+            {
+                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                title: 'Big Buck Bunny - Lundi',
+                description: 'Animation 3D par Blender Foundation'
+            },
+            {
+                url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
+                title: 'Nature - Mardi', 
+                description: 'Vidéo de démonstration nature'
+            },
+            {
+                url: 'https://www.w3schools.com/html/movie.mp4',
+                title: 'Démonstration - Mercredi',
+                description: 'Vidéo de test W3Schools'
+            },
+            {
+                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                title: 'Big Buck Bunny - Jeudi',
+                description: 'Retour du classique d\'animation'
+            },
+            {
+                url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4',
+                title: 'Océan - Vendredi',
+                description: 'Vidéo relaxante pour finir la semaine'
+            },
+            {
+                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                title: 'Weekend Bunny - Samedi',
+                description: 'Animation spéciale weekend'
+            },
+            {
+                url: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
+                title: 'Dimanche Zen - Dimanche',
+                description: 'Vidéo apaisante pour le dimanche'
+            }
+        ];
+
+        function setDailyVideo() {
+            const today = new Date();
+            const dayOfWeek = today.getDay(); // 0 = Dimanche, 1 = Lundi, etc.
+            
+            // Utiliser l'index basé sur le jour de la semaine
+            const videoIndex = dayOfWeek;
+            const todayVideo = dailyVideos[videoIndex];
+            
+            const videoElement = document.getElementById('daily-video');
+            const videoInfo = document.getElementById('video-info');
+            
+            // Changer la source de la vidéo
+            videoElement.src = todayVideo.url;
+            
+            // Mettre à jour les informations
+            videoInfo.innerHTML = `
+                🎬 ${todayVideo.title}<br>
+                <small style="opacity: 0.8;">${todayVideo.description}</small>
+            `;
+            
+            // Relancer la vidéo
+            videoElement.load();
+            
+            console.log(`Vidéo du jour chargée: ${todayVideo.title}`);
+        }
+
+        // Fonction pour vérifier et changer la vidéo à minuit
+        function checkForNewDay() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            
+            // Si c'est minuit (00:00), changer la vidéo
+            if (hours === 0 && minutes === 0) {
+                setDailyVideo();
+                console.log('Nouvelle vidéo chargée pour le nouveau jour !');
+            }
+        }
+
+        // Performance Monitoring
+        const performanceMonitor = {
+            startTime: performance.now(),
+            
+            logMetric: function(label, value) {
+                console.log(`🚀 ${label}: ${Math.round(value)}ms`);
+            },
+            
+            measureFunction: function(fn, label) {
+                const start = performance.now();
+                const result = fn();
+                this.logMetric(label, performance.now() - start);
+                return result;
+            }
+        };
+
+        // Optimisation : Debouncing pour les événements fréquents
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Optimisation : RequestAnimationFrame pour les animations
+        function optimizedAnimation(callback) {
+            if (window.requestAnimationFrame) {
+                return window.requestAnimationFrame(callback);
+            } else {
+                return setTimeout(callback, 16); // Fallback ~60fps
+            }
+        }
+
+        // Optimisation : Intersection Observer pour lazy loading
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                        imageObserver.unobserve(img);
+                    }
+                }
+            });
+        }, {
+            rootMargin: '50px 0px',
+            threshold: 0.1
+        });
+
+        // Optimisation : Cache des données pour éviter les recalculs
+        const dataCache = new Map();
+
+        function getCachedData(key, generator) {
+            if (dataCache.has(key)) {
+                return dataCache.get(key);
+            }
+            const data = generator();
+            dataCache.set(key, data);
+            return data;
+        }
+
+        // Optimisation : Préchargement des ressources critiques
+        function preloadCriticalResources() {
+            const criticalImages = [
+                'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop',
+                'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=400&h=300&fit=crop'
+            ];
+
+            criticalImages.forEach(url => {
+                const link = document.createElement('link');
+                link.rel = 'prefetch';
+                link.href = url;
+                document.head.appendChild(link);
+            });
+        }
+
+        // Optimisation : Réduction de la fréquence des événements
+        const optimizedEventHandlers = {
+            scroll: debounce(() => {
+                // Logique de scroll optimisée
+            }, 100),
+            
+            resize: debounce(() => {
+                // Logique de resize optimisée
+                performanceMonitor.logMetric('Resize handled', 0);
+            }, 250)
+        };
+
+        // Détection des capacités du navigateur
+        const browserCapabilities = {
+            supportsWebP: () => {
+                const canvas = document.createElement('canvas');
+                return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+            },
+            
+            supportsIntersectionObserver: () => {
+                return 'IntersectionObserver' in window;
+            },
+            
+            supportsRequestIdleCallback: () => {
+                return 'requestIdleCallback' in window;
+            }
+        };
+
+        // Fonction d'optimisation du chargement des images
+        function optimizedImageLoading(src, alt, callback) {
+            const startTime = performance.now();
+            const img = new Image();
+            
+            // Optimiser le format selon le support du navigateur
+            let optimizedSrc = src;
+            if (browserCapabilities.supportsWebP()) {
+                optimizedSrc = src.replace(/\.(jpg|jpeg|png)/, '.webp');
+            }
+            
+            img.onload = function() {
+                const loadTime = performance.now() - startTime;
+                performanceMonitor.logMetric(`Image ${alt} chargée`, loadTime);
+                if (callback) callback(img, loadTime);
+            };
+            
+            img.onerror = function() {
+                console.warn(`❌ Échec de chargement: ${alt}`);
+                // Fallback vers l'image originale si WebP échoue
+                if (optimizedSrc !== src) {
+                    img.src = src;
+                }
+            };
+            
+            img.src = optimizedSrc;
+            return img;
+        }
+
+        // Animation au chargement optimisée
+        window.addEventListener('load', function() {
+            const loadStartTime = performanceMonitor.startTime;
+            
+            performanceMonitor.measureFunction(() => {
+                document.body.style.opacity = '0';
+                document.body.style.transition = 'opacity 0.5s ease';
+                
+                // Précharger les ressources critiques
+                preloadCriticalResources();
+                
+                // Charger la vidéo du jour
+                setDailyVideo();
+                
+                // Optimiser l'apparition de la page
+                optimizedAnimation(() => {
+                    document.body.style.opacity = '1';
+                });
+                
+            }, 'Page initialization');
+            
+            // Mesurer le temps de chargement total
+            performanceMonitor.logMetric('Total load time', performance.now() - loadStartTime);
+            
+            // Vérifier toutes les minutes si on doit changer de vidéo
+            setInterval(checkForNewDay, 60000);
+            
+            // Ajouter les event listeners optimisés
+            window.addEventListener('scroll', optimizedEventHandlers.scroll, { passive: true });
+            window.addEventListener('resize', optimizedEventHandlers.resize, { passive: true });
+        });
+
+        // Performance Observer pour surveiller les métriques
+        if ('PerformanceObserver' in window) {
+            const observer = new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                    if (entry.entryType === 'navigation') {
+                        performanceMonitor.logMetric('DOM Content Loaded', entry.domContentLoadedEventEnd - entry.domContentLoadedEventStart);
+                        performanceMonitor.logMetric('Load Complete', entry.loadEventEnd - entry.loadEventStart);
+                    }
+                }
+            });
+            
+            observer.observe({ entryTypes: ['navigation'] });
+        }
+    </script>
+</body>
+</html>
