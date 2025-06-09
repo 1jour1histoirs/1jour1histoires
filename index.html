@@ -28,64 +28,154 @@
             z-index: 1;
         }
 
-        /* 🔝 BARRE DE NAVIGATION SIMPLE */
+        /* 🌟 BARRE DE NAVIGATION CLOUD STYLÉE */
         .top-bar {
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(30, 30, 30, 0.95);
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.25), 
+                rgba(255, 255, 255, 0.1)
+            );
             color: white;
-            padding: 15px 20px;
+            padding: 20px 25px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                0 4px 16px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0 0 25px 25px;
+            animation: cloudFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes cloudFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .top-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(102, 126, 234, 0.3), 
+                rgba(118, 75, 162, 0.3)
+            );
+            border-radius: 0 0 25px 25px;
+            z-index: -1;
         }
 
         .top-bar h1 {
             margin: 0;
-            font-size: 1.5rem;
-            font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
-            background-size: 300% 300%;
+            font-size: 2rem;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: rainbowText 4s ease-in-out infinite;
+            animation: gradientShift 8s ease-in-out infinite;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
         }
 
-        @keyframes rainbowText {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .top-bar h1::before {
+            content: '✨';
+            position: absolute;
+            left: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        .top-bar h1::after {
+            content: '✨';
+            position: absolute;
+            right: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: sparkle 2s ease-in-out infinite 1s;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.5; transform: translateY(-50%) scale(1); }
+            50% { opacity: 1; transform: translateY(-50%) scale(1.2); }
         }
 
         .nav-categories {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            margin-top: 10px;
-            gap: 15px;
+            margin-top: 15px;
+            gap: 12px;
         }
 
         .nav-categories a {
             color: white;
             text-decoration: none;
-            background: rgba(74, 144, 226, 0.8);
-            padding: 10px 15px;
-            border-radius: 25px;
-            transition: all 0.3s ease;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.2), 
+                rgba(255, 255, 255, 0.1)
+            );
+            padding: 12px 20px;
+            border-radius: 50px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             font-weight: 600;
             font-size: 0.9rem;
-            border: 2px solid transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-categories a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent
+            );
+            transition: left 0.6s;
+        }
+
+        .nav-categories a:hover::before {
+            left: 100%;
         }
 
         .nav-categories a:hover {
-            background: rgba(74, 144, 226, 1);
-            transform: translateY(-2px) scale(1.05);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.3), 
+                rgba(255, 255, 255, 0.2)
+            );
+            transform: translateY(-5px) scale(1.05);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.2),
+                0 4px 15px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
         /* CONTENEUR PRINCIPAL DU JEU */
@@ -2176,70 +2266,229 @@
             `;
         }
 
-        // FONCTION POUR AFFICHER LE MENU PRINCIPAL
+        // FONCTION POUR AFFICHER LE MENU PRINCIPAL CLASSE
         function showMainMenu() {
             const gameContainer = document.getElementById('game-container');
             
             gameContainer.innerHTML = `
-                <div class="game-title">🎮 Menu Principal</div>
-                <div class="game-subtitle">Choisissez votre jeu préféré !</div>
-                
-                <div style="display: grid; gap: 20px; max-width: 600px; margin: 0 auto;">
+                <div style="background: linear-gradient(135deg, 
+                    rgba(255, 255, 255, 0.25), 
+                    rgba(255, 255, 255, 0.1)
+                ); backdrop-filter: blur(20px); border-radius: 25px; padding: 40px; margin: -10px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);">
                     
-                    <div style="background: linear-gradient(135deg, #4a90e2, #357abd); padding: 25px; border-radius: 15px; border: 2px solid #4a90e2; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);" onclick="showMemoSelection()">
-                        <div style="text-align: center;">
-                            <div style="font-size: 3rem; margin-bottom: 10px;">🧠</div>
-                            <h3 style="color: white; margin-bottom: 10px; font-size: 1.4rem;">Jeu Mémo 30s</h3>
-                            <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem;">Testez votre mémoire avec nos histoires captivantes !</p>
-                        </div>
+                    <div style="text-align: center; margin-bottom: 40px;">
+                        <h1 style="
+                            font-size: 3rem; 
+                            margin: 0 0 15px 0; 
+                            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #f5576c);
+                            background-size: 400% 400%;
+                            -webkit-background-clip: text;
+                            -webkit-text-fill-color: transparent;
+                            background-clip: text;
+                            animation: gradientShift 8s ease-in-out infinite;
+                            font-weight: 800;
+                            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+                        ">🎮 GAMING ZONE</h1>
+                        <p style="
+                            color: rgba(255, 255, 255, 0.9); 
+                            font-size: 1.3rem; 
+                            margin: 0;
+                            font-weight: 600;
+                            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+                        ">Choisissez votre aventure préférée</p>
                     </div>
                     
-                    <div style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 25px; border-radius: 15px; border: 2px solid #667eea; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);" onclick="showQuiz()">
-                        <div style="text-align: center;">
-                            <div style="font-size: 3rem; margin-bottom: 10px;">🧠</div>
-                            <h3 style="color: white; margin-bottom: 10px; font-size: 1.4rem;">Quiz Interactif</h3>
-                            <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem;">Testez vos connaissances générales !</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; max-width: 900px; margin: 0 auto;">
+                        
+                        <!-- Jeu Mémo 30s -->
+                        <div class="game-card" data-color="#4a90e2" onclick="showMemoSelection()">
+                            <div class="game-card-inner">
+                                <div class="game-icon">🧠</div>
+                                <h3>Jeu Mémo 30s</h3>
+                                <p>Défiez votre mémoire avec nos histoires captivantes</p>
+                                <div class="game-stats">⚡ 30 secondes • 🎯 Précision</div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div style="background: linear-gradient(135deg, #ff6b35, #f7931e); padding: 25px; border-radius: 15px; border: 2px solid #ff6b35; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);" onclick="showEnfantStories()">
-                        <div style="text-align: center;">
-                            <div style="font-size: 3rem; margin-bottom: 10px;">🧒</div>
-                            <h3 style="color: white; margin-bottom: 10px; font-size: 1.4rem;">Histoires Enfants</h3>
-                            <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem;">Des histoires magiques pour les petits lecteurs !</p>
+                        
+                        <!-- Quiz Interactif -->
+                        <div class="game-card" data-color="#667eea" onclick="showQuiz()">
+                            <div class="game-card-inner">
+                                <div class="game-icon">🎓</div>
+                                <h3>Quiz Interactif</h3>
+                                <p>Testez vos connaissances générales</p>
+                                <div class="game-stats">📚 Culture • 🏆 5 Questions</div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div style="background: linear-gradient(135deg, #52c41a, #389e0d); padding: 25px; border-radius: 15px; border: 2px solid #52c41a; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(82, 196, 26, 0.3);" onclick="showEnigmes()">
-                        <div style="text-align: center;">
-                            <div style="font-size: 3rem; margin-bottom: 10px;">🔍</div>
-                            <h3 style="color: white; margin-bottom: 10px; font-size: 1.4rem;">Énigmes & Casse-tête</h3>
-                            <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem;">Défiez votre logique avec nos énigmes !</p>
+                        
+                        <!-- Histoires Enfants -->
+                        <div class="game-card" data-color="#ff6b35" onclick="showEnfantStories()">
+                            <div class="game-card-inner">
+                                <div class="game-icon">🧒</div>
+                                <h3>Histoires Enfants</h3>
+                                <p>Aventures magiques pour petits lecteurs</p>
+                                <div class="game-stats">✨ 5 Contes • 🌟 Questions</div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div style="background: linear-gradient(135deg, #8b0000, #a50000); padding: 25px; border-radius: 15px; border: 2px solid #8b0000; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);" onclick="showHorreurStories()">
-                        <div style="text-align: center;">
-                            <div style="font-size: 3rem; margin-bottom: 10px;">🧟</div>
-                            <h3 style="color: white; margin-bottom: 10px; font-size: 1.4rem;">Histoires d'Horreur</h3>
-                            <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem;">Des récits terrifiants... si vous l'osez !</p>
+                        
+                        <!-- Énigmes & Casse-tête -->
+                        <div class="game-card" data-color="#52c41a" onclick="showEnigmes()">
+                            <div class="game-card-inner">
+                                <div class="game-icon">🔍</div>
+                                <h3>Énigmes & Casse-tête</h3>
+                                <p>Défiez votre logique et réflexion</p>
+                                <div class="game-stats">🧩 3 Niveaux • 🤔 Logique</div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div style="background: linear-gradient(135deg, #ff6b6b, #e84393); padding: 25px; border-radius: 15px; border: 2px solid #ff6b6b; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);" onclick="showAbsurdeStories()">
-                        <div style="text-align: center;">
-                            <div style="font-size: 3rem; margin-bottom: 10px;">🤡</div>
-                            <h3 style="color: white; margin-bottom: 10px; font-size: 1.4rem;">Histoires Absurdes</h3>
-                            <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem;">Des histoires complètement folles pour rire !</p>
+                        
+                        <!-- Histoires d'Horreur -->
+                        <div class="game-card" data-color="#8b0000" onclick="showHorreurStories()">
+                            <div class="game-card-inner">
+                                <div class="game-icon">🧟</div>
+                                <h3>Histoires d'Horreur</h3>
+                                <p>Récits terrifiants pour âmes courageuses</p>
+                                <div class="game-stats">💀 3 Cauchemars • 😱 Frissons</div>
+                            </div>
                         </div>
+                        
+                        <!-- Histoires Absurdes -->
+                        <div class="game-card" data-color="#ff6b6b" onclick="showAbsurdeStories()">
+                            <div class="game-card-inner">
+                                <div class="game-icon">🤡</div>
+                                <h3>Histoires Absurdes</h3>
+                                <p>Délires et folies pour rire aux éclats</p>
+                                <div class="game-stats">🎪 3 Folies • 😂 Rires garantis</div>
+                            </div>
+                        </div>
+                        
                     </div>
-                    
                 </div>
                 
                 <style>
-                    .game-container > div:hover {
-                        transform: translateY(-5px) scale(1.02);
-                        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+                    .game-card {
+                        background: linear-gradient(135deg, 
+                            rgba(255, 255, 255, 0.1), 
+                            rgba(255, 255, 255, 0.05)
+                        );
+                        backdrop-filter: blur(10px);
+                        border-radius: 20px;
+                        padding: 0;
+                        cursor: pointer;
+                        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                        position: relative;
+                        overflow: hidden;
+                        box-shadow: 
+                            0 8px 32px rgba(0, 0, 0, 0.1),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+                    }
+                    
+                    .game-card::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background: linear-gradient(135deg, 
+                            rgba(255, 255, 255, 0.1), 
+                            rgba(255, 255, 255, 0.05)
+                        );
+                        opacity: 0;
+                        transition: opacity 0.3s ease;
+                        border-radius: 20px;
+                    }
+                    
+                    .game-card:hover::before {
+                        opacity: 1;
+                    }
+                    
+                    .game-card:hover {
+                        transform: translateY(-8px) scale(1.02);
+                        box-shadow: 
+                            0 20px 40px rgba(0, 0, 0, 0.2),
+                            0 8px 16px rgba(0, 0, 0, 0.1),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+                        border-color: rgba(255, 255, 255, 0.4);
+                    }
+                    
+                    .game-card-inner {
+                        padding: 30px 25px;
+                        text-align: center;
+                        position: relative;
+                        z-index: 1;
+                    }
+                    
+                    .game-icon {
+                        font-size: 4rem;
+                        margin-bottom: 15px;
+                        display: block;
+                        transition: transform 0.3s ease;
+                        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+                    }
+                    
+                    .game-card:hover .game-icon {
+                        transform: scale(1.1) rotateY(20deg);
+                    }
+                    
+                    .game-card h3 {
+                        color: white;
+                        font-size: 1.4rem;
+                        margin: 0 0 12px 0;
+                        font-weight: 700;
+                        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+                        transition: all 0.3s ease;
+                    }
+                    
+                    .game-card p {
+                        color: rgba(255, 255, 255, 0.9);
+                        font-size: 1rem;
+                        margin: 0 0 20px 0;
+                        line-height: 1.5;
+                        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+                    }
+                    
+                    .game-stats {
+                        background: rgba(0, 0, 0, 0.3);
+                        color: rgba(255, 255, 255, 0.9);
+                        padding: 8px 16px;
+                        border-radius: 50px;
+                        font-size: 0.85rem;
+                        font-weight: 600;
+                        display: inline-block;
+                        backdrop-filter: blur(5px);
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                    }
+                    
+                    /* Animation de flottement pour les cartes */
+                    .game-card:nth-child(1) { animation: float 6s ease-in-out infinite; }
+                    .game-card:nth-child(2) { animation: float 6s ease-in-out infinite 1s; }
+                    .game-card:nth-child(3) { animation: float 6s ease-in-out infinite 2s; }
+                    .game-card:nth-child(4) { animation: float 6s ease-in-out infinite 3s; }
+                    .game-card:nth-child(5) { animation: float 6s ease-in-out infinite 4s; }
+                    .game-card:nth-child(6) { animation: float 6s ease-in-out infinite 5s; }
+                    
+                    @keyframes float {
+                        0%, 100% { transform: translateY(0px); }
+                        50% { transform: translateY(-10px); }
+                    }
+                    
+                    /* Responsive */
+                    @media (max-width: 768px) {
+                        .game-card-inner {
+                            padding: 25px 20px;
+                        }
+                        
+                        .game-icon {
+                            font-size: 3rem;
+                        }
+                        
+                        .game-card h3 {
+                            font-size: 1.2rem;
+                        }
+                        
+                        .game-card p {
+                            font-size: 0.9rem;
+                        }
                     }
                 </style>
             `;
