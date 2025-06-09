@@ -1181,6 +1181,9 @@
                     <button class="memo-restart" onclick="showMemoSelection()">
                         🔄 Nouveau défi mémoire
                     </button>
+                    <button class="memo-submit" onclick="showMainMenu()" style="margin-left: 15px; background: linear-gradient(135deg, #667eea, #764ba2);">
+                        🏠 Retour au menu principal
+                    </button>
                 </div>
             `;
         }
@@ -1316,6 +1319,9 @@
                     </button>
                     <button class="memo-submit" onclick="showMemoSelection()" style="margin-left: 15px;">
                         🧠 Essayer le jeu mémo
+                    </button>
+                    <button class="memo-submit" onclick="showMainMenu()" style="margin-left: 15px; background: linear-gradient(135deg, #667eea, #764ba2);">
+                        🏠 Retour au menu principal
                     </button>
                 </div>
             `;
@@ -1534,6 +1540,9 @@
                     <button class="memo-submit" onclick="showEnfantStories()" style="background: linear-gradient(135deg, #9c88ff, #8c7ae6);">
                         📚 Autre histoire
                     </button>
+                    <button class="memo-submit" onclick="showMainMenu()" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                        🏠 Retour au menu principal
+                    </button>
                 </div>
             `;
         }
@@ -1723,6 +1732,9 @@
                     </button>
                     <button class="memo-submit" onclick="showEnigmes()" style="background: linear-gradient(135deg, ${colors.bg}, ${colors.border}); color: #2c3e50;">
                         🎯 Changer de niveau
+                    </button>
+                    <button class="memo-submit" onclick="showMainMenu()" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white;">
+                        🏠 Retour au menu principal
                     </button>
                 </div>
             `;
@@ -1939,6 +1951,9 @@
                     <button class="memo-submit" onclick="showHorreurStories()" style="background: linear-gradient(135deg, #4a2c2a, #6b1a1a);">
                         💀 Autre cauchemar
                     </button>
+                    <button class="memo-submit" onclick="showMainMenu()" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                        🏠 Retour au menu principal
+                    </button>
                 </div>
             `;
         }
@@ -2154,14 +2169,86 @@
                     <button class="memo-submit" onclick="showAbsurdeStories()" style="background: linear-gradient(135deg, #a29bfe, #6c5ce7);">
                         🎪 Autre folie
                     </button>
+                    <button class="memo-submit" onclick="showMainMenu()" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                        🏠 Retour au menu principal
+                    </button>
                 </div>
+            `;
+        }
+
+        // FONCTION POUR AFFICHER LE MENU PRINCIPAL
+        function showMainMenu() {
+            const gameContainer = document.getElementById('game-container');
+            
+            gameContainer.innerHTML = `
+                <div class="game-title">🎮 Menu Principal</div>
+                <div class="game-subtitle">Choisissez votre jeu préféré !</div>
+                
+                <div style="display: grid; gap: 20px; max-width: 600px; margin: 0 auto;">
+                    
+                    <div style="background: linear-gradient(135deg, #4a90e2, #357abd); padding: 25px; border-radius: 15px; border: 2px solid #4a90e2; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);" onclick="showMemoSelection()">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 10px;">🧠</div>
+                            <h3 style="color: white; margin-bottom: 10px; font-size: 1.4rem;">Jeu Mémo 30s</h3>
+                            <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem;">Testez votre mémoire avec nos histoires captivantes !</p>
+                        </div>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 25px; border-radius: 15px; border: 2px solid #667eea; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);" onclick="showQuiz()">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 10px;">🧠</div>
+                            <h3 style="color: white; margin-bottom: 10px; font-size: 1.4rem;">Quiz Interactif</h3>
+                            <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem;">Testez vos connaissances générales !</p>
+                        </div>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #ff6b35, #f7931e); padding: 25px; border-radius: 15px; border: 2px solid #ff6b35; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);" onclick="showEnfantStories()">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 10px;">🧒</div>
+                            <h3 style="color: white; margin-bottom: 10px; font-size: 1.4rem;">Histoires Enfants</h3>
+                            <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem;">Des histoires magiques pour les petits lecteurs !</p>
+                        </div>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #52c41a, #389e0d); padding: 25px; border-radius: 15px; border: 2px solid #52c41a; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(82, 196, 26, 0.3);" onclick="showEnigmes()">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 10px;">🔍</div>
+                            <h3 style="color: white; margin-bottom: 10px; font-size: 1.4rem;">Énigmes & Casse-tête</h3>
+                            <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem;">Défiez votre logique avec nos énigmes !</p>
+                        </div>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #8b0000, #a50000); padding: 25px; border-radius: 15px; border: 2px solid #8b0000; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);" onclick="showHorreurStories()">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 10px;">🧟</div>
+                            <h3 style="color: white; margin-bottom: 10px; font-size: 1.4rem;">Histoires d'Horreur</h3>
+                            <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem;">Des récits terrifiants... si vous l'osez !</p>
+                        </div>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #ff6b6b, #e84393); padding: 25px; border-radius: 15px; border: 2px solid #ff6b6b; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);" onclick="showAbsurdeStories()">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 10px;">🤡</div>
+                            <h3 style="color: white; margin-bottom: 10px; font-size: 1.4rem;">Histoires Absurdes</h3>
+                            <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem;">Des histoires complètement folles pour rire !</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <style>
+                    .game-container > div:hover {
+                        transform: translateY(-5px) scale(1.02);
+                        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+                    }
+                </style>
             `;
         }
 
         // INITIALISATION AUTOMATIQUE AU CHARGEMENT
         window.addEventListener('load', function() {
             console.log('🚀 Jeu Mémo chargé !');
-            initializeMemoGame();
+            showMainMenu();
         });
     </script>
 </body>
